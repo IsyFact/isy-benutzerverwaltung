@@ -1,0 +1,10 @@
+de/bund/bva/isyfact/benutzerverwaltung/sicherheit/konstanten/BenutzerverwaltungRecht.class
+de/bund/bva/isyfact/benutzerverwaltung/sicherheit/GesichertRollenverwaltungImpl.class
+de/bund/bva/isyfact/benutzerverwaltung/sicherheit/BenutzerverwaltungAufrufKontextImpl.class
+de/bund/bva/isyfact/benutzerverwaltung/sicherheit/GesichertRollenverwaltung.class
+de/bund/bva/isyfact/benutzerverwaltung/sicherheit/BenutzerverwaltungAccessManager.class
+de/bund/bva/isyfact/benutzerverwaltung/sicherheit/BenutzerverwaltungAuthentifizierungErgebnis.class
+de/bund/bva/isyfact/benutzerverwaltung/sicherheit/LoginVerwalter.class
+de/bund/bva/isyfact/benutzerverwaltung/sicherheit/GesichertBenutzerverwaltungImpl.class
+de/bund/bva/isyfact/benutzerverwaltung/sicherheit/GesichertBenutzerverwaltung.class
+de/bund/bva/isyfact/benutzerverwaltung/sicherheit/SessionAufrufKontextVerwalter.class

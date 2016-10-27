@@ -1,0 +1,31 @@
+= IsyFact-Benutzerverwaltung
+:sourcedir: src/main/java
+:webappdir: src/main/webapp
+
+Die IsyFact-Benutzerverwaltung stellt eine leichtgewichtige Software-Komponente zur Verwaltung von Benutzern und Rollen bereit und ist vor allem für kleine, eigenständige Anwendungen gedacht. Anwendungen können mithilfe der Komponente auf einfache Weise:
+
+* Benutzer und Rollen verwalten,
+* eine IsyFact-konforme Absicherung der Anwendung erzielen,
+* vorgefertigte grafische Oberflächen für die Verwaltung von Benutzern und Rollen sowie zur An- und Abmeldung von Benutzern einsetzen.
+
+Die IsyFact-Benutzerverwaltung stellt keine Möglichkeit eines Single Sign On (SSO) bereit. Jede Anwendung besitzt eigene Benutzer und Rollen.
+
+////
+== Anleitung zur Einbindung
+
+=== GUI allgemein
+* Inhalt der `gui-linksnavigation.properties` in die entsprechende Datei der Anwendung kopieren und die Liste der IDs zusammenführen.
+* Inhalt der `navigation.xml` mit der entsprechenden Datei der Anwendung zusammenführen.
+
+=== GUI mit Primefaces
+* `basis.xhtml` der Bibliothek `plis-web` überschreiben und Import von `jQuery` herausnehmen.
+
+.Konfiguration der FontAwesome-Icons
+[source,xml]
+----
+<context-param>
+    <param-name>primefaces.FONT_AWESOME</param-name>
+    <param-value>true</param-value>
+</context-param>
+----
+////

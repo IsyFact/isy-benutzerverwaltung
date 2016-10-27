@@ -1,0 +1,5 @@
+de/bund/bva/isyfact/benutzerverwaltung/TestfallKonfiguration.class
+de/bund/bva/isyfact/benutzerverwaltung/AbstractFfBenutzerzeichnisTest.class
+de/bund/bva/isyfact/benutzerverwaltung/sicherheit/PlisSicherheitTest.class
+de/bund/bva/isyfact/benutzerverwaltung/sicherheit/BenutzerverwaltungAccessManagerTest.class
+de/bund/bva/isyfact/benutzerverwaltung/TestPersistenceConfiguration.class

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+    <!-- Factory zum Erzeugen neuer Aufruf-Kontexte -->
+    <bean id="aufrufKontextFactory"
+          class="de.bund.bva.pliscommon.aufrufkontext.impl.AufrufKontextFactoryImpl">
+        <property name="aufrufKontextKlasse"
+                  value="de.bund.bva.isyfact.benutzerverwaltung.sicherheit.BenutzerverwaltungAufrufKontextImpl"/>
+    </bean>
+
+    <!-- AufrufKontextVerwalter definieren (jeder Request hat einen eigenen Kontext (-Verwalter)) -->
+    <bean id="aufrufKontextVerwalter"
+          class="de.bund.bva.isyfact.benutzerverwaltung.sicherheit.SessionAufrufKontextVerwalter"
+          scope="request">
+        <aop:scoped-proxy/>
+        <property name="loginVerwalter" ref="loginVerwalter"/>
+    </bean>
+
+    <!-- Plis-Sicherheit: Sicherheit -->
+    <bean id="sicherheit" class="de.bund.bva.pliscommon.sicherheit.impl.SicherheitImpl">
+        <property name="rollenRechteDateiPfad" value="/resources/sicherheit/rollenrechte.xml"/>
+        <property name="aufrufKontextVerwalter" ref="aufrufKontextVerwalter"/>
+        <property name="aufrufKontextFactory" ref="aufrufKontextFactory"/>
+        <property name="accessManager" ref="isy-BenutzerverwaltungAccessManager"/>
+        <property name="konfiguration" ref="konfiguration"/>
+    </bean>
+
+    <!-- Zur Überwachung der Verfügbarkeit des Cams -->
+    <bean id="sicherheitAdmin" class="de.bund.bva.pliscommon.sicherheit.impl.SicherheitAdminImpl">
+        <property name="accessManager" ref="isy-BenutzerverwaltungAccessManager"/>
+    </bean>
+
+    <bean id="isy-BenutzerverwaltungAccessManager"
+          class="de.bund.bva.isyfact.benutzerverwaltung.sicherheit.BenutzerverwaltungAccessManager">
+        <constructor-arg ref="benutzerverwaltung"/>
+        <constructor-arg ref="passwordEncoder"/>
+        <constructor-arg ref="konfiguration"/>
+    </bean>
+
+    <bean id="loginVerwalter" class="de.bund.bva.isyfact.benutzerverwaltung.sicherheit.LoginVerwalter"
+          scope="session"/>
+
+    <bean id="gesichertBenutzerverwaltung"
+          class="de.bund.bva.isyfact.benutzerverwaltung.sicherheit.GesichertBenutzerverwaltungImpl">
+        <constructor-arg ref="benutzerverwaltung"/>
+        <constructor-arg ref="aufrufKontextVerwalter"/>
+    </bean>
+
+    <bean id="gesichertRollenverwaltung"
+          class="de.bund.bva.isyfact.benutzerverwaltung.sicherheit.GesichertRollenverwaltungImpl">
+        <constructor-arg ref="rollenverwaltung"/>
+    </bean>
+
+    <bean id="gesichertInterceptor" class="de.bund.bva.pliscommon.sicherheit.annotation.GesichertInterceptor">
+        <property name="sicherheit" ref="sicherheit"/>
+    </bean>
+
+    <aop:config>
+        <aop:pointcut id="gesichertPointcut"
+                      expression="@annotation(de.bund.bva.pliscommon.sicherheit.annotation.Gesichert) || @within(de.bund.bva.pliscommon.sicherheit.annotation.Gesichert)"/>
+        <aop:advisor pointcut-ref="gesichertPointcut" advice-ref="gesichertInterceptor"/>
+    </aop:config>
+
+</beans>

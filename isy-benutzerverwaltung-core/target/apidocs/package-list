@@ -1,0 +1,15 @@
+de.bund.bva.isyfact.benutzerverwaltung.common.datentyp
+de.bund.bva.isyfact.benutzerverwaltung.common.exception
+de.bund.bva.isyfact.benutzerverwaltung.common.konstanten
+de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten
+de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung
+de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten
+de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.impl
+de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.validation
+de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung
+de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.daten
+de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.impl
+de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.validation
+de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao
+de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa
+de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity

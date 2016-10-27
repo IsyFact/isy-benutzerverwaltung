@@ -1,0 +1,176 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>isy-benutzerverwaltung-gui-primefaces</artifactId>
+    <name>IsyFact Benutzerverwaltung GUI mit Primefaces</name>
+
+    <parent>
+        <groupId>de.bund.bva.isyfact.benutzerverwaltung</groupId>
+        <artifactId>isy-benutzerverwaltung-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>5.3</version>
+        </dependency>
+
+        <!-- Benoetigt fuer AufrufKontextTo -->
+        <dependency>
+            <groupId>de.bund.bva.isyfact</groupId>
+            <artifactId>isy-aufrufkontext</artifactId>
+        </dependency>
+
+        <!-- Bibliothek mit den MBeans für die Überwachung -->
+        <dependency>
+            <groupId>de.bund.bva.pliscommon</groupId>
+            <artifactId>plis-ueberwachung</artifactId>
+        </dependency>
+
+        <!-- Bibliothek fuer Autorisierung -->
+        <dependency>
+            <groupId>de.bund.bva.isyfact</groupId>
+            <artifactId>isy-sicherheit</artifactId>
+        </dependency>
+
+        <!-- Servlet-API nicht ins WAR-File -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Spring Dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Benoetigt u.a. fuer JMX -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+        <!-- Benoetigt fuer AOP -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+        </dependency>
+
+        <!-- Benoetigt fuer Modul-Testfaelle im SpringContext -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Benoetigt fuer InitializingBeans -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+
+        <!-- Benoetigt fuer SpringDispatcher Servlet -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+
+        <!-- Benoetigt fuer HttpInvoker -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+
+        <!-- EL wird ab Tomcat 6 bereits durch den Tomcat bereitgestellt. Daher
+            muss sie explizit als vorhanden deklariert werden, -->
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!-- Dozer (Bean Mapping) -->
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+        </dependency>
+
+        <!-- Aktuelle Version von Commons-Collections, z.B. fuer Dozer -->
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+
+        <!-- PLIS-Erweiterungen fuer Spring Web Flow und JSF -->
+        <dependency>
+            <groupId>de.bund.bva.pliscommon</groupId>
+            <artifactId>plis-web</artifactId>
+        </dependency>
+
+        <!-- Isy-Logging -->
+        <dependency>
+            <groupId>de.bund.bva.isyfact</groupId>
+            <artifactId>isy-logging</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.bund.bva.isyfact.benutzerverwaltung</groupId>
+            <artifactId>isy-benutzerverwaltung-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.bund.bva.isyfact.benutzerverwaltung</groupId>
+            <artifactId>isy-benutzerverwaltung-sicherheit</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+    </dependencies>
+
+</project>

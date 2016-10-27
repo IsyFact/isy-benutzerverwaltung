@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:isy="http://java.sun.com/jsf/composite/isyfact">
+		<isy:panel>
+			<f:facet name="panelHeader">
+        		Rolle auswählen 
+        	</f:facet>
+			<f:facet name="panelBody">
+				<div class="form-horizontal">
+					<div class="row-fluid">
+						<div class="col-lg-6">
+							<isy:formSelectOneDropdown reference="rollen"
+                       	   		       value="#{rolleZuweisenModel.rollenIdZurZuweisung}"
+                       			   	   label="Rolle für Zuweisung"
+                       			   	   labelStyleClass="col-lg-4"
+	                                   inputStyleClass="col-lg-8"
+                       			       id="rollenSelect"
+                       			       placeholder="">
+                           		<f:selectItems value="#{rolleZuweisenModel.verfuegbareRollen}"/>
+                        	</isy:formSelectOneDropdown>
+						</div>
+					</div>
+				</div>
+			</f:facet>
+		</isy:panel>
+		<isy:panel>
+			<f:facet name="panelBody">
+				<div class="pull-left">
+	    			<isy:button action="rolleEntziehen"
+		    					id="rolleEntziehen"
+		    					ajax="false"
+		                   		value="Rolle entziehen"/>
+		    	</div>
+		    	<div class="pull-right">
+		       	<isy:button action="rolleZuweisen"
+		    				id="suche"
+		    				ajax="false"
+		    				value="Rolle zuweisen"/>
+		    	</div>
+			</f:facet>
+		</isy:panel>
+</ui:composition>

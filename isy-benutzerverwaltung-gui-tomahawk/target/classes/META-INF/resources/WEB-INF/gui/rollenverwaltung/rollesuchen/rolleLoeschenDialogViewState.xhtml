@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+                template="/WEB-INF/gui/benutzerverwaltung/common/benutzerverwaltung-applikation.xhtml">                      
+<ui:define name="modalDialog">
+	<isy:modalDialogContent>
+		<f:facet name="modalHeader">
+			<h:outputLabel value="#{msg_isyBenutzerverwaltung.MEL_Loeschen_bestaetigung_header}"/>
+		</f:facet>
+		<f:facet name="modalBody">
+			<h:outputLabel value="#{msg_isyBenutzerverwaltung.MEL_Loeschen_bestaetigung_text}"/>
+			<div class="form-horizontal">
+                <div class="row-fluid">
+                	<div class="col-lg-6">
+                        <isy:formInput reference="vorname"
+                                       value="#{rolle.rollenId}"
+                                       label="#{msg_isyBenutzerverwaltung.MEL_rolle_id}"
+                                       labelStyleClass="col-lg-4"
+                                       inputStyleClass="col-lg-8"
+                                       id="rollenIdInput"
+                                       readonly="true"/>
+						<isy:formInput reference="behoerde"
+                                       value="#{rolle.rollenName}"
+                                       label="#{msg_isyBenutzerverwaltung.MEL_rolle_name}"
+                                       labelStyleClass="col-lg-4"
+                                       inputStyleClass="col-lg-8"
+                                       id="rollenNameInput"
+                                       readonly="true"/>
+			 	    </div>
+			 	</div>
+            </div>
+            <isy:buttonRow alignRight="true">
+				<isy:button id="jaButton"
+                        	value="#{msg_isyBenutzerverwaltung.MEL_Ja}"
+                        	action="loescheRolle"
+                        	ajax="false"/>
+               	<isy:button id="neinButton"
+                        	value="#{msg_isyBenutzerverwaltung.MEL_Nein}"
+                        	action="schliesseModalenDialog"
+                        	ajax="false"/>        	
+            </isy:buttonRow>
+		</f:facet>
+	</isy:modalDialogContent>
+</ui:define> 
+</ui:composition>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:Anwendung xmlns:tns="http://www.example.org/RollenRechteSchema"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               AnwendungsId="restaurant"
+               xsi:schemaLocation="http://www.example.org/RollenRechteSchema RollenRechteSchema.xsd">
+
+    <tns:rollen RolleId="Administrator">
+        <tns:rechtId Id="Benutzerverwaltung.Benutzer.Aendern"/>
+        <tns:rechtId Id="Benutzerverwaltung.Benutzer.Aendern.Selbst"/>
+    </tns:rollen>
+
+    <tns:rollen RolleId="Rolle_A">
+        <tns:rechtId Id="Recht_A"/>
+    </tns:rollen>
+
+    <tns:rollen RolleId="Rolle_B">
+        <tns:rechtId Id="Recht_B"/>
+    </tns:rollen>
+
+    <tns:rechte>
+        <tns:rechtId Id="Benutzerverwaltung.Benutzer.Lesen"/>
+    </tns:rechte>
+    <tns:rechte>
+        <tns:rechtId Id="Benutzerverwaltung.Benutzer.Suchen"/>
+    </tns:rechte>
+    <tns:rechte>
+        <tns:rechtId Id="Benutzerverwaltung.Benutzer.Aendern"/>
+    </tns:rechte>
+    <tns:rechte>
+        <tns:rechtId Id="Benutzerverwaltung.Benutzer.Aendern.Selbst"/>
+    </tns:rechte>
+    <tns:rechte>
+        <tns:rechtId Id="Benutzerverwaltung.Benutzer.Loeschen"/>
+    </tns:rechte>
+
+    <tns:rechte>
+        <tns:rechtId Id="Recht_A"/>
+    </tns:rechte>
+    <tns:rechte>
+        <tns:rechtId Id="Recht_B"/>
+    </tns:rechte>
+
+</tns:Anwendung>

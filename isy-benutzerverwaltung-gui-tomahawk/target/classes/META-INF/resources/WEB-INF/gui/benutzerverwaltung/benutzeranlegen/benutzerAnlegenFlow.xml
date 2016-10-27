@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.springframework.org/schema/webflow"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+      parent="applikationseiteParentFlow">
+
+    <secured attributes="Benutzerverwaltung.Benutzer.Anlegen"/>
+
+    <var name="benutzerAnlegenModel"
+         class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzeranlegen.BenutzerAnlegenModel"/>
+
+    <on-start>
+        <evaluate expression="benutzerAnlegenController.initialisiereModel(benutzerAnlegenModel)"/>
+    </on-start>
+
+    <view-state id="benutzerAnlegenViewState" model="benutzerAnlegenModel">
+        <attribute name="headlineKey" value="MAS_Benutzerverwaltung_Headline"/>
+        <transition on="speichern" to="benutzerAnlegenViewState">
+            <evaluate expression="benutzerAnlegenController.legeBenutzerAn(benutzerAnlegenModel)"/>
+        </transition>
+        <transition on="fertig" to="end"/>
+    </view-state>
+
+    <end-state id="end"></end-state>
+</flow>

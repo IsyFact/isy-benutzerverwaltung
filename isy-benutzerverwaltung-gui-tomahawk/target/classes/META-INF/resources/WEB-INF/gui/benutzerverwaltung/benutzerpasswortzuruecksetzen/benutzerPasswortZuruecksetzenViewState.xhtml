@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+                template="/WEB-INF/gui/benutzerverwaltung/common/benutzerverwaltung-applikation.xhtml">
+
+    <ui:define name="inhaltsbereich">
+        <isy:panelGroup>
+            <isy:panel>
+                <f:facet name="panelHeader">
+                    #{msg_isyBenutzerverwaltung.MEL_PasswortZuruecksetzen}
+                </f:facet>
+                <f:facet name="panelBody">
+                	<div class="form-horizontal">
+	                    <div class="row-fluid">
+	                        <div class="col-lg-6">
+	                            <isy:formInput reference="benutzername"
+	                                           value="#{benutzerPasswortZuruecksetzenModel.benutzername}"
+	                                           label="#{msg_isyBenutzerverwaltung.MEL_PasswortZuruecksetzen_ausgewaehlterBenuter}"
+	                                           labelStyleClass="col-lg-4"
+	                                           inputStyleClass="col-lg-8"
+	                                           readonly="true"
+	                                           id="benutzernameInput"/>
+	                           	<isy:formInputPassword reference="neuesPasswort"
+	                                           value="#{benutzerPasswortZuruecksetzenModel.passwort}"
+	                                           label="#{msg_isyBenutzerverwaltung.MEL_PasswortZuruecksetzen_neuesPasswort}"
+	                                           labelStyleClass="col-lg-4"
+	                                           inputStyleClass="col-lg-8"
+	                                           required="true"
+	                                           id="passwortInput"/>
+	                            <isy:formInputPassword reference="neuesPasswortWiederholung"
+	                                           value="#{benutzerPasswortZuruecksetzenModel.passwortWiederholung}"
+	                                           label="#{msg_isyBenutzerverwaltung.MEL_PasswortZuruecksetzen_neuesPasswortWiederholen}"
+	                                           labelStyleClass="col-lg-4"
+	                                           inputStyleClass="col-lg-8"
+	                                           required="true"
+	                                           id="passwortWiederholungInput"/>
+	                            <div class="pull-right">
+						            <isy:button id="speichernButton"
+						                        value="#{msg_isyBenutzerverwaltung.MEL_Speichern}"
+						                        action="speichern"
+						                        ajax="false"/>
+						      	</div>
+	                        </div>                 
+						</div>
+					</div>
+            	</f:facet>
+            </isy:panel>
+        </isy:panelGroup>        
+    </ui:define>
+
+</ui:composition>

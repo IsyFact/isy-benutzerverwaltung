@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.springframework.org/schema/webflow"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd"
+      parent="applikationseiteParentFlow">
+
+    <!-- Model -->
+    <var name="loginModel"
+         class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.login.LoginModel"/>
+
+    <!-- Initialisieren des Models -->
+    <on-start>
+        <evaluate expression="loginController.initialisiereModel(loginModel)"/>
+    </on-start>
+
+    <!-- Erster View -->
+    <view-state id="loginViewState" model="loginModel">
+        <transition on="performLoginAction" to="loginViewStateSuccess" validate="true">
+            <evaluate expression="loginController.performLogin(loginModel, messageContext)"/>
+        </transition>
+    </view-state>
+
+    <!-- Bestätigung -->
+
+    <view-state id="loginViewStateSuccess" model="loginModel">
+        <transition on="ok" to="loginFinished"/>
+    </view-state>
+
+    <!-- Ende -->
+    <end-state id="loginFinished"/>
+
+</flow>

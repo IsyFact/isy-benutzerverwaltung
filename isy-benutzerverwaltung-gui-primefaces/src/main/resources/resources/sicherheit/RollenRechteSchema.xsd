@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.example.org/RollenRechteSchema"
+        xmlns:tns="http://www.example.org/RollenRechteSchema"
+        elementFormDefault="qualified">
+
+    <complexType name="Rolle">
+        <sequence>
+            <element name="rechtId" type="tns:RechtId" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+        <attribute name="RolleId" type="string" use="required"/>
+    </complexType>
+
+    <complexType name="Recht">
+        <sequence>
+            <element name="rechtId" type="tns:RechtId" minOccurs="1" maxOccurs="1"/>
+        </sequence>
+    </complexType>
+
+    <element name="Anwendung" type="tns:Anwendung"/>
+
+    <complexType name="Anwendung">
+        <sequence>
+            <element name="rollen" type="tns:Rolle" minOccurs="1" maxOccurs="unbounded">
+            </element>
+            <element name="rechte" type="tns:Recht" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+        <attribute name="AnwendungsId" type="string" use="required"/>
+    </complexType>
+
+    <complexType name="RechtId">
+        <attribute name="Id" type="string" use="required"/>
+    </complexType>
+</schema>

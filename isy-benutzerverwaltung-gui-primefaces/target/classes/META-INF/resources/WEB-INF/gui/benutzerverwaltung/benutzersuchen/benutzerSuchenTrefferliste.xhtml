@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <f:loadBundle basename="resources.isy-benutzerverwaltung.nachrichten.maskentexte" var="msg_bnvw"/>
+
+    <ui:fragment>
+        <p:panel header="#{msg_bnvw.MEL_BenutzerSuchen_Trefferliste_Titel}">
+            <p:dataTable var="benutzer"
+                         paginator="true" rows="10"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,25,50"
+                         currentPageReportTemplate="#{msg_bnvw.MEL_Trefferliste_TrefferGesamt}: #{benutzerSuchenModel.trefferliste.rowCount}"
+                         paginatorPosition="bottom"
+                         value="#{benutzerSuchenModel.trefferliste}" lazy="true"
+                         emptyMessage="#{msg_bnvw.MEL_Trefferliste_keineEintraege}">
+
+                <p:column sortBy="#{BenutzerSortierattribut.BENUTZERNAME}"
+                          headerText="#{msg_bnvw.MEL_BenutzerSuchen_benutzer_benutzername}">
+                    <h:outputText value="#{benutzer.benutzername}" title="#{benutzer.benutzername}"/>
+                </p:column>
+
+                <p:column sortBy="#{BenutzerSortierattribut.NACHNAME}"
+                          headerText="#{msg_bnvw.MEL_BenutzerSuchen_benutzer_nachname}">
+                    <h:outputText value="#{benutzer.nachname}" title="#{benutzer.nachname}"/>
+                </p:column>
+
+                <p:column sortBy="#{BenutzerSortierattribut.VORNAME}"
+                          headerText="#{msg_bnvw.MEL_BenutzerSuchen_benutzer_vorname}">
+                    <h:outputText value="#{benutzer.vorname}" title="#{benutzer.vorname}"/>
+                </p:column>
+
+                <p:column sortBy="#{BenutzerSortierattribut.BEHOERDE}"
+                          headerText="#{msg_bnvw.MEL_BenutzerSuchen_benutzer_behoerde}">
+                    <h:outputText value="#{benutzer.behoerde}" title="#{benutzer.behoerde}"/>
+                </p:column>
+
+                <!-- Aktionen zu Verwaltungs-Funktionen fuer benutzern -->
+
+                <p:column headerText="#{msg_bnvw.MEL_Trefferliste_Spalte_Aktionen}">
+                    <p:commandButton id="bearbeiten" action="bearbeiten" ajax="false"
+                                     title="#{msg_bnvw.MEL_BenutzerSuchen_Trefferliste_Spalte_Aktion_Bearbeiten}"
+                                     icon="fa fa-pencil fa-fw" tabindex="1100">
+                        <f:setPropertyActionListener value="#{benutzer}"
+                                                     target="#{benutzerSuchenModel.ausgewaehlterTreffer}"/>
+                    </p:commandButton>
+                    <p:commandButton id="passwortZuruecksetzen" action="passwortZuruecksetzen" ajax="false"
+                                     title="#{msg_bnvw.MEL_BenutzerSuchen_Trefferliste_Spalte_Aktion_Zuruecksetzen}"
+                                     icon="fa fa-undo fa-fw" tabindex="1100">
+                        <f:setPropertyActionListener value="#{benutzer}"
+                                                     target="#{benutzerSuchenModel.ausgewaehlterTreffer}"/>
+                    </p:commandButton>
+                    <p:commandButton id="loeschen" action="zeigeLoeschDialog" ajax="false"
+                                     icon="fa fa-trash fa-fw" tabindex="1101">
+                        <f:setPropertyActionListener value="#{benutzer}"
+                                                     target="#{benutzerSuchenModel.ausgewaehlterTreffer}"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+        </p:panel>
+    </ui:fragment>
+</ui:composition>

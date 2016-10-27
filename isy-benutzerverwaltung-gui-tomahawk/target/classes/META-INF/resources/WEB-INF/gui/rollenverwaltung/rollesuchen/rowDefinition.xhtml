@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:isy="http://java.sun.com/jsf/composite/isyfact">
+	<isy:dataTableCell>#{dataTableItem.rollenId}</isy:dataTableCell>
+	<isy:dataTableCell>#{dataTableItem.rollenName}</isy:dataTableCell>
+	<isy:dataTableCell>
+		<isy:buttonIcon action="#{rolleSuchenController.setzeAusgewaehltenTreffer(rolleSuchenModel, dataTableItem, 'bearbeiten')}"
+						icon="edit"
+						tooltip="#{msg_isyBenutzerverwaltung.MEL_Bearbeiten}"
+						id="bearbeitenButton">
+		</isy:buttonIcon>
+		<isy:buttonIcon action="#{rolleSuchenController.setzeAusgewaehltenTreffer(rolleSuchenModel, dataTableItem, 'loeschen')}"
+				icon="delete"
+				tooltip="#{msg_isyBenutzerverwaltung.MEL_Loeschen}"
+				id="loeschenButton">
+		</isy:buttonIcon>
+	</isy:dataTableCell>
+</ui:composition>

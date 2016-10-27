@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.springframework.org/schema/webflow"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+      parent="applikationseiteParentFlow">
+
+    <secured attributes="Benutzerverwaltung.Benutzer.Aendern"/>
+
+    <var name="benutzerPasswortZuruecksetzenModel"
+         class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerpasswortzuruecksetzen.BenutzerPasswortZuruecksetzenModel"/>
+
+    <input name="ausgewaehlterBenutzer"
+           type="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel"/>
+
+    <on-start>
+        <evaluate
+                expression="benutzerPasswortZuruecksetzenController.setzeBenutzer(benutzerPasswortZuruecksetzenModel, ausgewaehlterBenutzer)"/>
+    </on-start>
+
+    <view-state id="benutzerPasswortZuruecksetzenViewState" model="benutzerPasswortZuruecksetzenModel">
+    	<attribute name="headlineKey" value="MAS_Benutzerverwaltung_Headline"/>
+        <transition on="speichern" to="benutzerPasswortZuruecksetzenViewState">
+            <evaluate expression="benutzerPasswortZuruecksetzenController.setzePasswortZurueck(benutzerPasswortZuruecksetzenModel)"/>
+        </transition>
+    </view-state>
+    
+    <end-state id="end"></end-state>
+
+</flow>

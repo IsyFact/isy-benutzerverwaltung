@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:isy="http://java.sun.com/jsf/composite/isyfact">
+	<isy:panel>
+		<f:facet name="panelHeader">
+	    	#{msg_isyBenutzerverwaltung.MEL_Sucheingabe}
+	    </f:facet>            
+           <f:facet name="panelBody">
+          	<div class="form-horizontal">
+                <div class="row-fluid">
+                    <div class="col-lg-6">
+                        <isy:formInput reference="rollenId"
+                                       value="#{rolleSuchenModel.suchkriterien.id}"
+                                       label="#{msg_isyBenutzerverwaltung.MEL_rolle_id}"
+                                       labelStyleClass="col-lg-4"
+	                                   inputStyleClass="col-lg-8"
+                                       id="rollenIdInput"/> 
+               	        <isy:formInput reference="rollenName"
+                                       value="#{rolleSuchenModel.suchkriterien.name}"
+                                       label="#{msg_isyBenutzerverwaltung.MEL_rolle_name}"
+                                       labelStyleClass="col-lg-4"
+	                                   inputStyleClass="col-lg-8"
+                                       id="rollenNameInput"/>
+               		</div>
+               	</div>
+		    </div>
+	    </f:facet>
+	</isy:panel>
+	<isy:panel>
+		<f:facet name="panelBody">
+		   		<div class="pull-left">
+    		<isy:button action="filterZuruecksetzen"
+	    				id="filterZuruecksetzen"
+	    				ajax="false"
+	                    value="#{msg_isyBenutzerverwaltung.MEL_FilterZuruecksetzen}"/>
+   		</div>
+	    <div class="pull-right">
+	        <isy:button action="suchen"
+	    				id="suchenButton"
+	    				ajax="false"
+	    				value="#{msg_isyBenutzerverwaltung.MEL_Suchen}"/>
+		</div>
+		</f:facet>
+	</isy:panel>
+</ui:composition>
+

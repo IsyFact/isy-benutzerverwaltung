@@ -1,0 +1,4 @@
+<dataset>
+    <Rolle primaryKey="101" id="MITGLIED" name="Standard-Rolle für neue Benutzer" version="0"/>
+    <Rolle primaryKey="102" id="ADMINISTRATOR" name="Administrator-Rolle mit vollen Rechten" version="0"/>
+</dataset>

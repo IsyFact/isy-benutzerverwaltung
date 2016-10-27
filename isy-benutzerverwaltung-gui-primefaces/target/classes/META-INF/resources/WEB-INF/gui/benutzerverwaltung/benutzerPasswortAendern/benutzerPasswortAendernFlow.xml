@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.springframework.org/schema/webflow"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+      parent="applikationseiteParentFlow">
+
+    <secured attributes="Benutzerverwaltung.Benutzer.Aendern.Selbst"/>
+
+    <var name="passwortAendernModel"
+         class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.passwortaendern.PasswortAendernModel"/>
+
+    <on-start>
+        <evaluate expression="passwortAendernController.initialisiereModel(passwortAendernModel)"/>
+    </on-start>
+
+    <view-state id="benutzerPasswortAendernViewState" model="passwortAendernModel">
+        <transition on="speichern" to="benutzerPasswortAendernViewState">
+            <evaluate expression="passwortAendernController.passwortAendern(passwortAendernModel)"/>
+        </transition>
+    </view-state>
+
+    <end-state id="end"></end-state>
+
+</flow>

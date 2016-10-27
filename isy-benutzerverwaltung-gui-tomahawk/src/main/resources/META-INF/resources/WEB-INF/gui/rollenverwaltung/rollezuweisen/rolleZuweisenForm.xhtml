@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:isy="http://java.sun.com/jsf/composite/isyfact">
+	<isy:panel>
+		<f:facet name="panelHeader">
+	    	#{msg_isyBenutzerverwaltung.MEL_Sucheingabe}
+	    </f:facet>            
+           <f:facet name="panelBody">
+          	<div class="form-horizontal">
+                <div class="row-fluid">
+                    <div class="col-lg-6">
+                        <isy:formInput reference="nachname"
+                                       value="#{rolleZuweisenModel.suchkriterien.nachname}"
+                                       label="#{msg_isyBenutzerverwaltung.MEL_benutzer_nachname}"
+                                       labelStyleClass="col-lg-4"
+	                                   inputStyleClass="col-lg-8"
+                                       id="nachnameInput"/>
+                        <isy:formInput reference="vorname"
+                                       value="#{rolleZuweisenModel.suchkriterien.vorname}"
+                                       label="#{msg_isyBenutzerverwaltung.MEL_benutzer_vorname}"
+                                       labelStyleClass="col-lg-4"
+	                                   inputStyleClass="col-lg-8"
+                                       id="vornameInput"/>
+                        <div class="pull-left">
+	    					<isy:button action="filterZuruecksetzen"
+		    							id="filterZuruecksetzen"
+		    							ajax="false"
+		                    			value="#{msg_isyBenutzerverwaltung.MEL_FilterZuruecksetzen}"/>
+		    			</div>
+               		</div>
+               	</div>
+               	<div class="row-fluid">
+                    <div class="col-lg-6">
+                        <isy:formInput reference="benutzername"
+                                       value="#{rolleZuweisenModel.suchkriterien.benutzername}"
+                                       label="#{msg_isyBenutzerverwaltung.MEL_benutzer_benutzername}"
+                                       labelStyleClass="col-lg-4"
+	                                   inputStyleClass="col-lg-8"
+                                       id="benutzernameInput"/>
+                        <isy:formSelectOneDropdown reference="rollen"
+                       	   		       value="#{rolleZuweisenModel.suchkriterien.rollenId}"
+                       			   	   label="#{msg_isyBenutzerverwaltung.MEL_benutzer_rollen}"
+                       			   	   labelStyleClass="col-lg-4"
+	                                   inputStyleClass="col-lg-8"
+                       			       id="rollenSelect"
+                       			       placeholder="">
+                            <f:selectItem itemLabel="" itemValue="#{null}"/>
+                            <f:selectItems value="#{rolleZuweisenModel.verfuegbareRollen}"/>
+                        </isy:formSelectOneDropdown>  
+                        <div class="pull-right">
+					        <isy:button action="suche"
+					    				id="suche"
+					    				ajax="false"
+					    				value="#{msg_isyBenutzerverwaltung.MEL_Suchen}"/>
+		    			</div>                      
+               		</div>
+               	</div>
+		    </div>
+	    </f:facet>
+	</isy:panel>
+</ui:composition>
+

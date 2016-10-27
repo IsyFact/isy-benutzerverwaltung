@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="rolleAnlegenController"
+          class="de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.rolleanlegen.RolleAnlegenController">
+        <constructor-arg ref="messageController"/>
+        <constructor-arg ref="messageSource"/>
+        <constructor-arg ref="rollenverwaltungAwkWrapper"/>
+    </bean>
+
+    <bean id="rolleBearbeitenController"
+          class="de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.rollebearbeiten.RolleBearbeitenController">
+        <constructor-arg ref="messageController"/>
+        <constructor-arg ref="messageSource"/>
+        <constructor-arg ref="rollenverwaltungAwkWrapper"/>
+        <constructor-arg ref="sicherheit"/>
+    </bean>
+
+    <bean id="rolleSuchenController"
+          class="de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.rollesuchen.RolleSuchenController">
+        <constructor-arg ref="messageController"/>
+        <constructor-arg ref="messageSource"/>
+        <constructor-arg ref="rollenverwaltungAwkWrapper"/>
+        <constructor-arg ref="sicherheit"/>
+    </bean>
+
+</beans>

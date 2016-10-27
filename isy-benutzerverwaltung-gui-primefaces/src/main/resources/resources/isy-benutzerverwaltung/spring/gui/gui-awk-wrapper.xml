@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="benutzerverwaltungAwkWrapper"
+          class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.impl.BenutzerverwaltungAwkWrapperImpl">
+        <constructor-arg ref="gesichertBenutzerverwaltung"/>
+        <constructor-arg ref="gesichertRollenverwaltung"/>
+        <constructor-arg ref="dozer"/>
+    </bean>
+
+    <bean id="rollenverwaltungAwkWrapper"
+          class="de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.awkwrapper.impl.RollenverwaltungAwkWrapperImpl">
+        <constructor-arg ref="gesichertRollenverwaltung"/>
+        <constructor-arg ref="dozer"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.springframework.org/schema/webflow"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+      parent="applikationseiteParentFlow">
+
+    <secured attributes="Benutzerverwaltung.Benutzer.Aendern.Selbst"/>
+
+    <var name="benutzerSelbstBearbeitenModel"
+         class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerselbstbearbeiten.BenutzerSelbstBearbeitenModel"/>
+
+    <on-start>
+        <evaluate
+                expression="benutzerSelbstBearbeitenController.initialisiereModel(benutzerSelbstBearbeitenModel)"/>
+    </on-start>
+
+    <view-state id="benutzerSelbstBearbeitenViewState" model="benutzerSelbstBearbeitenModel">
+        <transition on="speichern" to="benutzerSelbstBearbeitenViewState">
+            <evaluate
+                    expression="benutzerSelbstBearbeitenController.benutzerSpeichern(benutzerSelbstBearbeitenModel)"/>
+        </transition>
+    </view-state>
+
+    <end-state id="end"></end-state>
+
+</flow>
