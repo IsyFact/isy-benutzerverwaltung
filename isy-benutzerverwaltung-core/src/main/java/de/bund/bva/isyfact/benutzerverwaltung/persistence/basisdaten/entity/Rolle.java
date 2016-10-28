@@ -11,11 +11,11 @@ import java.io.Serializable;
  * @author Stefan Dellmuth, msg systems ag
  */
 @Entity
-@NamedQueries({ @NamedQuery(name = NamedQuerySchluessel.SUCHE_ROLLE_ALLE, query = "from Rolle"),
+@NamedQueries({ @NamedQuery(name = NamedQuerySchluessel.SUCHE_ROLLE_ALLE, query = "Select r from Rolle r"),
                   @NamedQuery(name = NamedQuerySchluessel.SUCHE_ROLLE_ID,
-                              query = "from Rolle r where r.id = :id"),
+                              query = "Select r from Rolle r where r.id = :id"),
                   @NamedQuery(name = NamedQuerySchluessel.SUCHE_ROLLE_IDS,
-                              query = "from Rolle r where r.id in :ids") })
+                              query = "Select r from Rolle r where r.id in :ids") })
 public class Rolle implements Serializable {
 
     private static final long serialVersionUID = 1L;
