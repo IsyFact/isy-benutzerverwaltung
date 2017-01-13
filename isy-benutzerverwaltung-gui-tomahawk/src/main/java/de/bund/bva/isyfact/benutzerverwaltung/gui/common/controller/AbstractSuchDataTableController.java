@@ -1,12 +1,24 @@
 package de.bund.bva.isyfact.benutzerverwaltung.gui.common.controller;
 
-import java.lang.reflect.ParameterizedType;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.ConstraintViolation;
-
-import org.springframework.beans.factory.annotation.Required;
+/*-
+ * #%L
+ * IsyFact Benutzerverwaltung GUI mit Tomahawk
+ * %%
+ * Copyright (C) 2016 - 2017 Bundesverwaltungsamt (BVA)
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
 
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Paginierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierattribut;
@@ -18,13 +30,15 @@ import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.AbstractSuchDataTableModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.SuchergebnisModel;
 import de.bund.bva.isyfact.common.web.global.MessageController;
-import de.bund.bva.isyfact.common.web.jsf.components.datatable.DataTableController;
-import de.bund.bva.isyfact.common.web.jsf.components.datatable.DataTableItem;
-import de.bund.bva.isyfact.common.web.jsf.components.datatable.DataTableRequest;
-import de.bund.bva.isyfact.common.web.jsf.components.datatable.DataTableResult;
-import de.bund.bva.isyfact.common.web.jsf.components.datatable.SortDirection;
+import de.bund.bva.isyfact.common.web.jsf.components.datatable.*;
 import de.bund.bva.isyfact.common.web.validation.ValidationController;
 import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
+import org.springframework.beans.factory.annotation.Required;
+
+import javax.validation.ConstraintViolation;
+import java.lang.reflect.ParameterizedType;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Abstrakte Basisklasse für alle Controller, die Suchen mit einer plis-web
