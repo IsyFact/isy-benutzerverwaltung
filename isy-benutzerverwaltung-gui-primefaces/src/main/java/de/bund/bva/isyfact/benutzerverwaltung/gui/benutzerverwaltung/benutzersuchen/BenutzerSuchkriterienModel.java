@@ -23,6 +23,7 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzersu
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Diese Klasse beinhaltet die Filterkriterien zur Suche nach Benutzern.
@@ -94,5 +95,23 @@ public class BenutzerSuchkriterienModel implements Serializable {
 
     public void setStatus(BenutzerStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BenutzerSuchkriterienModel that = (BenutzerSuchkriterienModel) o;
+        return Objects.equals(nachname, that.nachname) &&
+                Objects.equals(vorname, that.vorname) &&
+                Objects.equals(behoerde, that.behoerde) &&
+                Objects.equals(rollenId, that.rollenId) &&
+                Objects.equals(benutzername, that.benutzername) &&
+                status == that.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nachname, vorname, behoerde, rollenId, benutzername, status);
     }
 }
