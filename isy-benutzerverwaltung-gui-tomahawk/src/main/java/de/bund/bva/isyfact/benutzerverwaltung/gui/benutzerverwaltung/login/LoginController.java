@@ -28,8 +28,8 @@ import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.bund.bva.isyfact.logging.LogKategorie;
 import de.bund.bva.pliscommon.aufrufkontext.AufrufKontextVerwalter;
 import de.bund.bva.pliscommon.aufrufkontext.impl.AufrufKontextImpl;
-import de.bund.bva.pliscommon.sicherheit.Berechtigungsmanager;
 import de.bund.bva.pliscommon.sicherheit.Sicherheit;
+import de.bund.bva.pliscommon.sicherheit.common.exception.AuthentifizierungFehlgeschlagenException;
 import de.bund.bva.pliscommon.sicherheit.common.exception.AuthentifizierungTechnicalException;
 import org.springframework.binding.message.MessageBuilder;
 import org.springframework.binding.message.MessageContext;
@@ -50,11 +50,10 @@ public class LoginController extends AbstractGuiController<LoginModel> {
     AufrufKontextVerwalter<BenutzerverwaltungAufrufKontextImpl> aufrufKontextVerwalter;
 
     /**
-     * Initialisiert das Modell des Loeschen Flows
-     *
-     * @param model Das Modell
+     * @param model Das Model
      */
     public void initialisiereModel(LoginModel model) {
+        // wird für LoginController nicht benötigt
     }
 
     /**
@@ -76,19 +75,26 @@ public class LoginController extends AbstractGuiController<LoginModel> {
         aufrufKontextVerwalter.setAufrufKontext(akontext);
 
         try {
-            @SuppressWarnings("unused") Berechtigungsmanager bmanager =
-                sicherheit.getBerechtigungsManagerUndAuthentifiziere(akontext);
+            sicherheit.getBerechtigungsManagerUndAuthentifiziere(akontext);
 
             LOG.info(LogKategorie.JOURNAL, EreignissSchluessel.MSG_LOGIN_SUCCESS,
-                "Authentifizierung war erfolgreich");
+                    "Authentifizierung erfolgreich");
+
+            aufrufKontextVerwalter.setAufrufKontext(akontext);
 
         } catch (AuthentifizierungTechnicalException e) {
-
             LOG.info(LogKategorie.JOURNAL, EreignissSchluessel.MSG_LOGIN_FAILED,
-                "Authentifizierung ist fehlgeschlagen", e);
+                    "Authentifizierung fehlgeschlagen (Technischer Fehler)", e);
 
             context.addMessage(
-                new MessageBuilder().error().defaultText("Authentifizierung ist fehlgeschlagen").build());
+                    new MessageBuilder().error().defaultText("Bei der Authentifizierung ist ein technischer Fehler aufgetreten.").build());
+            return false;
+        } catch (AuthentifizierungFehlgeschlagenException e) {
+            LOG.info(LogKategorie.JOURNAL, EreignissSchluessel.MSG_LOGIN_FAILED,
+                    "Authentifizierung fehlgeschlagen (Benutzername / Passwort falsch oder Benutzer nicht aktiviert)", e);
+
+            context.addMessage(
+                    new MessageBuilder().error().defaultText("Benutzername / Passwort falsch oder der Benutzer ist nicht aktiviert.").build());
             return false;
         }
         return true;
