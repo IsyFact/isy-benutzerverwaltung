@@ -43,7 +43,6 @@ Die Spring-Konfiguration von `isy-benutzerverwaltung-gui-tomahawk` wird folgende
 <beans ...>
 ...
     <import resource="classpath:resources/isy-benutzerverwaltung/spring/isy-benutzerverwaltung-gui-primefaces-modul.xml" />
-    <!-- Für Tomahawk-GUI -->
 ...
 </beans>
 ----
