@@ -21,13 +21,13 @@ Jede Anwendung besitzt eigene Benutzer und Rollen.
 
 Die Einbindung der einzelnen Module wird in der jeweiligen Moduldokumentation beschrieben.
 
-include::isy-benutzerverwaltung-core/src/docs/asciidoc/isy-benutzerverwaltung-core.adoc[Dokumentation `isy-benutzerverwaltung-core`]
+https://github.com/IsyFact/isyfact-benutzerverwaltung/blob/master/isy-benutzerverwaltung-core/src/docs/asciidoc/isy-benutzerverwaltung-core.adoc[Dokumentation `isy-benutzerverwaltung-core`]
 
-include::isy-benutzerverwaltung-sicherheit/src/docs/asciidoc/isy-benutzerverwaltung-sicherheit.adoc[Dokumentation `isy-benutzeverrwaltung-sicherheit`]
+https://github.com/IsyFact/isyfact-benutzerverwaltung/blob/master/isy-benutzerverwaltung-sicherheit/src/docs/asciidoc/isy-benutzerverwaltung-sicherheit.adoc[Dokumentation `isy-benutzeverrwaltung-sicherheit`]
 
-include::isy-benutzerverwaltung-gui-primefaces/src/docs/asciidoc/isy-benutzerverwaltung-gui-primefaces.adoc[Dokumentation `isy-benutzvererwaltung-gui-primefaces`]
+https://github.com/IsyFact/isyfact-benutzerverwaltung/blob/master/isy-benutzerverwaltung-gui-primefaces/src/docs/asciidoc/isy-benutzerverwaltung-gui-primefaces.adoc[Dokumentation `isy-benutzvererwaltung-gui-primefaces`]
 
-include::isy-benutzerverwaltung-gui-tomahawk/src/docs/asciidoc/isy-benutzerverwaltung-gui-tomahawk.adoc[Dokumentation `isy-benutzerverwaltung-gui-tomahawk`]
+https://github.com/IsyFact/isyfact-benutzerverwaltung/blob/master/isy-benutzerverwaltung-gui-tomahawk/src/docs/asciidoc/isy-benutzerverwaltung-gui-tomahawk.adoc[Dokumentation `isy-benutzerverwaltung-gui-tomahawk`]
 
 ////
 == Anleitung zur Einbindung
