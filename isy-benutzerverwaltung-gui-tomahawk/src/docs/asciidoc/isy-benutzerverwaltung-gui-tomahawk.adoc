@@ -1,0 +1,149 @@
+Einbinden von _isy-benutzerverwaltung-gui-tomahawk_
+---------------------------------------------------
+
+Für die Benutzerverwaltung existieren zwei Module, die eine Verwaltungsoberfläche für die Benutzerverwaltung umsetzen.
+Damit können Benutzer gegen eine lokale Datenbank authentifiziert und Benutzer und Rollen angelegt, bearbeitet, gesucht und gelöscht werden.
+Zusätzlich können Benutzern Rollen zugewiesen und Passwörter geändert werden.
+Das Modul `isy-benutzerverwaltung-gui-tomahawk` nutzt die GUI-Komponenten aus der `plis-web`-Bibliothek auf der Grundlage von _Apache MyFaces Tomahawk_.
+
+Im Folgenden wird beschrieben, wie das Modul `isy-benutzerverwaltung-gui-tomahawk` in die eigene Anwendung integriert wird.
+
+Maven
+~~~~~
+
+Folgende Abhängigkeit ist in der `pom.xml` zu ergänzen:
+
+.pom.xml
+[source,xml,caption="Listing: "]
+----
+<dependency>
+    <groupId>de.bund.bva.isyfact.benutzerverwaltung</groupId>
+    <artifactId>isy-benutzerverwaltung-gui-tomahawk</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+</dependency>
+----
+
+Spring
+~~~~~~
+
+Die Spring-Konfiguration von `isy-benutzerverwaltung-gui-tomahawk` wird folgendermaßen in die eigene Anwendung integriert:
+
+.Spring-Konfiguration mit _Tomahawk_-GUI
+[source,xml,caption="Listing: "]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<beans ...>
+...
+    <import resource="classpath:resources/isy-benutzerverwaltung/spring/isy-benutzerverwaltung-gui-tomahawk-modul.xml"/>
+...
+</beans>
+----
+
+Maskentexte
+~~~~~~~~~~~
+
+Um den Titel der Anwendung auf den Seiten der Benutzerverwaltungs zu setzen gibt es mehrere Möglichkeiten.
+Eine davon ist die Datei `/WEB-INF/gui/common/seitenelemente/messageRessources.xhtml` in der eigenen Anwendung zu überschreiben und darin eine eigene _Properties_-Datei für den Anwendungstitel zu laden.
+
+./WEB-INF/gui/common/seitenelemente/messageRessources.xhtml
+[source,xml,caption="Listing: "]
+----
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+    <!-- Diese Datei muss in der einbindenden Anwendung überschrieben werden,       
+         damit man für MEL_Anwendungsname einen Wert in einer eigenen Properties- 
+         Datei setzen kann.-->
+    <f:loadBundle basename="resources.nachrichten.meinemaskentexte"
+                  var="msg" />
+</ui:composition>
+----
+
+.meinemasktentext.properties
+[source,properties,caption="Listing: "]
+----
+MEL_Anwendungsname = Terminfindung
+----
+
+Sonstiges
+~~~~~~~~~
+
+Rollen und Rechten
+^^^^^^^^^^^^^^^^^^
+
+In beiden Implementierungen der Benutzeroberfläche ist die GUI durch folgende Rechte gesichert:
+
+Benutzerverwaltung:
+
+- `Benutzerverwaltung.Benutzer.Anlegen`
+- `Benutzerverwaltung.Benutzer.Suchen`
+- `Benutzerverwaltung.Benutzer.Aendern` 
+- `Benutzerverwaltung.Benutzer.Loeschen`
+- `Benutzerverwaltung.Benutzer.Aendern.Selbst`
+
+Rollenverwaltung:
+
+- `Benutzerverwaltung.Rolle.Anlegen`
+- `Benutzerverwaltung.Rolle.Suchen`
+- `Benutzerverwaltung.Rolle.Aendern`
+- `Benutzerverwaltung.Rolle.Loeschen`
+
+Diese Rechte können in der eigenen Anwendung einer beliebigen Rolle zugeordnet werden.
+
+
+.Beispiel für eine `rollenrechte.xml`
+[source,xml,caption="Listing: "]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:Anwendung AnwendungsId="isy-benutzerverwaltung-gui-primefaces"
+	xmlns:tns="http://www.example.org/RollenRechteSchema"     
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/RollenRechteSchema RollenRechteSchema.xsd">
+  <!-- Rechte der Benutzerverwaltung -->
+  <tns:rechte><tns:rechtId Id="Benutzerverwaltung.Benutzer.Anlegen"/></tns:rechte>
+  <tns:rechte><tns:rechtId Id="Benutzerverwaltung.Benutzer.Suchen"/></tns:rechte>
+  <tns:rechte><tns:rechtId Id="Benutzerverwaltung.Benutzer.Aendern"/></tns:rechte>
+  <tns:rechte>
+    <tns:rechtId Id="Benutzerverwaltung.Benutzer.Loeschen"/>
+  </tns:rechte>
+  <tns:rechte>
+    <tns:rechtId Id="Benutzerverwaltung.Benutzer.Aendern.Selbst"/>
+  </tns:rechte>
+  <!-- Rechte der Rollenverwaltung -->
+  <tns:rechte><tns:rechtId Id="Benutzerverwaltung.Rolle.Anlegen"/></tns:rechte>
+  <tns:rechte><tns:rechtId Id="Benutzerverwaltung.Rolle.Suchen"/></tns:rechte>
+  <tns:rechte><tns:rechtId Id="Benutzerverwaltung.Rolle.Aendern"/></tns:rechte>
+  <tns:rechte><tns:rechtId Id="Benutzerverwaltung.Rolle.Loeschen"/></tns:rechte>
+
+  <!-- Beispielrollen -->
+  <tns:rollen RolleId="BenutzerAdmin" RolleName="Benutzer-Administrator">
+    <tns:rechtId Id="Benutzerverwaltung.Benutzer.Anlegen"/>
+    <tns:rechtId Id="Benutzerverwaltung.Benutzer.Suchen"/>
+    <tns:rechtId Id="Benutzerverwaltung.Benutzer.Aendern"/>
+    <tns:rechtId Id="Benutzerverwaltung.Benutzer.Loeschen"/>
+    <tns:rechtId Id="Benutzerverwaltung.Benutzer.Aendern.Selbst"/>
+    <tns:rechtId Id="Benutzerverwaltung.Rolle.Anlegen"/>
+    <tns:rechtId Id="Benutzerverwaltung.Rolle.Suchen"/>
+    <tns:rechtId Id="Benutzerverwaltung.Rolle.Aendern"/>
+    <tns:rechtId Id="Benutzerverwaltung.Rolle.Loeschen"/>
+  </tns:rollen>
+
+  <tns:rollen RolleId="Benutzer">
+    <tns:rechtId Id="Benutzerverwaltung.Benutzer.Aendern.Selbst"/>
+  </tns:rollen>
+</tns:Anwendung>
+----
+
+Im gezeigten Beispiel wird eine Rolle `BenutzerAdmin` angelegt, der alle Rechte für die _IsyFact-Benutzerverwaltung_ zugeordnet sind und eine Rolle `Benutzer`, die nur das Recht hat, ihre eigenen Kontaktdaten zu ändern.
+
+HTML-Beispielseite
+^^^^^^^^^^^^^^^^^^
+
+Unter `src/main/resources/WEB-INF/gui/` befindet sich eine Seite `index.html`, auf der Links zu den Unterseiten von `isy-benutzerverwaltung-gui-tomahawk` zu finden sind. 
+Diese Seite soll nur als Beispiel dienen und zeigen, wie die Unterseiten aufgerufen werden können. 
+
+WARNING: Bis auf die Login-Seite ist der Zugriff auf die anderen Seiten durch Rollen und Rechte gesichert und können daher nur von angemeldeten Benutzern aufgerufen werden.
+Um auf die Seiten zuzugreifen muss also entweder ein Nutzer angelegt werden (z.B. über das Script `isy-benutzerverwaltung-testdaten-benutzer-anlegen.sql` aus `isy-benutzerverwaltung-core`) oder die `<secured>`-Tags müssen aus den Flows entfernt werden.
