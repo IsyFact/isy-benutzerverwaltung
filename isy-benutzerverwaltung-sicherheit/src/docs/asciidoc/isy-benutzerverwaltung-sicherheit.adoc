@@ -1,0 +1,86 @@
+Einbinden von _isy-benutzerverwaltung-sicherheit_
+-------------------------------------------------
+
+Das Modul `isy-benutzerverwaltung-sicherheit` implementiert einen `AccessManager` aus `isy-sicherheit` als zentrale Komponente zur Authentifizierung.
+
+Maven
+~~~~~
+
+Zur Integration der Sicherheitskomponente muss die Anwendung die folgende Abhängigkeit in ihrem POM definieren:
+
+[source,xml]
+----
+<dependency>
+    <groupId>de.bund.bva.isyfact.benutzerverwaltung</groupId>
+    <artifactId>isy-benutzerverwaltung-sicherheit</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+</dependency>
+----
+
+Spring
+~~~~~~
+
+Zur Integration der Sicherheitskomponente muss die Anwendung die XML-Konfiguration der Komponente importieren:
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<beans ...>
+    ...
+    <import resource="classpath:resources/isy-benutzerverwaltung/spring/isy-benutzerverwaltung-sicherheit-modul.xml"/>
+    ...
+</beans>
+----
+
+Wird die Anwendung mittels Annotationen konfiguriert, sieht der Import wie folgt aus:
+
+[source,java]
+----
+...
+@Configuration
+...
+@ImportResource("classpath:resources/isy-benutzerverwaltung/spring/isy-benutzerverwaltung-sicherheit-modul.xml")
+...
+public class ...
+----
+
+Wichtig ist, dass die Anwendung bei der Nutzung der Sicherheitskomponente keine eigenen Sicherheits-Beans instanziieren darf.
+Folgende Bean-Definitionen müssen beim Einbinden der Sicherheitskomponente entfernt werden, damit keine Konflikte entstehen:
+
+- `Sicherheit`
+- `SicherheitAdmin`
+- `AccessManager`
+- `AufrufkontextFactory`
+- `AufrufkontextVerwalter`
+
+Wird die Sicherheitskomponente nicht im Kontext einer Web-Anwendung genutzt – zum Beispiel im Rahmen einer Batch-Anwendung – müssen darüber hinaus noch eigene Scopes definiert werden. 
+Dies wird mit folgender Spring-Konfiguration erreicht:
+
+[source,xml]
+----
+<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+    <property name="scopes">
+        <map>
+            <entry key="request">
+		  <bean class="org.springframework.context.support.SimpleThreadScope"/>
+            </entry>
+            <entry key="session">
+               <bean class="org.springframework.context.support.SimpleThreadScope"/>
+            </entry>
+        </map>
+    </property>
+</bean>
+----
+
+Wird die Anwendung mittels Annotationen konfiguriert, sieht die Konfiguration wie folgt aus:
+
+[source,java]
+----
+@Bean
+public static CustomScopeConfigurer customScopeConfigurer() {
+    CustomScopeConfigurer customScopeConfigurer = new CustomScopeConfigurer();
+    customScopeConfigurer.addScope("request", new SimpleThreadScope());
+    customScopeConfigurer.addScope("session", new SimpleThreadScope());
+    return customScopeConfigurer;
+}
+----
