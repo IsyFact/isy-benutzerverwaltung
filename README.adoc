@@ -1,4 +1,11 @@
 = IsyFact-Benutzerverwaltung
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
 :sourcedir: src/main/java
 :webappdir: src/main/webapp
 
@@ -14,13 +21,13 @@ Jede Anwendung besitzt eigene Benutzer und Rollen.
 
 Die Einbindung der einzelnen Module wird in der jeweiligen Moduldokumentation beschrieben.
 
-https://github.com/IsyFact/isyfact-benutzerverwaltung/blob/master/isy-benutzerverwaltung-core/src/docs/asciidoc/isy-benutzerverwaltung-core.adoc[Dokumentation `isy-benutzerverwaltung-core`]
+link:/isy-benutzerverwaltung-core/src/docs/asciidoc/isy-benutzerverwaltung-core.adoc[Dokumentation `isy-benutzerverwaltung-core`]
 
-https://github.com/IsyFact/isyfact-benutzerverwaltung/blob/master/isy-benutzerverwaltung-core/src/docs/asciidoc/isy-benutzerverwaltung-sicherheit.adoc[Dokumentation `isy-benutzeverrwaltung-sicherheit`]
+link:/isy-benutzerverwaltung-sicherheit/src/docs/asciidoc/isy-benutzerverwaltung-sicherheit.adoc[Dokumentation `isy-benutzeverrwaltung-sicherheit`]
 
-https://github.com/IsyFact/isyfact-benutzerverwaltung/blob/master/isy-benutzerverwaltung-core/src/docs/asciidoc/isy-benutzerverwaltung-gui-primefaces.adoc[Dokumentation `isy-benutzvererwaltung-gui-primefaces`]
+link:/isy-benutzerverwaltung-gui-primefaces/src/docs/asciidoc/isy-benutzerverwaltung-gui-primefaces.adoc[Dokumentation `isy-benutzvererwaltung-gui-primefaces`]
 
-https://github.com/IsyFact/isyfact-benutzerverwaltung/blob/master/isy-benutzerverwaltung-core/src/docs/asciidoc/isy-benutzerverwaltung-gui-tomahawk.adoc[Dokumentation `isy-benutzerverwaltung-gui-tomahawk`]
+link:/isy-benutzerverwaltung-gui-tomahawk/src/docs/asciidoc/isy-benutzerverwaltung-gui-tomahawk.adoc[Dokumentation `isy-benutzerverwaltung-gui-tomahawk`]
 
 ////
 == Anleitung zur Einbindung

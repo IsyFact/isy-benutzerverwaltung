@@ -1,3 +1,11 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
 Einbinden von _isy-benutzerverwaltung-gui-primefaces_
 -----------------------------------------------------
 
@@ -35,7 +43,6 @@ Die Spring-Konfiguration von `isy-benutzerverwaltung-gui-tomahawk` wird folgende
 <beans ...>
 ...
     <import resource="classpath:resources/isy-benutzerverwaltung/spring/isy-benutzerverwaltung-gui-primefaces-modul.xml" />
-    <!-- Für Tomahawk-GUI -->
 ...
 </beans>
 ----
@@ -72,7 +79,7 @@ MEL_Anwendungsname = Terminfindung
 Sonstiges
 ~~~~~~~~~
 
-Rollen und Rechten
+Rollen und Rechte
 ^^^^^^^^^^^^^^^^^^
 
 In beiden Implementierungen der Benutzeroberfläche ist die GUI durch folgende Rechte gesichert:

@@ -1,3 +1,11 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
 Einbinden von _isy-benutzerverwaltung-gui-tomahawk_
 ---------------------------------------------------
 
@@ -71,7 +79,7 @@ MEL_Anwendungsname = Terminfindung
 Sonstiges
 ~~~~~~~~~
 
-Rollen und Rechten
+Rollen und Rechte
 ^^^^^^^^^^^^^^^^^^
 
 In beiden Implementierungen der Benutzeroberfläche ist die GUI durch folgende Rechte gesichert:
