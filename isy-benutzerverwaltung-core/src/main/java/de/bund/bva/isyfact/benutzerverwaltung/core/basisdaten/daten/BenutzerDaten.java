@@ -29,6 +29,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Die Benutzer Entitaet der Core-Schicht.
@@ -316,6 +317,7 @@ public class BenutzerDaten implements Serializable {
      * This method gets the field <tt>version</tt>.
      *
      * @return the field version
+
      */
     public int getVersion() {
         return version;
@@ -339,4 +341,36 @@ public class BenutzerDaten implements Serializable {
         this.passwort = passwort;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BenutzerDaten that = (BenutzerDaten) o;
+        return fehlanmeldeVersuche == that.fehlanmeldeVersuche &&
+                version == that.version &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(benutzername, that.benutzername) &&
+                Objects.equals(passwort, that.passwort) &&
+                Objects.equals(behoerde, that.behoerde) &&
+                Objects.equals(nachname, that.nachname) &&
+                Objects.equals(vorname, that.vorname) &&
+                status == that.status &&
+                Objects.equals(letzteAnmeldung, that.letzteAnmeldung) &&
+                Objects.equals(letzteAbmeldung, that.letzteAbmeldung) &&
+                Objects.equals(bemerkung, that.bemerkung) &&
+                Objects.equals(emailAdresse, that.emailAdresse) &&
+                Objects.equals(telefonnummer, that.telefonnummer) &&
+                Objects.equals(rollen, that.rollen);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, benutzername, passwort, behoerde, nachname, vorname, status, fehlanmeldeVersuche, letzteAnmeldung, letzteAbmeldung, bemerkung, emailAdresse, telefonnummer, rollen, version);
+    }
 }

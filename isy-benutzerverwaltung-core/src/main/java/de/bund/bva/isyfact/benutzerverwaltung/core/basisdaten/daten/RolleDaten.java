@@ -23,6 +23,7 @@ package de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 /**
  * Dieser Core-Datentyp speichert Rolleninformationen.
@@ -110,4 +111,25 @@ public class RolleDaten {
     public String toString() {
         return "RollenId " + rollenId + ", RollenName: " + rollenName;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RolleDaten that = (RolleDaten) o;
+        return Objects.equals(rollenId, that.rollenId) &&
+                Objects.equals(rollenName, that.rollenName);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(rollenId, rollenName);
+    }
 }
+
