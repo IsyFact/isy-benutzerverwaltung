@@ -4,7 +4,8 @@
     <groupId>de.bund.bva.isyfact.benutzerverwaltung</groupId>
     <artifactId>isy-benutzerverwaltung-parent</artifactId>
     <name>IsyFact Benutzerverwaltung Parent</name>
-    <version>1.0.0-SNAPSHOT</version>
+    <!--<version>1.0.0-SNAPSHOT</version> -->
+    <version>1.0.1</version>
 
     <parent>
         <groupId>de.bund.bva.isyfact</groupId>
