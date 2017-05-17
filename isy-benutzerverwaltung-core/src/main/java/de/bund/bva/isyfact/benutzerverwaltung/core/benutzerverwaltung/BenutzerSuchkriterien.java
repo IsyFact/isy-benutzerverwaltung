@@ -25,8 +25,8 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.RolleDaten;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Objects;
 
-//import org.hibernate.validator.constraints.Length;
 
 /**
  * Filter transport objekt fuer die Trefferliste
@@ -188,5 +188,23 @@ public class BenutzerSuchkriterien implements Serializable {
      */
     public void setStatus(BenutzerStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BenutzerSuchkriterien that = (BenutzerSuchkriterien) o;
+        return Objects.equals(nachname, that.nachname) &&
+                Objects.equals(vorname, that.vorname) &&
+                Objects.equals(behoerde, that.behoerde) &&
+                Objects.equals(rollenId, that.rollenId) &&
+                Objects.equals(benutzername, that.benutzername) &&
+                status == that.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nachname, vorname, behoerde, rollenId, benutzername, status);
     }
 }
