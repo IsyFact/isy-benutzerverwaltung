@@ -21,6 +21,7 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.login;
  */
 
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.konstanten.EreignissSchluessel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.konstanten.KonfigurationsSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.sicherheit.BenutzerverwaltungAufrufKontextImpl;
 import de.bund.bva.isyfact.common.web.global.AbstractGuiController;
 import de.bund.bva.isyfact.logging.IsyLogger;
@@ -28,6 +29,7 @@ import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.bund.bva.isyfact.logging.LogKategorie;
 import de.bund.bva.pliscommon.aufrufkontext.AufrufKontextVerwalter;
 import de.bund.bva.pliscommon.aufrufkontext.impl.AufrufKontextImpl;
+import de.bund.bva.pliscommon.konfiguration.common.Konfiguration;
 import de.bund.bva.pliscommon.sicherheit.Sicherheit;
 import de.bund.bva.pliscommon.sicherheit.common.exception.AuthentifizierungFehlgeschlagenException;
 import de.bund.bva.pliscommon.sicherheit.common.exception.AuthentifizierungTechnicalException;
@@ -45,15 +47,17 @@ public class LoginController extends AbstractGuiController<LoginModel> {
 
     private static final IsyLogger LOG = IsyLoggerFactory.getLogger(LoginController.class);
 
-    Sicherheit<AufrufKontextImpl> sicherheit;
+    private Sicherheit<AufrufKontextImpl> sicherheit;
 
-    AufrufKontextVerwalter<BenutzerverwaltungAufrufKontextImpl> aufrufKontextVerwalter;
+    private AufrufKontextVerwalter<BenutzerverwaltungAufrufKontextImpl> aufrufKontextVerwalter;
+
+    private Konfiguration konfiguration;
 
     /**
      * @param model Das Model
      */
     public void initialisiereModel(LoginModel model) {
-        // wird für LoginController nicht benötigt
+        model.setRedirectUrl(konfiguration.getAsString(KonfigurationsSchluessel.REDIRECT_URL_NACH_LOGIN, "/app/loginFlow"));
     }
 
     /**
@@ -115,6 +119,10 @@ public class LoginController extends AbstractGuiController<LoginModel> {
     public void setAufrufKontextVerwalter(
         AufrufKontextVerwalter<BenutzerverwaltungAufrufKontextImpl> aufrufKontextVerwalter) {
         this.aufrufKontextVerwalter = aufrufKontextVerwalter;
+    }
+
+    public void setKonfiguration(Konfiguration konfiguration) {
+        this.konfiguration = konfiguration;
     }
 
     @Override
