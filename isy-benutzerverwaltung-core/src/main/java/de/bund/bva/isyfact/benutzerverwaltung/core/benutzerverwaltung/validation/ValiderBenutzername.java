@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Size(min = 2, max = 20)
+@Size(min = 2, max = 50)
 @Documented
 @Constraint(validatedBy = ValiderBenutzernameValidator.class)
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
