@@ -29,6 +29,7 @@ import de.bund.bva.isyfact.benutzerverwaltung.common.exception.Benutzerverwaltun
 import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.BenutzerDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.RolleDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.*;
+import de.bund.bva.isyfact.benutzerverwaltung.integratiion.BenutzerReferenz;
 
 import java.util.List;
 
@@ -180,4 +181,13 @@ public interface Benutzerverwaltung {
     void entzieheRolle(RolleDaten rolle, List<String> benutzernamen)
         throws BenutzerverwaltungBusinessException;
 
+
+    /**
+     * Löst die übergebene BenutzerReferenz auf. Dabei wird das Feld BenutzerDaten mit den Daten des Benutzers
+     * gesetzt, der die in der BenutzerReferenz gespeicherte ID hat.
+     *
+     * @param benutzerReferenz die BenutzerReferenz, die aufgelöst werden soll.
+     * @see   BenutzerReferenz
+     */
+    void loeseBenutzerReferenzAuf(BenutzerReferenz benutzerReferenz);
 }
