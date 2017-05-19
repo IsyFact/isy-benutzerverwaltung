@@ -29,7 +29,7 @@ import de.bund.bva.isyfact.benutzerverwaltung.common.exception.Benutzerverwaltun
 import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.BenutzerDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.RolleDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.*;
-import de.bund.bva.isyfact.benutzerverwaltung.integratiion.BenutzerReferenz;
+import de.bund.bva.isyfact.benutzerverwaltung.integration.BenutzerReferenz;
 
 import java.util.List;
 

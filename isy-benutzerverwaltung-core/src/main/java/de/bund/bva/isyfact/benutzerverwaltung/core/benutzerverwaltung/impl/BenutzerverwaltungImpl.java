@@ -34,7 +34,7 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSt
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSuchkriterien;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.Benutzerverwaltung;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.*;
-import de.bund.bva.isyfact.benutzerverwaltung.integratiion.BenutzerReferenz;
+import de.bund.bva.isyfact.benutzerverwaltung.integration.BenutzerReferenz;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.BenutzerDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.RollenDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Benutzer;

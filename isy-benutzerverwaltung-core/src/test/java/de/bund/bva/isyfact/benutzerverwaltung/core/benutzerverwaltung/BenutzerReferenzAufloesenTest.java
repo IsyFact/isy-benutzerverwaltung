@@ -22,7 +22,7 @@ package de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung;
 
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungTechnicalRuntimeException;
-import de.bund.bva.isyfact.benutzerverwaltung.integratiion.BenutzerReferenz;
+import de.bund.bva.isyfact.benutzerverwaltung.integration.BenutzerReferenz;
 import org.junit.Test;
 
 import java.text.DateFormat;

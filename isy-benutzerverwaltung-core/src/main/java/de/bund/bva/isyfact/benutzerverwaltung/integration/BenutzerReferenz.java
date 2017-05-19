@@ -1,4 +1,4 @@
-package de.bund.bva.isyfact.benutzerverwaltung.integratiion;
+package de.bund.bva.isyfact.benutzerverwaltung.integration;
 
 /*-
  * #%L
