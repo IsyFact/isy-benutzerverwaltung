@@ -217,8 +217,6 @@ public class BenutzerverwaltungImpl implements Benutzerverwaltung {
         if (benutzerReferenz != null && benutzerReferenz.getId() != null) {
             BenutzerDaten daten = mapper.map(awfBenutzerSuchen.leseBenutzer(benutzerReferenz.getId()), BenutzerDaten.class);
             benutzerReferenz.setDaten(daten);
-        } else {
-            throw new BenutzerverwaltungTechnicalRuntimeException(FehlerSchluessel.MSG_EINGABEDATEN_FEHLEN);
         }
     }
 

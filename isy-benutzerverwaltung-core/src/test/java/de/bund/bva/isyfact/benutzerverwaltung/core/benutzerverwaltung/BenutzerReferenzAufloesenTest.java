@@ -21,7 +21,6 @@ package de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung;
  */
 
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungTechnicalRuntimeException;
 import de.bund.bva.isyfact.benutzerverwaltung.integration.BenutzerReferenz;
 import org.junit.Test;
 
@@ -80,17 +79,4 @@ public class BenutzerReferenzAufloesenTest extends AbstractBenutzerverwaltungTes
         assertNotNull(benutzerReferenz.getDaten());
         assertEquals(202L, (long)benutzerReferenz.getDaten().getId());
     }
-
-    @Test(expected = BenutzerverwaltungTechnicalRuntimeException.class)
-    public void testLoeseReferenzAufReferenzNull() {
-        benutzerverwaltung.loeseBenutzerReferenzAuf(null);
-    }
-
-    @Test(expected = BenutzerverwaltungTechnicalRuntimeException.class)
-    public void testLoeseReferenzAufIdNull() {
-        BenutzerReferenz benutzerReferenz = new BenutzerReferenz();
-
-        benutzerverwaltung.loeseBenutzerReferenzAuf(benutzerReferenz);
-    }
-
 }
