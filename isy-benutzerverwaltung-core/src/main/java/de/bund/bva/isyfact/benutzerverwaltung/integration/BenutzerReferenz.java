@@ -24,7 +24,7 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.BenutzerDate
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
+import java.util.Objects;
 
 
 /**
@@ -67,5 +67,18 @@ public class BenutzerReferenz {
 
     public void setDaten(BenutzerDaten daten) {
         this.daten = daten;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BenutzerReferenz that = (BenutzerReferenz) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
