@@ -76,6 +76,7 @@
           class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.login.LoginController">
         <property name="sicherheit" ref="sicherheit"/>
         <property name="aufrufKontextVerwalter" ref="aufrufKontextVerwalter"/>
+        <property name="konfiguration" ref="konfiguration"/>
     </bean>
 
     <bean id="logoutController"

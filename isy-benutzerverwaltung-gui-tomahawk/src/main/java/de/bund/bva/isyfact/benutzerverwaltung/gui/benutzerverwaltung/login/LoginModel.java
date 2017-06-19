@@ -37,6 +37,8 @@ public class LoginModel extends AbstractMaskenModel implements Serializable {
 
     private String password;
 
+    private String redirectUrl;
+
     public String getUsername() {
         return username;
     }
@@ -53,4 +55,7 @@ public class LoginModel extends AbstractMaskenModel implements Serializable {
         this.password = password;
     }
 
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
+    }
 }

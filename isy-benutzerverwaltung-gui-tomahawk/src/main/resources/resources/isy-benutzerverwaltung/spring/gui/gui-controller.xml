@@ -107,13 +107,11 @@
         <property name="sicherheit" ref="sicherheit"/>
     </bean>
 
-    <!-- bean id="trefferlistenButtonActionListener"
-          class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzersuchen.ButtonActionListener"/-->
-
     <bean id="loginController"
           class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.login.LoginController">
         <property name="sicherheit" ref="sicherheit"/>
         <property name="aufrufKontextVerwalter" ref="aufrufKontextVerwalter"/>
+        <property name="konfiguration" ref="konfiguration"/>
     </bean>
 
     <bean id="logoutController"

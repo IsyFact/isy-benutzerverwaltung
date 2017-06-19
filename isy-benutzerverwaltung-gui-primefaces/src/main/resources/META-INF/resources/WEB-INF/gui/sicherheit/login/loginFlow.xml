@@ -41,11 +41,8 @@
         </transition>
     </view-state>
 
-    <!-- Bestätigung -->
-
-    <view-state id="loginViewStateSuccess" model="loginModel">
-        <transition on="ok" to="loginFinished"/>
-    </view-state>
+    <!-- Weiterleitung nach erfolgreichem Login -->
+    <view-state id="loginViewStateSuccess" view="externalRedirect:contextRelative:#{loginModel.redirectUrl}"/>
 
     <!-- Ende -->
     <end-state id="loginFinished"/>
