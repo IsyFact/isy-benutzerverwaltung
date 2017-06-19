@@ -33,6 +33,6 @@ public class ValiderBenutzernameValidator implements ConstraintValidator<Valider
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return StringUtils.isEmpty(value) || value.matches("[a-zA-Z0-9\\-_.]+");
+        return StringUtils.isEmpty(value) || value.matches("[a-zA-Z0-9\\-_.@]+");
     }
 }
