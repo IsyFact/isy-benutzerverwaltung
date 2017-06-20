@@ -29,10 +29,35 @@ import java.util.Objects;
 
 /**
  * Referenziert einen Benutzer der Benutzerverwaltung zur Integration in Anwendungen.
+ * <br>
+ * <br>
+ * In die Entitäten der Anwendung kann sie wie folgt eingebunden werden:
+ * <pre>
+ * <code>
+ * {@literal @}Embedded
+ * {@literal @}AttributeOverride(name = "id", column = {@literal @}Column(name = "benutzer"))
+ *  private BenutzerReferenz benutzer;
+ * </code>
+ * </pre>
+ * Dadurch wird in der Tabelle eine Spalte mit dem Namen BENUTZER angelegt, welche die ID des Benutzers enthält.
+ * <br>
+ * Sollen mehr als eine BenutzerReferenz in einer Entität gespeichert werden, müssen die Spaltennamen
+ * (<code>{@literal @}Column</code>) entsprechend angepasst werden.
+ * <br>
+ * Auf eine Liste von Benutzern kann so verwiesen werden:
+ * <pre>
+ * <code>
+ * {@literal @}ElementCollection
+ * {@literal @}CollectionTable(name = "ENTITAET_BENUTZER", joinColumns = {@literal @}JoinColumn(name = "ENTITAET_ID"))
+ *  private List<BenutzerReferenz> benutzer = new ArrayList<>();
+ * </code>
+ * </pre>
+ * Dadurch wird eine Tabelle mit zwei Spalten erzeugt. ID enthält die ID des Benutzers, ENTITAET_ID verweist auf die ID der beinhaltenden Entität.
+ *
  */
 @Embeddable
 @Access(AccessType.FIELD)
-@AttributeOverride(name = "id", column = @Column(name = "benutzer_id"))
+@AttributeOverride(name = "id", column = @Column(name = "BENUTZER_ID"))
 public class BenutzerReferenz {
 
     @NotNull
@@ -44,10 +69,22 @@ public class BenutzerReferenz {
     public BenutzerReferenz() {
     }
 
+    /**
+     * Erseugt eine BenutzerReferenz mit der übergebenen Id.
+     * Das Feld daten wird nicht gesetzt.
+     *
+     * @param id Id der erzeugten BenutzerReferenz.
+     */
     public BenutzerReferenz(Long id) {
         this.id = id;
     }
 
+    /**
+     * Erzeugt eine BenutzerReferenz und initialisiert diese mit den übergebenen Benutzerdaten.
+     * Die Id wird auf den Wert der Id der Benutzerdaten gesetzt.
+     *
+     * @param daten
+     */
     public BenutzerReferenz(BenutzerDaten daten) {
         id = daten.getId();
         this.daten = daten;
