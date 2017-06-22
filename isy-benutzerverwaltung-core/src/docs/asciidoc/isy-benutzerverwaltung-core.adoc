@@ -107,3 +107,11 @@ In der Datei `persistence.xml` muss ein Eintrag für die Entities `Benutzer` und
   </persistence-unit>
 </persistence>
 ----
+
+Integration in Anwendungen
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Da Anwendungen nicht direkt auf die Tabellen der Benutzerverwaltung zugreifen und diese ändern dürfen, müssen sie immer über die Schnittstelle des Anwendungskerns gehen.
+Anwendungskomponenten müssen trotzdem Referenzen auf Benutzer speichern können.
+Dazu ist zur Integration in die Entitäten der Anwendung die Klasse `BenutzerReferenz` vorgesehen.
+Hinweise zur Verwendung sind in der API-Dokumentation der Klasse enthalten.

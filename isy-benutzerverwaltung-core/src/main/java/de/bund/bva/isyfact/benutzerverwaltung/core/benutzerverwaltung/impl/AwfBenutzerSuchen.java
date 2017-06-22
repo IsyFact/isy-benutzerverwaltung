@@ -25,7 +25,9 @@ import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Paginierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierrichtung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
+import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungTechnicalRuntimeException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungValidationException;
+import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.FehlerSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSortierattribut;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSuchkriterien;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.BenutzerDao;
@@ -54,11 +56,26 @@ class AwfBenutzerSuchen extends AbstractAnwendungsfall {
      * Liest einen Benutzer anhand des Benutzernamens aus.
      *
      * @param benutzername Benutzername
-     * @return die Daten des Benutzers, falls vorhanden, oder {@code null}.
+     * @return die Daten des Benutzers, falls vorhanden.
      * @throws BenutzerverwaltungBusinessException wenn der Benutzer nicht existiert.
      */
+    @Override
     public Benutzer leseBenutzer(String benutzername) throws BenutzerverwaltungBusinessException {
         return super.leseBenutzer(benutzername);
+    }
+
+    /**
+     * Liest einen Benutzer anhand seiner ID.
+     *
+     * @param id ID des Benutzers.
+     * @return die Daten des Benutzers, falls vorhanden, oder {@code null}.
+     */
+    public Benutzer leseBenutzer(Long id) {
+        if (id == null) {
+            throw new BenutzerverwaltungTechnicalRuntimeException(FehlerSchluessel.MSG_EINGABEDATEN_FEHLEN);
+        }
+
+        return benutzerDao.sucheMitId(id);
     }
 
     /**

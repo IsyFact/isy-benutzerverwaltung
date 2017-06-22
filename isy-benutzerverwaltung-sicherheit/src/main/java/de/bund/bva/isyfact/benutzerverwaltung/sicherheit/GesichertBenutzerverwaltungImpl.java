@@ -31,6 +31,7 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSt
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSuchkriterien;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.Benutzerverwaltung;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.*;
+import de.bund.bva.isyfact.benutzerverwaltung.integration.BenutzerReferenz;
 import de.bund.bva.isyfact.benutzerverwaltung.sicherheit.konstanten.BenutzerverwaltungRecht;
 import de.bund.bva.pliscommon.aufrufkontext.AufrufKontextVerwalter;
 import de.bund.bva.pliscommon.sicherheit.annotation.Gesichert;
@@ -143,5 +144,10 @@ public class GesichertBenutzerverwaltungImpl implements GesichertBenutzerverwalt
     public void entzieheRolle(RolleDaten rolle, List<String> benutzernamen)
         throws BenutzerverwaltungBusinessException {
         benutzerverwaltung.entzieheRolle(rolle, benutzernamen);
+    }
+
+    @Override
+    public void loeseBenutzerReferenzAuf(BenutzerReferenz benutzerReferenz) {
+        benutzerverwaltung.loeseBenutzerReferenzAuf(benutzerReferenz);
     }
 }

@@ -34,6 +34,7 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSt
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSuchkriterien;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.Benutzerverwaltung;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.*;
+import de.bund.bva.isyfact.benutzerverwaltung.integration.BenutzerReferenz;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.BenutzerDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.RollenDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Benutzer;
@@ -208,6 +209,14 @@ public class BenutzerverwaltungImpl implements Benutzerverwaltung {
             awfBenutzerVerwalten.entzieheRolle(rolle, benutzernamen);
         } catch (RuntimeException e) {
             throw mappeRuntimeException(e);
+        }
+    }
+
+    @Override
+    public void loeseBenutzerReferenzAuf(BenutzerReferenz benutzerReferenz) {
+        if (benutzerReferenz != null && benutzerReferenz.getId() != null) {
+            BenutzerDaten daten = mapper.map(awfBenutzerSuchen.leseBenutzer(benutzerReferenz.getId()), BenutzerDaten.class);
+            benutzerReferenz.setDaten(daten);
         }
     }
 
