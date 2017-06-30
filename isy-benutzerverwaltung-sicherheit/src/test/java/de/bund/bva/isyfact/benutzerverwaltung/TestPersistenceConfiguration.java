@@ -22,6 +22,7 @@ package de.bund.bva.isyfact.benutzerverwaltung;
 
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.BenutzerDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa.JpaBenutzerDao;
+import de.bund.bva.pliscommon.konfiguration.common.impl.ReloadablePropertyKonfiguration;
 import org.h2.jdbcx.JdbcDataSource;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
@@ -94,7 +95,7 @@ public class TestPersistenceConfiguration {
 
     @Bean
     public BenutzerDao benutzerDao(EntityManager entityManager) {
-        JpaBenutzerDao dao = new JpaBenutzerDao();
+        JpaBenutzerDao dao = new JpaBenutzerDao(new ReloadablePropertyKonfiguration(new String[] {}));
         dao.setEntityManager(entityManager);
         return dao;
     }

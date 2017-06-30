@@ -26,12 +26,14 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Paginierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierung;
+import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.KonfigurationsSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.NamedQuerySchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.RolleSortierattribut;
 import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.RolleSuchkriterien;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.RollenDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.QRolle;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Rolle;
+import de.bund.bva.pliscommon.konfiguration.common.Konfiguration;
 import de.bund.bva.pliscommon.persistence.dao.AbstractDao;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -51,6 +53,12 @@ public class JpaRollenDao extends AbstractDao<Rolle, Long> implements RollenDao,
     private static QRolle ROLLE = QRolle.rolle;
 
     private JPAQueryFactory queryFactory;
+
+    private final Konfiguration konfiguration;
+
+    public JpaRollenDao(Konfiguration konfiguration) {
+        this.konfiguration = konfiguration;
+    }
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -131,14 +139,24 @@ public class JpaRollenDao extends AbstractDao<Rolle, Long> implements RollenDao,
     private Predicate[] erzeugeSuchfilter(RolleSuchkriterien suchkriterien) {
         List<Predicate> predicates = new ArrayList<>();
 
-        // ID
-        if (suchkriterien.getId() != null && !suchkriterien.getId().isEmpty()) {
-            predicates.add(ROLLE.id.like("%" + suchkriterien.getId() + "%"));
-        }
+        boolean sucheCaseSensitive = konfiguration.getAsBoolean(KonfigurationsSchluessel.SUCHE_CASE_SENSITIVE, false);
 
-        // Name
-        if (suchkriterien.getName() != null && !suchkriterien.getName().isEmpty()) {
-            predicates.add(ROLLE.name.like("%" + suchkriterien.getName() + "%"));
+        if (sucheCaseSensitive) {
+            if (suchkriterien.getId() != null && !suchkriterien.getId().isEmpty()) {
+                predicates.add(ROLLE.id.like("%" + suchkriterien.getId() + "%"));
+            }
+
+            if (suchkriterien.getName() != null && !suchkriterien.getName().isEmpty()) {
+                predicates.add(ROLLE.name.like("%" + suchkriterien.getName() + "%"));
+            }
+        } else {
+            if (suchkriterien.getId() != null && !suchkriterien.getId().isEmpty()) {
+                predicates.add(ROLLE.id.likeIgnoreCase("%" + suchkriterien.getId() + "%"));
+            }
+
+            if (suchkriterien.getName() != null && !suchkriterien.getName().isEmpty()) {
+                predicates.add(ROLLE.name.likeIgnoreCase("%" + suchkriterien.getName() + "%"));
+            }
         }
 
         return predicates.toArray(new Predicate[predicates.size()]);
