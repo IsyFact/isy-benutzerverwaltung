@@ -29,12 +29,14 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Paginierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierrichtung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierung;
+import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.KonfigurationsSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.NamedQuerySchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSortierattribut;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSuchkriterien;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.BenutzerDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Benutzer;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.QBenutzer;
+import de.bund.bva.pliscommon.konfiguration.common.Konfiguration;
 import de.bund.bva.pliscommon.persistence.dao.AbstractDao;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -53,14 +55,17 @@ public class JpaBenutzerDao extends AbstractDao<Benutzer, Long> implements Benut
 
     private JPAQueryFactory queryFactory;
 
+    private final Konfiguration konfiguration;
+
+    public JpaBenutzerDao(Konfiguration konfiguration) {
+        this.konfiguration = konfiguration;
+    }
+
     @Override
     public void afterPropertiesSet() throws Exception {
         queryFactory = new JPAQueryFactory(getEntityManager());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void loesche(Benutzer benutzer) {
         long id = benutzer.getId();
@@ -140,32 +145,46 @@ public class JpaBenutzerDao extends AbstractDao<Benutzer, Long> implements Benut
     private Predicate[] erzeugeSuchfilter(BenutzerSuchkriterien suchkriterien) {
         List<Predicate> predicates = new ArrayList<>();
 
-        // Benutzername
-        if (suchkriterien.getBenutzername() != null && !suchkriterien.getBenutzername().isEmpty()) {
-            predicates.add(BENUTZER.benutzername.like("%" + suchkriterien.getBenutzername() + "%"));
+        boolean sucheCaseSensitive = konfiguration.getAsBoolean(KonfigurationsSchluessel.SUCHE_CASE_SENSITIVE, false);
+
+        if (sucheCaseSensitive) {
+            if (suchkriterien.getBenutzername() != null && !suchkriterien.getBenutzername().isEmpty()) {
+                predicates.add(BENUTZER.benutzername.like("%" + suchkriterien.getBenutzername() + "%"));
+            }
+
+            if (suchkriterien.getNachname() != null && !suchkriterien.getNachname().isEmpty()) {
+                predicates.add(BENUTZER.nachname.like("%" + suchkriterien.getNachname() + "%"));
+            }
+
+            if (suchkriterien.getVorname() != null && !suchkriterien.getVorname().isEmpty()) {
+                predicates.add(BENUTZER.vorname.like("%" + suchkriterien.getVorname() + "%"));
+            }
+
+            if (suchkriterien.getBehoerde() != null && !suchkriterien.getBehoerde().isEmpty()) {
+                predicates.add(BENUTZER.behoerde.like("%" + suchkriterien.getBehoerde() + "%"));
+            }
+        } else {
+            if (suchkriterien.getBenutzername() != null && !suchkriterien.getBenutzername().isEmpty()) {
+                predicates.add(BENUTZER.benutzername.likeIgnoreCase("%" + suchkriterien.getBenutzername() + "%"));
+            }
+
+            if (suchkriterien.getNachname() != null && !suchkriterien.getNachname().isEmpty()) {
+                predicates.add(BENUTZER.nachname.likeIgnoreCase("%" + suchkriterien.getNachname() + "%"));
+            }
+
+            if (suchkriterien.getVorname() != null && !suchkriterien.getVorname().isEmpty()) {
+                predicates.add(BENUTZER.vorname.likeIgnoreCase("%" + suchkriterien.getVorname() + "%"));
+            }
+
+            if (suchkriterien.getBehoerde() != null && !suchkriterien.getBehoerde().isEmpty()) {
+                predicates.add(BENUTZER.behoerde.likeIgnoreCase("%" + suchkriterien.getBehoerde() + "%"));
+            }
         }
 
-        // Nachname
-        if (suchkriterien.getNachname() != null && !suchkriterien.getNachname().isEmpty()) {
-            predicates.add(BENUTZER.nachname.like("%" + suchkriterien.getNachname() + "%"));
-        }
-
-        // Vorname
-        if (suchkriterien.getVorname() != null && !suchkriterien.getVorname().isEmpty()) {
-            predicates.add(BENUTZER.vorname.like("%" + suchkriterien.getVorname() + "%"));
-        }
-
-        // Behoerde
-        if (suchkriterien.getBehoerde() != null && !suchkriterien.getBehoerde().isEmpty()) {
-            predicates.add(BENUTZER.behoerde.like("%" + suchkriterien.getBehoerde() + "%"));
-        }
-
-        // Status
         if (suchkriterien.getStatus() != null) {
             predicates.add(BENUTZER.status.eq(suchkriterien.getStatus()));
         }
 
-        // RollenZuweisung (Alle Benutzer mit dieser Rollenzuweisung)
         if (suchkriterien.getRollenId() != null && !suchkriterien.getRollenId().isEmpty()) {
             predicates.add(BENUTZER.rollen.any().id.eq(suchkriterien.getRollenId()));
         }

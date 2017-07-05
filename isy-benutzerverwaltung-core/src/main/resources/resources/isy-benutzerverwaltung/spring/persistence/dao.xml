@@ -37,12 +37,14 @@
         <property name="entityManager" ref="entityManagerFactoryBean"/>
     </bean>
 
-    <bean class="de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa.JpaBenutzerDao"
-          id="benutzerDao"
-          parent="abstractDao"/>
+    <bean id="benutzerDao" class="de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa.JpaBenutzerDao"
+          parent="abstractDao">
+        <constructor-arg ref="konfiguration"/>
+    </bean>
 
-    <bean id="rollenDao"
-          class="de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa.JpaRollenDao"
-          parent="abstractDao"/>
+    <bean id="rollenDao" class="de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa.JpaRollenDao"
+          parent="abstractDao">
+        <constructor-arg ref="konfiguration"/>
+    </bean>
 
 </beans>

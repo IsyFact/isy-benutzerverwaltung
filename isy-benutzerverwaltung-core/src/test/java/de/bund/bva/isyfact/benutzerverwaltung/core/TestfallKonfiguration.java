@@ -21,6 +21,7 @@ package de.bund.bva.isyfact.benutzerverwaltung.core;
  */
 
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.TestPersistenceConfiguration;
+import de.bund.bva.pliscommon.konfiguration.common.Konfiguration;
 import de.bund.bva.pliscommon.util.spring.MessageSourceHolder;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+
+import static org.mockito.Mockito.mock;
 
 /**
  * Enthält die Konfiguration für einen Testfall.
@@ -38,6 +41,8 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 @Import(TestPersistenceConfiguration.class)
 @ImportResource("classpath:resources/isy-benutzerverwaltung/spring/isy-benutzerverwaltung-core-modul.xml")
 public class TestfallKonfiguration {
+
+    public static Konfiguration konfiguration = mock(Konfiguration.class);
 
     private static final String[] BASENAMES = { "resources/isy-benutzerverwaltung/nachrichten/fehler",
         "resources/isy-benutzerverwaltung/nachrichten/hinweise",
@@ -53,6 +58,11 @@ public class TestfallKonfiguration {
     @Bean
     public MessageSourceHolder messageSourceHolder() {
         return new MessageSourceHolder();
+    }
+
+    @Bean
+    public Konfiguration konfiguration() {
+        return konfiguration;
     }
 
 }

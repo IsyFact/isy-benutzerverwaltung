@@ -30,4 +30,5 @@ public abstract class KonfigurationsSchluessel {
     public static final String CONF_ZUGRIFFSVERWALTUNG_MAX_FEHLANMELDEVERSUCHE =
         "benutzerverwaltung.maxfehlanmeldeversuche";
 
+    public static final String SUCHE_CASE_SENSITIVE = "benutzerverwaltung.suche.casesensitive";
 }

@@ -1,0 +1,43 @@
+<!--
+  #%L
+  IsyFact Benutzerverwaltung Core
+  %%
+  Copyright (C) 2016 - 2017 Bundesverwaltungsamt (BVA)
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+
+<dataset>
+    <Rolle primaryKey="101" id="idrolle1" name="namerolle1" version="0"/>
+    <Rolle primaryKey="102" id="IdRolle1" name="NameRolle1" version="0"/>
+    <Rolle primaryKey="103" id="idrolle2" name="namerolle2" version="0"/>
+    <Rolle primaryKey="104" id="IdRolle2" name="NameRolle2" version="0"/>
+
+    <Benutzer id="201" benutzername="test"
+              passwort="$2a$10$lj4tBJe5luAEI6g7iOZ75uiVvyHgQgn6oQjZNJRIQdQt7fPzvyQRy"
+              behoerde="BFJA" nachname="Tester" vorname="Klaus" status="2" fehlanmeldeVersuche="5"
+              letzteAnmeldung="2016-01-01" letzteAbmeldung="2016-01-02" bemerkung="Testexperte"
+              emailAdresse="klaus.tester@behoerde.de" telefonnummer="0123/456789" version="0"/>
+
+    <Benutzer id="202" benutzername="Test"
+              passwort="$2a$10$lj4tBJe5luAEI6g7iOZ75uiVvyHgQgn6oQjZNJRIQdQt7fPzvyQRy"
+              behoerde="BFJA" nachname="Tester" vorname="Jürgen" status="2" fehlanmeldeVersuche="0"
+              letzteAnmeldung="2016-04-01" letzteAbmeldung="2016-04-01" bemerkung="Superuser"
+              emailAdresse="juergen.tester@behoerde.de" telefonnummer="0121/456799" version="0"/>
+
+    <Benutzer_Rollen Benutzer_PK="201" Rolle_PK="101"/>
+    <Benutzer_Rollen Benutzer_PK="201" Rolle_PK="102"/>
+    <Benutzer_Rollen Benutzer_PK="202" Rolle_PK="103"/>
+    <Benutzer_Rollen Benutzer_PK="202" Rolle_PK="102"/>
+</dataset>
