@@ -24,7 +24,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui"
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://xmlns.jcp.org/jsf/html"
                 template="/WEB-INF/gui/common/benutzerverwaltung-applikationDetailseite.xhtml">
 
     <f:loadBundle basename="resources.isy-benutzerverwaltung.nachrichten.maskentexte" var="msg_bnvw"/>
@@ -132,11 +132,6 @@
                 </div>
             </div>
         </p:panel>
+        <h:outputScript library="js" name="isy-benutzerverwaltung_benutzerBearbeiten.js"/>
     </ui:define>
-
-    <ui:define name="script">
-        <script type="text/javascript"
-                src="#{facesContext.externalContext.requestContextPath}/js/isy-benutzerverwaltung_benutzerBearbeiten.js"></script>
-    </ui:define>
-
 </ui:composition>
