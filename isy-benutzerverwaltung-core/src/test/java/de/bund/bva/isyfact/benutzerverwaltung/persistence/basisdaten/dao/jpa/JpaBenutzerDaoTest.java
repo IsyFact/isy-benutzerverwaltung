@@ -1,4 +1,4 @@
-package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao;
+package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa;
 
 /*-
  * #%L
@@ -29,6 +29,8 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.TestfallKonfiguration;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSortierattribut;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSuchkriterien;
+import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.BenutzerDao;
+import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.RollenDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Benutzer;
 import de.bund.bva.isyfact.test.AbstractSpringDbUnitTest;
 import org.junit.Test;
@@ -45,10 +47,10 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = TestfallKonfiguration.class)
 @DatabaseSetup("BenutzerverwaltungPersistenceTestSetup.xml")
-public class BenutzerDaoTest extends AbstractSpringDbUnitTest {
+public class JpaBenutzerDaoTest extends AbstractSpringDbUnitTest {
 
     @Autowired
-    protected BenutzerDao benutzerDao;
+    private BenutzerDao benutzerDao;
 
     @Autowired
     private RollenDao rollenDao;

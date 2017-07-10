@@ -58,9 +58,14 @@ public abstract class HinweisSchluessel {
     public static final String BENUTZER_SELBST_PASSWORT_GEAENDERT = "BENVW80007";
 
     /**
-     * Der Benutzer '{0}' wird noch verwendet und kann daher nicht gelöscht werden.
+     * Die von Ihnen eingegebene Email '{0}' konnte nicht gefunden werden.
      */
-    public static final String BENUTZER_LOESCHEN_VERWENDET = "BENVW80008";
+    public static final String EMAIL_NICHT_GEFUNDEN = "BENVW80009";
+
+    /**
+     * Email ungültig.
+     */
+    public static final String EMAIL_UNGUELTIG = "BENVW80010";
 
     /**
      * Die Rolle '{0}' wurde erfolgreich erstellt.

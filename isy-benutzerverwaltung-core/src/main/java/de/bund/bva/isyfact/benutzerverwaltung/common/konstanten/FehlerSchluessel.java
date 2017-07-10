@@ -65,6 +65,11 @@ public class FehlerSchluessel {
     public static final String MSG_TECHNISCHER_FEHLER_KONVERTIERUNG = "BENVW10901";
 
     /**
+     * Email versenden ist fehlgeschlagen
+     */
+    public static final String MSG_EMAIL_VERSENDEN_IST_FEHLGESCHLAGEN = "BENVW10902";
+
+    /**
      * Validieren der Eingabedaten fehlgeschlagen.
      */
     public static final String MSG_EINGABEDATEN_UNGUELTIG = "BENVW10910";
@@ -75,8 +80,15 @@ public class FehlerSchluessel {
     public static final String MSG_EINGABEDATEN_FEHLEN = "BENVW10911";
 
     /**
-     * Technischer Fehler bei der Abmeldung eines Benutzers.
+     * Token nicht gefunden.
      */
-    public static final String MSG_TECHNISCHER_FEHLER_ABMELDUNG = "BENVW10920";
+    public static final String MSG_TOKEN_NICHT_GEFUNDEN = "BENVW10912";
+
+    /**
+     * Tokendatum nicht gefunden.
+     */
+    public static final String MSG_TOKEN_DATUM_ABGELAUFEN = "BENVW10913";
+
+
 
 }

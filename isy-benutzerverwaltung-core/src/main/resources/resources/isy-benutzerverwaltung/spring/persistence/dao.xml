@@ -47,4 +47,8 @@
         <constructor-arg ref="konfiguration"/>
     </bean>
 
+    <bean id="benutzerTokenDao"
+          class="de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa.JpaBenutzerTokenDao"
+          parent="abstractDao"/>
+
 </beans>

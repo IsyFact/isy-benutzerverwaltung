@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+  #%L
+  IsyFact Benutzerverwaltung GUI mit Primefaces
+  %%
+  Copyright (C) 2016 - 2017 Bundesverwaltungsamt (BVA)
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/gui/common/benutzerverwaltung-applikation.xhtml">
+
+    <f:loadBundle basename="resources.isy-benutzerverwaltung.nachrichten.maskentexte" var="msg_bnvw"/>
+
+    <ui:define name="inhaltsbereich">
+        <p:panel header="#{msg_bnvw.MAS_benutzerPasswortZuruecksetzenFlow_Breadcrumb}">
+            <div class="form-horizontal">
+                <div class="row row-df">
+                    <div class="col-lg-6">
+                        <p:outputLabel for="email"
+                                       value="#{msg_bnvw.MEL_benutzer_emailAdresse}"/>
+                        <p:inputText id="email"
+                                     value="#{selfServicePasswortAnfordernModel.email}"
+                                     style="width:100%" tabindex="1001"/>
+                    </div>
+                </div>
+            </div>
+        </p:panel>
+        <p:panel>
+            <div class="form-horizontal">
+                <div class="row row-df">
+                    <div class="col-lg-6">
+                        <div class="pull-right">
+                            <p:commandButton action="selfServicePasswortAnfordern" id="perfomSelfServicePasswortAnfordern" ajax="false"
+                                             value="#{msg_bnvw.MEL_Selfservice_PasswortZuruecksetzen}"
+                                             tabindex="1100"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>

@@ -52,7 +52,7 @@ public class TestPersistenceConfiguration {
     @Bean
     public DataSource dataSource() {
         JdbcDataSource dataSource = new JdbcDataSource();
-        dataSource.setUrl("jdbc:h2:mem:test-unit;MODE=Oracle;DB_CLOSE_DELAY=-1");
+        dataSource.setUrl("jdbc:h2:mem:test-unit;MODE=MySQL;DB_CLOSE_DELAY=-1");
         return dataSource;
     }
 

@@ -1,4 +1,4 @@
-package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.daten;
+package de.bund.bva.isyfact.benutzerverwaltung.gui.common.daten;
 
 /*-
  * #%L

@@ -150,4 +150,9 @@ public class GesichertBenutzerverwaltungImpl implements GesichertBenutzerverwalt
     public void loeseBenutzerReferenzAuf(BenutzerReferenz benutzerReferenz) {
         benutzerverwaltung.loeseBenutzerReferenzAuf(benutzerReferenz);
     }
+
+    @Override
+    public BenutzerDaten selfServicePasswortZuruecksetzen(String email) throws BenutzerverwaltungBusinessException {
+        return benutzerverwaltung.selfServicePasswortZuruecksetzen(email);
+    }
 }

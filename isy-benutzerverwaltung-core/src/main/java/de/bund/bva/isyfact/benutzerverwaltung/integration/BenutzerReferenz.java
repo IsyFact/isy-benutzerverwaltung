@@ -71,7 +71,7 @@ public class BenutzerReferenz {
 
     /**
      * Erseugt eine BenutzerReferenz mit der übergebenen Id.
-     * Das Feld daten wird nicht gesetzt.
+     * Das Feld impl wird nicht gesetzt.
      *
      * @param id Id der erzeugten BenutzerReferenz.
      */

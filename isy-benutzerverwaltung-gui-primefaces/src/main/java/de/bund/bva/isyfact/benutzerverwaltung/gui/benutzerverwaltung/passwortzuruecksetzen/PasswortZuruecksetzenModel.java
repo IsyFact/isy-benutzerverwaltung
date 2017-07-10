@@ -21,7 +21,7 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.passwortzu
  */
 
 
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.daten.PasswortZuruecksetzenDaten;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.daten.PasswortZuruecksetzenDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel;
 import de.bund.bva.isyfact.common.web.global.AbstractMaskenModel;
 

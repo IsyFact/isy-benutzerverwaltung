@@ -190,4 +190,17 @@ public interface Benutzerverwaltung {
      * @see   BenutzerReferenz
      */
     void loeseBenutzerReferenzAuf(BenutzerReferenz benutzerReferenz);
+
+    /**
+     * Setzt das Passwort mithilfe des Selfservice zurück. Diese Aktion wird vom Benutzer durchgeführt.
+     *
+     * @param email Email des Benutzers.
+     * @return den aktualisierten Benutzer.
+     * @throws BenutzerverwaltungBusinessException falls die Email ungültig ist
+     *         oder kein Benutzer mit der Email gefunden wird.
+     */
+    BenutzerDaten selfServicePasswortZuruecksetzen(String email)
+            throws BenutzerverwaltungBusinessException;
+
+
 }

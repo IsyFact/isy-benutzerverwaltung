@@ -31,4 +31,6 @@ public abstract class NamedQuerySchluessel {
 
     public static final String SUCHE_ROLLE_IDS = "rolle.suche.ids";
 
+    public static final String SUCHE_BENUTZERTOKEN = "benutzer.suche.tokens";
+
 }

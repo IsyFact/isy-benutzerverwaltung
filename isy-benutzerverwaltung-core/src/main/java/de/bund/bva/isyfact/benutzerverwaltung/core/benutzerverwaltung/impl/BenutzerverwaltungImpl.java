@@ -22,14 +22,17 @@ package de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.impl;
 
 
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Paginierung;
+import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierrichtung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Suchergebnis;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungTechnicalRuntimeException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungValidationException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.FehlerSchluessel;
+import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.ValidierungSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.BenutzerDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.RolleDaten;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSortierattribut;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSuchkriterien;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.Benutzerverwaltung;
@@ -45,6 +48,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.Validator;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -218,6 +222,37 @@ public class BenutzerverwaltungImpl implements Benutzerverwaltung {
             BenutzerDaten daten = mapper.map(awfBenutzerSuchen.leseBenutzer(benutzerReferenz.getId()), BenutzerDaten.class);
             benutzerReferenz.setDaten(daten);
         }
+    }
+
+    @Override
+    public BenutzerDaten selfServicePasswortZuruecksetzen(String email) throws BenutzerverwaltungBusinessException {
+        BenutzerSuchkriterien suchkriterien = new BenutzerSuchkriterien();
+        suchkriterien.setEmail(email);
+
+        //Hole Benutzer von der Datenbank
+        List<Benutzer> benutzerListe = awfBenutzerSuchen.sucheBenutzer(
+                suchkriterien,
+                new Sortierung(BenutzerSortierattribut.getStandard(), Sortierrichtung.getStandard()),
+                new Paginierung(0, 100));
+
+        //Wenn Benutzer gefunden, dann setze Passwort neu
+        if(benutzerListe.size() > 0) {
+            Benutzer benutzer = benutzerListe.get(0);
+            String unverschluesseltesPasswort = UUID.randomUUID().toString().substring(24,34);
+            PasswortZuruecksetzen passwortZuruecksetzen = new PasswortZuruecksetzen(
+                    benutzer.getBenutzername(),
+                    unverschluesseltesPasswort,
+                    unverschluesseltesPasswort);
+
+            // Das Passwort wird gespeichert.
+            // Dabei wird es ein PasswordEncoder verschlüsseln
+            benutzer = awfBenutzerVerwalten.setzePasswortZurueck(passwortZuruecksetzen);
+
+            // Wir setzen das Passwort erneut, weil es unverschlüsselt dem Benutzer anzeigen wollen.
+            benutzer.setPasswort(unverschluesseltesPasswort);
+            return mappeErgebnis(benutzer);
+        }
+        throw new BenutzerverwaltungBusinessException(ValidierungSchluessel.MSG_EMAIL_UNGUELTIG, email);
     }
 
     /**

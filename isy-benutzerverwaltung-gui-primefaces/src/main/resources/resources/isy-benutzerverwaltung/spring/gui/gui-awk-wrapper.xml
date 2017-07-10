@@ -36,4 +36,11 @@
         <constructor-arg ref="dozer"/>
     </bean>
 
+    <bean id="selfServiceAwkWrapper"
+          class="de.bund.bva.isyfact.benutzerverwaltung.gui.selfservice.awkwrapper.impl.SelfServiceAwkWrapperImpl">
+        <constructor-arg ref="benutzerverwaltung"/>
+        <constructor-arg ref="selfService"/>
+        <constructor-arg ref="dozer"/>
+    </bean>
+
 </beans>

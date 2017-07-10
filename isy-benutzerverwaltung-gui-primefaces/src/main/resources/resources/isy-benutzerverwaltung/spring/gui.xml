@@ -32,5 +32,6 @@
     <import resource="gui/gui-awk-wrapper.xml"/>
     <import resource="gui/gui-controller-benutzerverwaltung.xml"/>
     <import resource="gui/gui-controller-rollenverwaltung.xml"/>
+    <import resource="gui/gui-controller-selfservice.xml"/>
 
 </beans>
