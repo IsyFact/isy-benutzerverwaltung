@@ -39,7 +39,7 @@
                                        value="#{msg_bnvw.MEL_benutzer_passwort_neu}"/>
                         <p:password id="passwort"
                                     value="#{selfServicePasswortZuruecksetzenModel.passwort}"
-                                    style="width:100%" tabindex="1002"
+                                    style="width:100%" tabindex="1002" required="true"
                                     disabled="#{not selfServicePasswortZuruecksetzenModel.tokenGueltig}"/>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                                        value="#{msg_bnvw.MEL_benutzer_passwort_neu_bestaetigen}"/>
                         <p:password id="passwortWiederholung"
                                     value="#{selfServicePasswortZuruecksetzenModel.passwortWiederholung}"
-                                    style="width:100%" tabindex="1003"
+                                    style="width:100%" tabindex="1003" required="true"
                                     disabled="#{not selfServicePasswortZuruecksetzenModel.tokenGueltig}"/>
                     </div>
                 </div>

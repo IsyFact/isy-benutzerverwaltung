@@ -37,9 +37,11 @@
                     <div class="col-lg-6">
                         <p:outputLabel for="email"
                                        value="#{msg_bnvw.MEL_benutzer_emailAdresse}"/>
-                        <p:inputText id="email"
+                        <p:inputText id="email" required="true"
                                      value="#{selfServicePasswortAnfordernModel.email}"
-                                     style="width:100%" tabindex="1001"/>
+                                     style="width:100%" tabindex="1001">
+                            <f:validateRegex pattern="\S+@\S+" />
+                        </p:inputText>
                     </div>
                 </div>
             </div>

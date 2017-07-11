@@ -1,5 +1,9 @@
 package de.bund.bva.isyfact.benutzerverwaltung.core.selfservice;
 
+import java.io.IOException;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.core.selfservice.impl.EmailServiceImpl;
 import de.bund.bva.pliscommon.konfiguration.common.Konfiguration;
@@ -12,10 +16,6 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.io.IOException;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -23,18 +23,18 @@ import static org.mockito.Mockito.when;
 public class EmailServiceTest {
     private EmailService emailService;
 
-    String host = "mail.gmx.de";
-    int port = 465;
-    boolean sslEnable = true;
-    boolean auth = true;
-    String emailAdresse = "user@mail.com";
-    String username = "self.service@gmx.de";
-    String password = "self.service";
-    String sender = "self.service@gmx.de";
-    String token = "$2a$10$lj4tBJe5luAEI6";
-    String subject = "Selfservice zum Zurücksetzen Ihres Passworts";
-    String link = "http://localhost:8080/";
-    String body = "Link: $link";
+    private String host = "mail.gmx.de";
+    private int port = 465;
+    private boolean sslEnable = true;
+    private boolean auth = true;
+    private String emailAdresse = "user@mail.com";
+    private String username = "self.service@gmx.de";
+    private String password = "self.service";
+    private String sender = "self.service@gmx.de";
+    private String token = "$2a$10$lj4tBJe5luAEI6";
+    private String subject = "Selfservice zum Zurücksetzen Ihres Passworts";
+    private String link = "http://localhost:8080/";
+    private String body = "Link: $link";
 
     @Mock
     private Konfiguration konfiguration;
@@ -70,7 +70,7 @@ public class EmailServiceTest {
 
         String expectedBody = body.replace("$link", link + token);
         assertEquals(expectedBody, mimeMessage.getContent().toString());
-        String from = mimeMessage.getHeader("From")[0].toString();
+        String from = mimeMessage.getHeader("From")[0];
         assertEquals(sender, from);
     }
 
