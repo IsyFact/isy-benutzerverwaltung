@@ -71,8 +71,7 @@ public class SelfServiceAwkWrapperImpl implements SelfServiceAwkWrapper {
         PasswortZuruecksetzen passwortZuruecksetzen =
                 new PasswortZuruecksetzen(daten.getBenutzername(), daten.getNeuesPasswort(),
                         daten.getNeuesPasswortBestaetigung());
-        return mapper
-                .map(benutzerverwaltung.setzePasswortZurueck(passwortZuruecksetzen), BenutzerModel.class);
+        return mapper.map(selfService.setzePasswortZurueck(passwortZuruecksetzen), BenutzerModel.class);
     }
 
 

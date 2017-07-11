@@ -46,6 +46,7 @@ public class SelfServicePasswortZuruecksetzenController
 
     @Override
     public void initialisiereModel(SelfServicePasswortZuruecksetzenModel model) {
+        model.setPasswortZurueckgesetzt(false);
         model.setTokenGueltig(false);
     }
 
@@ -61,8 +62,8 @@ public class SelfServicePasswortZuruecksetzenController
             model.setBenutzername(benutzername);
         } catch (BenutzerverwaltungBusinessException e) {
             getMessageController().writeErrorMessage(
-                    MessageSourceHolder.getMessage(HinweisSchluessel.BENUTZER_PASSWORT_ZURUECKGESETZT),
-                    MessageSourceHolder.getMessage(HinweisSchluessel.BENUTZER_PASSWORT_ZURUECKGESETZT));
+                    MessageSourceHolder.getMessage(HinweisSchluessel.SELFSERVICE_TOKEN_UNGUELTIG),
+                    MessageSourceHolder.getMessage(HinweisSchluessel.SELFSERVICE_TOKEN_UNGUELTIG));
         }
     }
 
@@ -74,6 +75,7 @@ public class SelfServicePasswortZuruecksetzenController
             passwortZuruecksetzenDaten.setNeuesPasswortBestaetigung(model.getPasswortWiederholung());
             getAwkWrapper().passwortZuruecksetzen(passwortZuruecksetzenDaten);
             getMessageController().writeSuccessMessage(MessageSourceHolder.getMessage(HinweisSchluessel.BENUTZER_PASSWORT_ZURUECKGESETZT));
+            model.setPasswortZurueckgesetzt(true);
         } catch (BenutzerverwaltungBusinessException e) {
             getMessageController().writeAndLogException(e);
         }

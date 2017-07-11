@@ -58,14 +58,9 @@ public abstract class HinweisSchluessel {
     public static final String BENUTZER_SELBST_PASSWORT_GEAENDERT = "BENVW80007";
 
     /**
-     * Die von Ihnen eingegebene Email '{0}' konnte nicht gefunden werden.
+     * Das Token ist nicht vorhanden oder abgelaufen.
      */
-    public static final String EMAIL_NICHT_GEFUNDEN = "BENVW80009";
-
-    /**
-     * Email ungültig.
-     */
-    public static final String EMAIL_UNGUELTIG = "BENVW80010";
+    public static final String SELFSERVICE_TOKEN_UNGUELTIG = "BENVW80008";
 
     /**
      * Die Rolle '{0}' wurde erfolgreich erstellt.

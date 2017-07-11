@@ -20,6 +20,9 @@ package de.bund.bva.isyfact.benutzerverwaltung.persistence;
  * #L%
  */
 
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+
 import com.github.springtestdbunit.bean.DatabaseConfigBean;
 import com.github.springtestdbunit.bean.DatabaseDataSourceConnectionFactoryBean;
 import org.dbunit.ext.h2.H2DataTypeFactory;
@@ -37,9 +40,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
 /**
  * Konfiguriert Komponententests der Datenzugriffsschicht.
  *
@@ -52,7 +52,7 @@ public class TestPersistenceConfiguration {
     @Bean
     public DataSource dataSource() {
         JdbcDataSource dataSource = new JdbcDataSource();
-        dataSource.setUrl("jdbc:h2:mem:test-unit;MODE=MySQL;DB_CLOSE_DELAY=-1");
+        dataSource.setUrl("jdbc:h2:mem:test-unit;MODE=Oracle;DB_CLOSE_DELAY=-1");
         return dataSource;
     }
 

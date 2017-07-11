@@ -63,7 +63,7 @@
                             <p:commandButton action="passwortZuruecksetzen" id="passwortZuruecksetzen" ajax="false"
                                              value="#{msg_bnvw.MEL_Speichern}"
                                              tabindex="1100"
-                                             disabled="#{not selfServicePasswortZuruecksetzenModel.tokenGueltig}"/>
+                                             disabled="#{not selfServicePasswortZuruecksetzenModel.tokenGueltig or selfServicePasswortZuruecksetzenModel.passwortZurueckgesetzt}"/>
                         </div>
                     </div>
                 </div>

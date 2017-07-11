@@ -59,8 +59,6 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public MimeMessage erzeugeEmailMitToken(String emailAdresse, String token) throws BenutzerverwaltungBusinessException {
-
-
         MimeMessage mimeMessage = new MimeMessage(erzeugeMailSession());
         try {
             mimeMessage.setFrom(new InternetAddress(konfiguration.getAsString("selfservice.mail.sender")));

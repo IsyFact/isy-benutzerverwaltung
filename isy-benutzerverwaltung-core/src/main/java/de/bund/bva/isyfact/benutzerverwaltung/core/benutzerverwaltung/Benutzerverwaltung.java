@@ -20,6 +20,7 @@ package de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung;
  * #L%
  */
 
+import java.util.List;
 
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Paginierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierung;
@@ -28,10 +29,12 @@ import de.bund.bva.isyfact.benutzerverwaltung.common.exception.Benutzerverwaltun
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungValidationException;
 import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.BenutzerDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.RolleDaten;
-import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.*;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.BenutzerAendern;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.BenutzerAnlegen;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.BenutzerSelbstAendern;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.PasswortAendern;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.PasswortZuruecksetzen;
 import de.bund.bva.isyfact.benutzerverwaltung.integration.BenutzerReferenz;
-
-import java.util.List;
 
 /**
  * Interface fuer die Benutzerverwaltung-Komponente. Diese Komponente bietet die Moeglichkeit zur Verwaltung
@@ -190,17 +193,4 @@ public interface Benutzerverwaltung {
      * @see   BenutzerReferenz
      */
     void loeseBenutzerReferenzAuf(BenutzerReferenz benutzerReferenz);
-
-    /**
-     * Setzt das Passwort mithilfe des Selfservice zurück. Diese Aktion wird vom Benutzer durchgeführt.
-     *
-     * @param email Email des Benutzers.
-     * @return den aktualisierten Benutzer.
-     * @throws BenutzerverwaltungBusinessException falls die Email ungültig ist
-     *         oder kein Benutzer mit der Email gefunden wird.
-     */
-    BenutzerDaten selfServicePasswortZuruecksetzen(String email)
-            throws BenutzerverwaltungBusinessException;
-
-
 }

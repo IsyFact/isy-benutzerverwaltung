@@ -20,6 +20,9 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.common.controller;
  * #L%
  */
 
+import java.util.Locale;
+import javax.validation.ConstraintViolation;
+import javax.validation.Path;
 
 import com.google.common.base.Joiner;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
@@ -30,16 +33,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Path;
-import java.util.Locale;
-
 /**
  * Diese Klasse bietet einen zentralen Zugriff für alle Controller auf den AwkWrapper und implementiert
  * Standard-Funktionen.
  *
  * @author Capgemini, Jonas Zitz
- * @version $Id: AbstractSelfServiceController.java 41870 2013-07-25 13:54:34Z jozitz $
+ * @version $Id: AbstractGuiController.java 41870 2013-07-25 13:54:34Z jozitz $
  */
 public abstract class AbstractGuiController<T extends AbstractMaskenModel>
     extends de.bund.bva.isyfact.common.web.global.AbstractGuiController<T> {

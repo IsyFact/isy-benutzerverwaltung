@@ -39,6 +39,8 @@ public class SelfServicePasswortZuruecksetzenModel extends AbstractMaskenModel {
 
     private String benutzername;
 
+    private boolean passwortZurueckgesetzt;
+
     public String getPasswort() {
         return passwort;
     }
@@ -71,4 +73,11 @@ public class SelfServicePasswortZuruecksetzenModel extends AbstractMaskenModel {
         this.benutzername = benutzername;
     }
 
+    public boolean isPasswortZurueckgesetzt() {
+        return passwortZurueckgesetzt;
+    }
+
+    public void setPasswortZurueckgesetzt(boolean passwortZurueckgesetzt) {
+        this.passwortZurueckgesetzt = passwortZurueckgesetzt;
+    }
 }

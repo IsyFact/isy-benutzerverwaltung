@@ -20,6 +20,8 @@ package de.bund.bva.isyfact.benutzerverwaltung.sicherheit;
  * #L%
  */
 
+import java.util.List;
+
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Paginierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Suchergebnis;
@@ -30,13 +32,15 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.RolleDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSuchkriterien;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.Benutzerverwaltung;
-import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.*;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.BenutzerAendern;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.BenutzerAnlegen;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.BenutzerSelbstAendern;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.PasswortAendern;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.PasswortZuruecksetzen;
 import de.bund.bva.isyfact.benutzerverwaltung.integration.BenutzerReferenz;
 import de.bund.bva.isyfact.benutzerverwaltung.sicherheit.konstanten.BenutzerverwaltungRecht;
 import de.bund.bva.pliscommon.aufrufkontext.AufrufKontextVerwalter;
 import de.bund.bva.pliscommon.sicherheit.annotation.Gesichert;
-
-import java.util.List;
 
 /**
  * Implementierung der Benutzerverwaltung, die alle Aufrufe mit den folgenden Rechten absichert:
@@ -149,10 +153,5 @@ public class GesichertBenutzerverwaltungImpl implements GesichertBenutzerverwalt
     @Override
     public void loeseBenutzerReferenzAuf(BenutzerReferenz benutzerReferenz) {
         benutzerverwaltung.loeseBenutzerReferenzAuf(benutzerReferenz);
-    }
-
-    @Override
-    public BenutzerDaten selfServicePasswortZuruecksetzen(String email) throws BenutzerverwaltungBusinessException {
-        return benutzerverwaltung.selfServicePasswortZuruecksetzen(email);
     }
 }

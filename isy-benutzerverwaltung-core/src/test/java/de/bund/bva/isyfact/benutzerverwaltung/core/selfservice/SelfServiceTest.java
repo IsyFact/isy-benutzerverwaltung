@@ -1,5 +1,12 @@
 package de.bund.bva.isyfact.benutzerverwaltung.core.selfservice;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Suchergebnis;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.KonfigurationsSchluessel;
@@ -22,13 +29,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
-
-import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -191,5 +191,6 @@ public class SelfServiceTest {
         assertEquals("passwort", geanderterBenutzer.getPasswort());
 
         verify(benutzerverwaltung).setzePasswortZurueck(passwortZuruecksetzen);
+        verify(benutzerTokenDao).loescheTokensFuerBenutzer("benutzername");
     }
 }

@@ -32,7 +32,7 @@ import org.springframework.context.MessageSource;
  * Standard-Funktionen.
  *
  * @author Capgemini, Jonas Zitz
- * @version $Id: AbstractSelfServiceController.java 41870 2013-07-25 13:54:34Z jozitz $
+ * @version $Id: AbstractBenutzerverwaltungController.java 41870 2013-07-25 13:54:34Z jozitz $
  */
 public abstract class AbstractBenutzerverwaltungController<T extends AbstractMaskenModel>
     extends AbstractGuiController<T> {

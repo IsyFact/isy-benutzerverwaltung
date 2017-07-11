@@ -1,5 +1,11 @@
 package de.bund.bva.isyfact.benutzerverwaltung.core.selfservice.impl;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.UUID;
+import javax.mail.Message;
+
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Suchergebnis;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungValidationException;
@@ -16,12 +22,6 @@ import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.Benutze
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Benutzer;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.BenutzerToken;
 import de.bund.bva.pliscommon.konfiguration.common.Konfiguration;
-
-import javax.mail.Message;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * Implementierungsklasse vom SelfService.
@@ -135,6 +135,10 @@ public class SelfServiceImpl implements SelfService {
     @Override
     public BenutzerDaten setzePasswortZurueck(PasswortZuruecksetzen passwortZuruecksetzen)
             throws BenutzerverwaltungBusinessException {
-        return benutzerverwaltung.setzePasswortZurueck(passwortZuruecksetzen);
+        BenutzerDaten benutzerDaten = benutzerverwaltung.setzePasswortZurueck(passwortZuruecksetzen);
+
+        benutzerTokenDao.loescheTokensFuerBenutzer(passwortZuruecksetzen.getBenutzername());
+
+        return benutzerDaten;
     }
 }
