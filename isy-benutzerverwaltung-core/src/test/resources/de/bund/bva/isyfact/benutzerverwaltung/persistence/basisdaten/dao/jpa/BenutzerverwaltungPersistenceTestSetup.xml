@@ -40,4 +40,13 @@
     <Benutzer_Rollen Benutzer_PK="201" Rolle_PK="102"/>
     <Benutzer_Rollen Benutzer_PK="202" Rolle_PK="103"/>
     <Benutzer_Rollen Benutzer_PK="202" Rolle_PK="102"/>
+
+    <BenutzerToken token="$2a$10$lj4tBJe5luAEI6"
+                   ablaufDatum="1970-04-01"
+                   benutzer_id="201"  version="0"/>
+
+    <BenutzerToken token="$2a$10$lj4tBJe5luAEI7"
+                   ablaufDatum="2021-10-30"
+                   benutzer_id="202"  version="0"/>
+
 </dataset>

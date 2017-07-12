@@ -58,9 +58,9 @@ public abstract class HinweisSchluessel {
     public static final String BENUTZER_SELBST_PASSWORT_GEAENDERT = "BENVW80007";
 
     /**
-     * Der Benutzer '{0}' wird noch verwendet und kann daher nicht gelöscht werden.
+     * Das Token ist nicht vorhanden oder abgelaufen.
      */
-    public static final String BENUTZER_LOESCHEN_VERWENDET = "BENVW80008";
+    public static final String SELFSERVICE_TOKEN_UNGUELTIG = "BENVW80008";
 
     /**
      * Die Rolle '{0}' wurde erfolgreich erstellt.

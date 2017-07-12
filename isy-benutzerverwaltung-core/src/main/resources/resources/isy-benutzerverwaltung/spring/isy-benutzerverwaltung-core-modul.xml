@@ -31,6 +31,7 @@
 
     <import resource="core/benutzerverwaltung.xml"/>
     <import resource="core/rollenverwaltung.xml"/>
+    <import resource="core/selfservice.xml"/>
 
     <!--<context:annotation-config/>-->
 

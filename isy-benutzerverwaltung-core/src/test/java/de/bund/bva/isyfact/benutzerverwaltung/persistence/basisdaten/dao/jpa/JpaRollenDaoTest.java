@@ -1,4 +1,4 @@
-package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao;
+package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa;
 
 /*-
  * #%L
@@ -28,6 +28,7 @@ import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.KonfigurationsSc
 import de.bund.bva.isyfact.benutzerverwaltung.core.TestfallKonfiguration;
 import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.RolleSortierattribut;
 import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.RolleSuchkriterien;
+import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.RollenDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Rolle;
 import de.bund.bva.isyfact.test.AbstractSpringDbUnitTest;
 import org.junit.Test;
@@ -46,7 +47,7 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = TestfallKonfiguration.class)
 @DatabaseSetup("BenutzerverwaltungPersistenceTestSetup.xml")
-public class RollenDaoTest extends AbstractSpringDbUnitTest {
+public class JpaRollenDaoTest extends AbstractSpringDbUnitTest {
 
     @Autowired
     private RollenDao rollenDao;

@@ -39,11 +39,11 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.RolleSuchkri
 import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.Rollenverwaltung;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.BenutzerverwaltungAwkWrapper;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.daten.BenutzerAnlegenDaten;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.daten.PasswortZuruecksetzenDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerbearbeiten.BenutzerBearbeitenModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerselbstbearbeiten.BenutzerSelbstBearbeitenModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzersuchen.BenutzerSuchkriterienModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.passwortaendern.PasswortAendernModel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.daten.PasswortZuruecksetzenDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.SuchergebnisModel;

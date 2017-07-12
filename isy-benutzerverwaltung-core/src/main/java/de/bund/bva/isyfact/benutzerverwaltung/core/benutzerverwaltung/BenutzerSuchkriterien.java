@@ -48,28 +48,20 @@ public class BenutzerSuchkriterien implements Serializable {
 
     private String benutzername;
 
+    private String email;
+
     private BenutzerStatus status;
 
     /**
      * Initialisierung Standardmaessig wird nicht gefiltert (=null).
      */
-    public BenutzerSuchkriterien() {
-        nachname = null;
-        vorname = null;
-        behoerde = null;
-        rollenId = null;
-        status = null;
-    }
+    public BenutzerSuchkriterien() {}
 
     /**
      * Initialisierung. Filterung nach der angegebenen {@link RolleDaten}.
      */
     public BenutzerSuchkriterien(String rollenId) {
-        nachname = null;
-        vorname = null;
-        behoerde = null;
         this.rollenId = rollenId;
-        status = null;
     }
 
     /**
@@ -172,6 +164,24 @@ public class BenutzerSuchkriterien implements Serializable {
     }
 
     /**
+     * This method gets the field <tt>email</tt>.
+     *
+     * @return email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * This method sets the field <tt>email</tt>.
+     *
+     * @param email
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
      * This method gets the field <tt>status</tt>.
      * 
      * @return the field status
@@ -200,11 +210,12 @@ public class BenutzerSuchkriterien implements Serializable {
                 Objects.equals(behoerde, that.behoerde) &&
                 Objects.equals(rollenId, that.rollenId) &&
                 Objects.equals(benutzername, that.benutzername) &&
+                Objects.equals(email, that.email) &&
                 status == that.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nachname, vorname, behoerde, rollenId, benutzername, status);
+        return Objects.hash(nachname, vorname, behoerde, rollenId, benutzername, email, status);
     }
 }

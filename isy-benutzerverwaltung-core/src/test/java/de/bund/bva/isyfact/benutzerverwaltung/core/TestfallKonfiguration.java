@@ -61,8 +61,6 @@ public class TestfallKonfiguration {
     }
 
     @Bean
-    public Konfiguration konfiguration() {
-        return konfiguration;
-    }
+    public Konfiguration konfiguration() { return konfiguration; }
 
 }

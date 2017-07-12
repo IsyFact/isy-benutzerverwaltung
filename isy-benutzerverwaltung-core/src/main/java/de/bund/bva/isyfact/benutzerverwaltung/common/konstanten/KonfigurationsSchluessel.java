@@ -28,7 +28,10 @@ package de.bund.bva.isyfact.benutzerverwaltung.common.konstanten;
 public abstract class KonfigurationsSchluessel {
 
     public static final String CONF_ZUGRIFFSVERWALTUNG_MAX_FEHLANMELDEVERSUCHE =
-        "benutzerverwaltung.maxfehlanmeldeversuche";
+            "benutzerverwaltung.maxfehlanmeldeversuche";
+
+    public static final String CONF_SELFSERVICE_TOKEN_ABGELAUFEN_IN_STUNDEN =
+            "selfservice.token.timeout.hours";
 
     public static final String SUCHE_CASE_SENSITIVE = "benutzerverwaltung.suche.casesensitive";
 }

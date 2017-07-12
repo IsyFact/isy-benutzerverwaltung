@@ -92,7 +92,6 @@ public class JpaBenutzerDao extends AbstractDao<Benutzer, Long> implements Benut
 
         JPAQuery<Benutzer> query = queryFactory.selectFrom(BENUTZER);
 
-        // Benutzername
         query.where(erzeugeSuchfilter(suchkriterien));
 
         // Sortierung
@@ -179,6 +178,10 @@ public class JpaBenutzerDao extends AbstractDao<Benutzer, Long> implements Benut
             if (suchkriterien.getBehoerde() != null && !suchkriterien.getBehoerde().isEmpty()) {
                 predicates.add(BENUTZER.behoerde.likeIgnoreCase("%" + suchkriterien.getBehoerde() + "%"));
             }
+        }
+
+        if (suchkriterien.getEmail() != null && !suchkriterien.getEmail().isEmpty()) {
+            predicates.add(BENUTZER.emailAdresse.likeIgnoreCase("%" + suchkriterien.getEmail() + "%"));
         }
 
         if (suchkriterien.getStatus() != null) {

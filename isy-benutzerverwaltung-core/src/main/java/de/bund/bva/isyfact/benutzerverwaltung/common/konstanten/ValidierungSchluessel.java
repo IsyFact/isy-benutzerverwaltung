@@ -61,7 +61,9 @@ public class ValidierungSchluessel {
     public static final String MSG_PASSWORT_AENDERN_FALSCH = "validation.benutzer.passwort.aendern.falsch";
 
     public static final String MSG_PASSWORT_AENDERN_UNTERSCHIEDLICH =
-        "validation.benutzer.passwort.unterschiedlich";
+            "validation.benutzer.passwort.unterschiedlich";
+
+    public static final String MSG_EMAIL_UNGUELTIG = "validation.benutzer.email.ungueltig";
 
     public static final String MSG_ROLLE_BEREITS_VORHANDEN = "validation.rolle.vorhanden";
 

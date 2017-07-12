@@ -25,6 +25,7 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.validation
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 /**
  * Eingabedaten für eine Zurücksetzung des Passworts durch einen Administrator.
@@ -80,5 +81,20 @@ public class PasswortZuruecksetzen {
 
     public void setNeuesPasswortBestaetigung(String neuesPasswortBestaetigung) {
         this.neuesPasswortBestaetigung = neuesPasswortBestaetigung;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PasswortZuruecksetzen that = (PasswortZuruecksetzen) o;
+        return Objects.equals(benutzername, that.benutzername) &&
+                Objects.equals(neuesPasswort, that.neuesPasswort) &&
+                Objects.equals(neuesPasswortBestaetigung, that.neuesPasswortBestaetigung);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(benutzername, neuesPasswort, neuesPasswortBestaetigung);
     }
 }

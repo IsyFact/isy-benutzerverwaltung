@@ -20,6 +20,9 @@ package de.bund.bva.isyfact.benutzerverwaltung.persistence;
  * #L%
  */
 
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+
 import com.github.springtestdbunit.bean.DatabaseConfigBean;
 import com.github.springtestdbunit.bean.DatabaseDataSourceConnectionFactoryBean;
 import org.dbunit.ext.h2.H2DataTypeFactory;
@@ -36,9 +39,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
 
 /**
  * Konfiguriert Komponententests der Datenzugriffsschicht.
