@@ -103,6 +103,7 @@ public class BenutzerverwaltungAccessManager implements
         ergebnis.setNachname(authentifiziereBenutzer.getNachname());
         ergebnis.setVorname(authentifiziereBenutzer.getVorname());
         ergebnis.setBehoerde(authentifiziereBenutzer.getBehoerde());
+        ergebnis.setEmailAdresse(authentifiziereBenutzer.getEmailAdresse());
         ergebnis.setPasswort(authentifiziereBenutzer.getPasswort());
         ergebnis.setRollenIds(ermittleRollenIds(authentifiziereBenutzer));
 

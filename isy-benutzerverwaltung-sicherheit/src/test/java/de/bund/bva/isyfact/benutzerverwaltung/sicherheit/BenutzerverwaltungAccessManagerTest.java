@@ -66,7 +66,7 @@ public class BenutzerverwaltungAccessManagerTest extends AbstractSicherheitTest 
 
     @Test
     public void testPasswortAenderung() throws BenutzerverwaltungBusinessException {
-        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT_ALT, BenutzerStatus.AKTIVIERT, "Administrator");
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT_ALT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT, "Administrator");
         assertNotNull(sicherheit.getBerechtigungsManagerUndAuthentifiziere(
             erzeugeAufrufkontext(BENUTZERNAME, PASSWORT_ALT, false)));
 
@@ -88,7 +88,7 @@ public class BenutzerverwaltungAccessManagerTest extends AbstractSicherheitTest 
 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testBenutzerDeaktiviert() throws BenutzerverwaltungBusinessException {
-        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.DEAKTIVIERT);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.DEAKTIVIERT);
         BenutzerDaten b = benutzerverwaltung.leseBenutzer(BENUTZERNAME);
 
         assertEquals(BenutzerStatus.DEAKTIVIERT, b.getStatus());
@@ -99,7 +99,7 @@ public class BenutzerverwaltungAccessManagerTest extends AbstractSicherheitTest 
 
     @Test
     public void testInkrementAnzahlFehlversuche() throws BenutzerverwaltungBusinessException {
-        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         assertNotNull(sicherheit
             .getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext(BENUTZERNAME, PASSWORT, false)));
 
@@ -128,7 +128,7 @@ public class BenutzerverwaltungAccessManagerTest extends AbstractSicherheitTest 
 
     @Test
     public void testAuthentifizierungErfolgreichMitHash() throws BenutzerverwaltungBusinessException {
-        Benutzer bDb = erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        Benutzer bDb = erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         BenutzerDaten b = benutzerverwaltung.leseBenutzer(BENUTZERNAME);
 
         String passwortHash = bDb.getPasswort();
@@ -139,7 +139,7 @@ public class BenutzerverwaltungAccessManagerTest extends AbstractSicherheitTest 
 
     @Test
     public void testAuthentifizierungErfolgreich() throws BenutzerverwaltungBusinessException {
-        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         BenutzerDaten b = benutzerverwaltung.leseBenutzer(BENUTZERNAME);
 
         assertNotNull(sicherheit.getBerechtigungsManagerUndAuthentifiziere(
@@ -149,7 +149,7 @@ public class BenutzerverwaltungAccessManagerTest extends AbstractSicherheitTest 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlgeschlagenFalschesPasswort()
         throws BenutzerverwaltungBusinessException {
-        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         BenutzerDaten b = benutzerverwaltung.leseBenutzer(BENUTZERNAME);
 
         sicherheit.getBerechtigungsManagerUndAuthentifiziere(
@@ -158,39 +158,39 @@ public class BenutzerverwaltungAccessManagerTest extends AbstractSicherheitTest 
 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlerFalscherName() {
-        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         sicherheit
             .getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext("Benutzer_99", PASSWORT, false));
     }
 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlerKeinPasswort() {
-        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         sicherheit.getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext(BENUTZERNAME, "", false));
     }
 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlerNullPasswort() {
-        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         sicherheit.getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext(BENUTZERNAME, null, false));
     }
 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlerKeinName() {
-        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         sicherheit.getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext("", PASSWORT, false));
     }
 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlerNullName() {
-        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         sicherheit.getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext(null, PASSWORT, false));
     }
 
     @Test
     public void logoutTest() throws BenutzerverwaltungBusinessException,
         BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         BenutzerDaten b = benutzerverwaltung.leseBenutzer(BENUTZERNAME);
         assertNull(b.getLetzteAbmeldung());
 

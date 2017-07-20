@@ -21,6 +21,8 @@ package de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten;
  */
 
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.validation.BekannterBenutzername;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 
@@ -71,6 +73,8 @@ public class BenutzerSelbstAendern {
         return behoerde;
     }
 
+    @NotBlank
+    @Email
     public String getEmailAdresse() {
         return emailAdresse;
     }

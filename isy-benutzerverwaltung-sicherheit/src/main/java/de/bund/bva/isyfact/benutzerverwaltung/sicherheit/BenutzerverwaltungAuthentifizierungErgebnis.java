@@ -42,6 +42,8 @@ public class BenutzerverwaltungAuthentifizierungErgebnis implements Authentifzie
 
     private String behoerde = "";
 
+    private String emailAdresse = "";
+
     public List<String> getRollenIds() {
         return rollenIds;
     }
@@ -90,4 +92,11 @@ public class BenutzerverwaltungAuthentifizierungErgebnis implements Authentifzie
         this.behoerde = behoerde;
     }
 
+    public String getEmailAdresse() {
+        return emailAdresse;
+    }
+
+    public void setEmailAdresse(String emailAdresse) {
+        this.emailAdresse = emailAdresse;
+    }
 }

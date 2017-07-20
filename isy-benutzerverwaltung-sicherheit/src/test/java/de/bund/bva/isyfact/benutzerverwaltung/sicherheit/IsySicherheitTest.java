@@ -55,7 +55,7 @@ public class IsySicherheitTest extends AbstractSicherheitTest {
     @Test
     public void testAuthentifizierungErfolgreichMitHash()
         throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        Benutzer bDb = erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT, ROLLE_B);
+        Benutzer bDb = erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT, ROLLE_B);
         BenutzerverwaltungAufrufKontextImpl unauthentifizierterAufrufKontext =
             new BenutzerverwaltungAufrufKontextImpl();
         unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung(BENUTZERNAME);
@@ -74,7 +74,7 @@ public class IsySicherheitTest extends AbstractSicherheitTest {
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlgehlschagenMitHash()
         throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        Benutzer bDb = erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        Benutzer bDb = erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         BenutzerverwaltungAufrufKontextImpl unauthentifizierterAufrufKontext =
             new BenutzerverwaltungAufrufKontextImpl();
         unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung(bDb.getBenutzername());
@@ -91,7 +91,7 @@ public class IsySicherheitTest extends AbstractSicherheitTest {
     @Test
     public void testAuthentifizierungErfolgreichOhneHash()
         throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT, ROLLE_A, ROLLE_B);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT, ROLLE_A, ROLLE_B);
         BenutzerverwaltungAufrufKontextImpl unauthentifizierterAufrufKontext =
             new BenutzerverwaltungAufrufKontextImpl();
         unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung(BENUTZERNAME);
@@ -110,7 +110,7 @@ public class IsySicherheitTest extends AbstractSicherheitTest {
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlgehlschagenOhneHash()
         throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         BenutzerverwaltungAufrufKontextImpl unauthentifizierterAufrufKontext =
             new BenutzerverwaltungAufrufKontextImpl();
         unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung(BENUTZERNAME);
