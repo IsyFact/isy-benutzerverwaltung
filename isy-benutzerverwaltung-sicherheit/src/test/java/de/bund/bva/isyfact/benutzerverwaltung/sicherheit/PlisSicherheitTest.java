@@ -47,7 +47,7 @@ public class PlisSicherheitTest extends AbstractFfBenutzerzeichnisTest {
     @Test
     public void testAuthentifizierungErfolgreichMitHash()
         throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        Benutzer bDb = erzeugeBenutzerInDb("Benutzer_1", "geheim", BenutzerStatus.AKTIVIERT, ROLLE_B);
+        Benutzer bDb = erzeugeBenutzerInDb("Benutzer_1", "geheim", "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT, ROLLE_B);
         BenutzerverwaltungAufrufKontextImpl unauthentifizierterAufrufKontext =
             new BenutzerverwaltungAufrufKontextImpl();
         unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung("Benutzer_1");
@@ -66,7 +66,7 @@ public class PlisSicherheitTest extends AbstractFfBenutzerzeichnisTest {
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlgehlschagenMitHash()
         throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        Benutzer bDb = erzeugeBenutzerInDb("Benutzer_1", "geheim", BenutzerStatus.AKTIVIERT);
+        Benutzer bDb = erzeugeBenutzerInDb("Benutzer_1", "geheim", "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         BenutzerverwaltungAufrufKontextImpl unauthentifizierterAufrufKontext =
             new BenutzerverwaltungAufrufKontextImpl();
         unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung(bDb.getBenutzername());
@@ -83,7 +83,7 @@ public class PlisSicherheitTest extends AbstractFfBenutzerzeichnisTest {
     @Test
     public void testAuthentifizierungErfolgreichOhneHash()
         throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim", BenutzerStatus.AKTIVIERT, ROLLE_A, ROLLE_B);
+        erzeugeBenutzerInDb("Benutzer_1", "geheim", "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT, ROLLE_A, ROLLE_B);
         BenutzerverwaltungAufrufKontextImpl unauthentifizierterAufrufKontext =
             new BenutzerverwaltungAufrufKontextImpl();
         unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung("Benutzer_1");
@@ -102,7 +102,7 @@ public class PlisSicherheitTest extends AbstractFfBenutzerzeichnisTest {
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlgehlschagenOhneHash()
         throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim", BenutzerStatus.AKTIVIERT);
+        erzeugeBenutzerInDb("Benutzer_1", "geheim", "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT);
         BenutzerverwaltungAufrufKontextImpl unauthentifizierterAufrufKontext =
             new BenutzerverwaltungAufrufKontextImpl();
         unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung("Benutzer_1");

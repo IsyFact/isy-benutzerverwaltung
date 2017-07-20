@@ -25,6 +25,8 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSt
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.validation.BekannterBenutzername;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.validation.UnbekannterBenutzername;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.validation.ValideRollen;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -105,7 +107,9 @@ public class BenutzerAendern {
         return behoerde;
     }
 
-    public String getEmailAdresse() {
+    @NotBlank
+    @Email
+   public String getEmailAdresse() {
         return emailAdresse;
     }
 
