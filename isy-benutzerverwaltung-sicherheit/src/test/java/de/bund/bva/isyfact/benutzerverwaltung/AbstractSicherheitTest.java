@@ -20,7 +20,6 @@ package de.bund.bva.isyfact.benutzerverwaltung;
  * #L%
  */
 
-
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.BenutzerDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.RollenDao;
@@ -32,14 +31,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 /**
- * Abstracte Testklasse für FfBenutzerverzeichnis tests. Bietet einheitliche
- * Funktionen, wie das erzeugen eines neuen Benutzers.
+ * Abstrakte Testklasse für Tests der Sicherheitskomponente.
  *
- * @author <a href="jonas.zitz@capgemini.com">Jonas Zitz</a>
- * @version $Revision: 41876 $
+ * @author msg systems ag, Stefan Dellmuth
  */
 @ContextConfiguration(classes = TestfallKonfiguration.class)
-public abstract class AbstractFfBenutzerzeichnisTest extends AbstractTransactionalJUnit4SpringContextTests {
+public abstract class AbstractSicherheitTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     protected static final String ROLLE_A = "Rolle_A";
 

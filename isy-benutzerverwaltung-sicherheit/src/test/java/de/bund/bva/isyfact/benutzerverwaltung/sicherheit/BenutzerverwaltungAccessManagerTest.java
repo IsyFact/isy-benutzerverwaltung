@@ -20,8 +20,7 @@ package de.bund.bva.isyfact.benutzerverwaltung.sicherheit;
  * #L%
  */
 
-
-import de.bund.bva.isyfact.benutzerverwaltung.AbstractFfBenutzerzeichnisTest;
+import de.bund.bva.isyfact.benutzerverwaltung.AbstractSicherheitTest;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.BenutzerDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
@@ -40,7 +39,15 @@ import static org.junit.Assert.*;
  *
  * @author msg systems ag, Stefan Dellmuth
  */
-public class BenutzerverwaltungAccessManagerTest extends AbstractFfBenutzerzeichnisTest {
+public class BenutzerverwaltungAccessManagerTest extends AbstractSicherheitTest {
+
+    private static final String BENUTZERNAME = "Benutzer_1";
+
+    private static final String PASSWORT_ALT = "altalt123";
+
+    private static final String PASSWORT_NEU = "neuneu123";
+
+    private static final String PASSWORT = "geheim123";
 
     @Autowired
     private GesichertBenutzerverwaltung benutzerverwaltung;
@@ -59,30 +66,30 @@ public class BenutzerverwaltungAccessManagerTest extends AbstractFfBenutzerzeich
 
     @Test
     public void testPasswortAenderung() throws BenutzerverwaltungBusinessException {
-        erzeugeBenutzerInDb("Benutzer_1", "altalt123", BenutzerStatus.AKTIVIERT, "Administrator");
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT_ALT, BenutzerStatus.AKTIVIERT, "Administrator");
         assertNotNull(sicherheit.getBerechtigungsManagerUndAuthentifiziere(
-            erzeugeAufrufkontext("Benutzer_1", "altalt123", false)));
+            erzeugeAufrufkontext(BENUTZERNAME, PASSWORT_ALT, false)));
 
-        BenutzerDaten gesuchterBenutzer = benutzerverwaltung.leseBenutzer("Benutzer_1");
+        BenutzerDaten gesuchterBenutzer = benutzerverwaltung.leseBenutzer(BENUTZERNAME);
         PasswortAendern passwortAendern =
-            new PasswortAendern("Benutzer_1", "altalt123", "neuneu123", "neuneu123");
+            new PasswortAendern(BENUTZERNAME, PASSWORT_ALT, PASSWORT_NEU, PASSWORT_NEU);
         benutzerverwaltung.setzePasswort(passwortAendern);
 
         try {
             sicherheit.getBerechtigungsManagerUndAuthentifiziere(
-                erzeugeAufrufkontext("Benutzer_1", "altalt123", false));
+                erzeugeAufrufkontext(BENUTZERNAME, PASSWORT_ALT, false));
             fail("Benutzer wurde mit altem Passwort authentifziert.");
         } catch (AuthentifizierungFehlgeschlagenException ex) {
             // Success
         }
         assertNotNull(sicherheit.getBerechtigungsManagerUndAuthentifiziere(
-            erzeugeAufrufkontext("Benutzer_1", "neuneu123", false)));
+            erzeugeAufrufkontext(BENUTZERNAME, PASSWORT_NEU, false)));
     }
 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testBenutzerDeaktiviert() throws BenutzerverwaltungBusinessException {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim123", BenutzerStatus.DEAKTIVIERT);
-        BenutzerDaten b = benutzerverwaltung.leseBenutzer("Benutzer_1");
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.DEAKTIVIERT);
+        BenutzerDaten b = benutzerverwaltung.leseBenutzer(BENUTZERNAME);
 
         assertEquals(BenutzerStatus.DEAKTIVIERT, b.getStatus());
 
@@ -92,16 +99,16 @@ public class BenutzerverwaltungAccessManagerTest extends AbstractFfBenutzerzeich
 
     @Test
     public void testInkrementAnzahlFehlversuche() throws BenutzerverwaltungBusinessException {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim123", BenutzerStatus.AKTIVIERT);
-        assertNotNull(sicherheit.getBerechtigungsManagerUndAuthentifiziere(
-            erzeugeAufrufkontext("Benutzer_1", "geheim123", false)));
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        assertNotNull(sicherheit
+            .getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext(BENUTZERNAME, PASSWORT, false)));
 
         // Erzeuge fehlgeschlagene Zugriffe
         int MAX_FEHLVERSUCHE_DEFAULT = 5;
         for (int i = 0; i < MAX_FEHLVERSUCHE_DEFAULT + 1; i++) {
             try {
                 sicherheit.getBerechtigungsManagerUndAuthentifiziere(
-                    erzeugeAufrufkontext("Benutzer_1", "falschesPasswort", false));
+                    erzeugeAufrufkontext(BENUTZERNAME, "falschesPasswort", false));
                 fail("Benutzer hat sich erfolgreich authentifiziert.");
             } catch (AuthentifizierungFehlgeschlagenException ex) {
                 // OK
@@ -109,20 +116,20 @@ public class BenutzerverwaltungAccessManagerTest extends AbstractFfBenutzerzeich
         }
         try {
             sicherheit.getBerechtigungsManagerUndAuthentifiziere(
-                erzeugeAufrufkontext("Benutzer_1", "geheim123", false));
+                erzeugeAufrufkontext(BENUTZERNAME, PASSWORT, false));
             fail("Benutzer sollte gesperrt sein");
         } catch (AuthentifizierungFehlgeschlagenException e) {
             // OK
         }
 
-        BenutzerDaten bNachAuth = benutzerverwaltung.leseBenutzer("Benutzer_1");
+        BenutzerDaten bNachAuth = benutzerverwaltung.leseBenutzer(BENUTZERNAME);
         assertEquals(bNachAuth.getStatus(), BenutzerStatus.GESPERRT);
     }
 
     @Test
     public void testAuthentifizierungErfolgreichMitHash() throws BenutzerverwaltungBusinessException {
-        Benutzer bDb = erzeugeBenutzerInDb("Benutzer_1", "geheim123", BenutzerStatus.AKTIVIERT);
-        BenutzerDaten b = benutzerverwaltung.leseBenutzer("Benutzer_1");
+        Benutzer bDb = erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        BenutzerDaten b = benutzerverwaltung.leseBenutzer(BENUTZERNAME);
 
         String passwortHash = bDb.getPasswort();
 
@@ -132,18 +139,18 @@ public class BenutzerverwaltungAccessManagerTest extends AbstractFfBenutzerzeich
 
     @Test
     public void testAuthentifizierungErfolgreich() throws BenutzerverwaltungBusinessException {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim123", BenutzerStatus.AKTIVIERT);
-        BenutzerDaten b = benutzerverwaltung.leseBenutzer("Benutzer_1");
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        BenutzerDaten b = benutzerverwaltung.leseBenutzer(BENUTZERNAME);
 
         assertNotNull(sicherheit.getBerechtigungsManagerUndAuthentifiziere(
-            erzeugeAufrufkontext(b.getBenutzername(), "geheim123", false)));
+            erzeugeAufrufkontext(b.getBenutzername(), PASSWORT, false)));
     }
 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlgeschlagenFalschesPasswort()
         throws BenutzerverwaltungBusinessException {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim123", BenutzerStatus.AKTIVIERT);
-        BenutzerDaten b = benutzerverwaltung.leseBenutzer("Benutzer_1");
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        BenutzerDaten b = benutzerverwaltung.leseBenutzer(BENUTZERNAME);
 
         sicherheit.getBerechtigungsManagerUndAuthentifiziere(
             erzeugeAufrufkontext(b.getBenutzername(), "geheim987", false));
@@ -151,44 +158,44 @@ public class BenutzerverwaltungAccessManagerTest extends AbstractFfBenutzerzeich
 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlerFalscherName() {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim123", BenutzerStatus.AKTIVIERT);
-        sicherheit.getBerechtigungsManagerUndAuthentifiziere(
-            erzeugeAufrufkontext("Benutzer_99", "geheim123", false));
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        sicherheit
+            .getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext("Benutzer_99", PASSWORT, false));
     }
 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlerKeinPasswort() {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim123", BenutzerStatus.AKTIVIERT);
-        sicherheit.getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext("Benutzer_1", "", false));
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        sicherheit.getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext(BENUTZERNAME, "", false));
     }
 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlerNullPasswort() {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim123", BenutzerStatus.AKTIVIERT);
-        sicherheit.getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext("Benutzer_1", null, false));
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        sicherheit.getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext(BENUTZERNAME, null, false));
     }
 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlerKeinName() {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim123", BenutzerStatus.AKTIVIERT);
-        sicherheit.getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext("", "geheim123", false));
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        sicherheit.getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext("", PASSWORT, false));
     }
 
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlerNullName() {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim123", BenutzerStatus.AKTIVIERT);
-        sicherheit.getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext(null, "geheim123", false));
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        sicherheit.getBerechtigungsManagerUndAuthentifiziere(erzeugeAufrufkontext(null, PASSWORT, false));
     }
 
     @Test
     public void logoutTest() throws BenutzerverwaltungBusinessException,
         BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim123", BenutzerStatus.AKTIVIERT);
-        BenutzerDaten b = benutzerverwaltung.leseBenutzer("Benutzer_1");
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
+        BenutzerDaten b = benutzerverwaltung.leseBenutzer(BENUTZERNAME);
         assertNull(b.getLetzteAbmeldung());
 
         benutzerverwaltung.speichereAbmeldung(b.getBenutzername());
 
-        assertNotNull(benutzerverwaltung.leseBenutzer("Benutzer_1").getLetzteAbmeldung());
+        assertNotNull(benutzerverwaltung.leseBenutzer(BENUTZERNAME).getLetzteAbmeldung());
     }
 }

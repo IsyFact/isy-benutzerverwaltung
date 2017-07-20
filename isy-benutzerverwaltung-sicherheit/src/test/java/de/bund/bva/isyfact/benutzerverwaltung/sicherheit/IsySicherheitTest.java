@@ -20,8 +20,9 @@ package de.bund.bva.isyfact.benutzerverwaltung.sicherheit;
  * #L%
  */
 
+import java.util.UUID;
 
-import de.bund.bva.isyfact.benutzerverwaltung.AbstractFfBenutzerzeichnisTest;
+import de.bund.bva.isyfact.benutzerverwaltung.AbstractSicherheitTest;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Benutzer;
 import de.bund.bva.isyfact.benutzerverwaltung.sicherheit.exception.BenutzerverwaltungAuthentifizierungFehlgeschlagenException;
@@ -34,26 +35,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.Assert.*;
 
 /**
- * Tests, welche die erwartete Funktionalität der PLIS-Sicherheit prüfen
- * 
- * @author <a href="jonas.zitz@capgemini.com">Jonas Zitz</a>
- * @version $Revision: 41699 $
+ * Tests, welche die erwartete Funktionalität der Isy-Sicherheit prüfen.
+ *
+ * @author msg systems ag, Stefan Dellmuth
  */
-public class PlisSicherheitTest extends AbstractFfBenutzerzeichnisTest {
+public class IsySicherheitTest extends AbstractSicherheitTest {
+
+    private static final String BENUTZERNAME = "Benutzer_1";
+
+    private static final String PASSWORT = "geheim";
+
+    private static final String PASSWORT_FALSCH = "falsch";
+
+    private static final String KORRELATIONS_ID = UUID.randomUUID().toString();
 
     @Autowired
-    Sicherheit<BenutzerverwaltungAufrufKontextImpl> sicherheit;
+    private Sicherheit<BenutzerverwaltungAufrufKontextImpl> sicherheit;
 
     @Test
     public void testAuthentifizierungErfolgreichMitHash()
         throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        Benutzer bDb = erzeugeBenutzerInDb("Benutzer_1", "geheim", BenutzerStatus.AKTIVIERT, ROLLE_B);
+        Benutzer bDb = erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT, ROLLE_B);
         BenutzerverwaltungAufrufKontextImpl unauthentifizierterAufrufKontext =
             new BenutzerverwaltungAufrufKontextImpl();
-        unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung("Benutzer_1");
+        unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung(BENUTZERNAME);
         unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerPasswort(bDb.getPasswort());
         unauthentifizierterAufrufKontext.setPasswortIstHash(true);
-        unauthentifizierterAufrufKontext.setKorrelationsId("DUMMY-ID");
+        unauthentifizierterAufrufKontext.setKorrelationsId(KORRELATIONS_ID);
 
         // Authentifizierung mit Klartext-Passwort
         Berechtigungsmanager bm =
@@ -66,13 +74,13 @@ public class PlisSicherheitTest extends AbstractFfBenutzerzeichnisTest {
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlgehlschagenMitHash()
         throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        Benutzer bDb = erzeugeBenutzerInDb("Benutzer_1", "geheim", BenutzerStatus.AKTIVIERT);
+        Benutzer bDb = erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
         BenutzerverwaltungAufrufKontextImpl unauthentifizierterAufrufKontext =
             new BenutzerverwaltungAufrufKontextImpl();
         unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung(bDb.getBenutzername());
-        unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerPasswort("falsch");
+        unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerPasswort(PASSWORT_FALSCH);
         unauthentifizierterAufrufKontext.setPasswortIstHash(true);
-        unauthentifizierterAufrufKontext.setKorrelationsId("DUMMY-ID");
+        unauthentifizierterAufrufKontext.setKorrelationsId(KORRELATIONS_ID);
 
         // Authentifizierung mit Klartext-Passwort
         Berechtigungsmanager bm =
@@ -83,13 +91,13 @@ public class PlisSicherheitTest extends AbstractFfBenutzerzeichnisTest {
     @Test
     public void testAuthentifizierungErfolgreichOhneHash()
         throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim", BenutzerStatus.AKTIVIERT, ROLLE_A, ROLLE_B);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT, ROLLE_A, ROLLE_B);
         BenutzerverwaltungAufrufKontextImpl unauthentifizierterAufrufKontext =
             new BenutzerverwaltungAufrufKontextImpl();
-        unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung("Benutzer_1");
-        unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerPasswort("geheim");
+        unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung(BENUTZERNAME);
+        unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerPasswort(PASSWORT);
         unauthentifizierterAufrufKontext.setPasswortIstHash(false);
-        unauthentifizierterAufrufKontext.setKorrelationsId("DUMMY-ID");
+        unauthentifizierterAufrufKontext.setKorrelationsId(KORRELATIONS_ID);
 
         // Authentifizierung mit Klartext-Passwort
         Berechtigungsmanager bm =
@@ -102,13 +110,13 @@ public class PlisSicherheitTest extends AbstractFfBenutzerzeichnisTest {
     @Test(expected = AuthentifizierungFehlgeschlagenException.class)
     public void testAuthentifizierungFehlgehlschagenOhneHash()
         throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-        erzeugeBenutzerInDb("Benutzer_1", "geheim", BenutzerStatus.AKTIVIERT);
+        erzeugeBenutzerInDb(BENUTZERNAME, PASSWORT, BenutzerStatus.AKTIVIERT);
         BenutzerverwaltungAufrufKontextImpl unauthentifizierterAufrufKontext =
             new BenutzerverwaltungAufrufKontextImpl();
-        unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung("Benutzer_1");
-        unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerPasswort("falschesPasswort");
+        unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerKennung(BENUTZERNAME);
+        unauthentifizierterAufrufKontext.setDurchfuehrenderBenutzerPasswort(PASSWORT_FALSCH);
         unauthentifizierterAufrufKontext.setPasswortIstHash(true);
-        unauthentifizierterAufrufKontext.setKorrelationsId("DUMMY-ID");
+        unauthentifizierterAufrufKontext.setKorrelationsId(KORRELATIONS_ID);
 
         // Authentifizierung mit Klartext-Passwort
         Berechtigungsmanager bm =
