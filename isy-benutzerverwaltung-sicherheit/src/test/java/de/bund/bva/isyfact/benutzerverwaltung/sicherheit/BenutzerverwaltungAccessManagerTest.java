@@ -59,7 +59,7 @@ public class BenutzerverwaltungAccessManagerTest extends AbstractFfBenutzerzeich
 
     @Test
     public void testPasswortAenderung() throws BenutzerverwaltungBusinessException {
-        erzeugeBenutzerInDb("Benutzer_1", "altalt123", null, BenutzerStatus.AKTIVIERT, "Administrator");
+        erzeugeBenutzerInDb("Benutzer_1", "altalt123", "meine@emailAdresse.de", BenutzerStatus.AKTIVIERT, "Administrator");
         assertNotNull(sicherheit.getBerechtigungsManagerUndAuthentifiziere(
             erzeugeAufrufkontext("Benutzer_1", "altalt123", false)));
 

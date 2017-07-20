@@ -20,7 +20,6 @@ package de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung;
  * #L%
  */
 
-
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
@@ -46,6 +45,12 @@ import static org.junit.Assert.assertTrue;
  */
 public class BenutzerAendernTest extends AbstractBenutzerverwaltungTest {
 
+    private static final String BENUTZERNAME = "benutzer";
+
+    private static final String PASSWORT = "passwort";
+
+    private static final String PASSWORT_NEU = "passwort_neu";
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -54,10 +59,10 @@ public class BenutzerAendernTest extends AbstractBenutzerverwaltungTest {
     public void testSetzePasswort() throws BenutzerverwaltungBusinessException {
 
         PasswortAendern passwortAendern =
-            new PasswortAendern("benutzer", "passwort", "passwort_neu", "passwort_neu");
+            new PasswortAendern(BENUTZERNAME, PASSWORT, PASSWORT_NEU, PASSWORT_NEU);
         BenutzerDaten benutzerDaten = benutzerverwaltung.setzePasswort(passwortAendern);
 
-        assertTrue(passwordEncoder.matches("passwort_neu", benutzerDaten.getPasswort()));
+        assertTrue(passwordEncoder.matches(PASSWORT_NEU, benutzerDaten.getPasswort()));
     }
 
     @Test
@@ -65,18 +70,17 @@ public class BenutzerAendernTest extends AbstractBenutzerverwaltungTest {
     public void testSetzePasswortZurück() throws BenutzerverwaltungBusinessException {
 
         PasswortZuruecksetzen passwortZuruecksetzen =
-            new PasswortZuruecksetzen("benutzer", "passwort_neu", "passwort_neu");
+            new PasswortZuruecksetzen(BENUTZERNAME, PASSWORT_NEU, PASSWORT_NEU);
         BenutzerDaten benutzerDaten = benutzerverwaltung.setzePasswortZurueck(passwortZuruecksetzen);
 
-        assertTrue(passwordEncoder.matches("passwort_neu", benutzerDaten.getPasswort()));
+        assertTrue(passwordEncoder.matches(PASSWORT_NEU, benutzerDaten.getPasswort()));
     }
 
     @Test
     @DatabaseSetup("testBenutzerverwaltungSetup.xml")
-    @ExpectedDatabase(value = "testBenutzerverwaltungRolleZugewiesen.xml",
-                      assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
+    @ExpectedDatabase(value = "testBenutzerverwaltungRolleZugewiesen.xml", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     public void testWeiseBenutzerRollenZu() throws BenutzerverwaltungBusinessException {
-        List<String> benutzernamen = Arrays.asList("benutzer", "admin");
+        List<String> benutzernamen = Arrays.asList(BENUTZERNAME, "admin");
         RolleDaten rolle =
             new RolleDaten(RollenTestdaten.ROLLE_MODERATOR_ID, RollenTestdaten.ROLLE_MODERATOR_NAME);
 
@@ -85,10 +89,9 @@ public class BenutzerAendernTest extends AbstractBenutzerverwaltungTest {
 
     @Test
     @DatabaseSetup("testBenutzerverwaltungSetup.xml")
-    @ExpectedDatabase(value = "testBenutzerverwaltungRolleEntzogen.xml",
-                      assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
+    @ExpectedDatabase(value = "testBenutzerverwaltungRolleEntzogen.xml", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
     public void testEntzieheBenutzerRolle() throws BenutzerverwaltungBusinessException {
-        List<String> benutzernamen = Arrays.asList("benutzer", "admin");
+        List<String> benutzernamen = Arrays.asList(BENUTZERNAME, "admin");
         RolleDaten rolle =
             new RolleDaten(RollenTestdaten.ROLLE_MITGLIED_ID, RollenTestdaten.ROLLE_MITGLIED_NAME);
 
