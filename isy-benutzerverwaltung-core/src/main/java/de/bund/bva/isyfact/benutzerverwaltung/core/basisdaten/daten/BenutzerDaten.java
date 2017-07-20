@@ -23,6 +23,7 @@ package de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten;
 
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -263,6 +264,7 @@ public class BenutzerDaten implements Serializable {
      *
      * @return the field emailAdresse
      */
+    @NotBlank
     @Email
     public String getEmailAdresse() {
         return emailAdresse;

@@ -58,7 +58,7 @@ public abstract class AbstractFfBenutzerzeichnisTest extends AbstractTransaction
     @Autowired
     protected PasswordEncoder passwordEncoder;
 
-    protected Benutzer erzeugeBenutzerInDb(String benutzername, String passwort, BenutzerStatus status,
+    protected Benutzer erzeugeBenutzerInDb(String benutzername, String passwort, String emailAdresse, BenutzerStatus status,
         String... rollen) {
         Benutzer benutzer = new Benutzer();
         benutzer.setBenutzername(benutzername);
@@ -66,6 +66,7 @@ public abstract class AbstractFfBenutzerzeichnisTest extends AbstractTransaction
         // Setze Passwort
         String passwortHash = passwordEncoder.encode(passwort);
         benutzer.setPasswort(passwortHash);
+        benutzer.setEmailAdresse(emailAdresse);
         benutzer.setStatus(status);
 
         for (String rolle : rollen) {
