@@ -27,7 +27,7 @@ Folgende Abhängigkeit ist in der `pom.xml` zu ergänzen:
 <dependency>
     <groupId>de.bund.bva.isyfact.benutzerverwaltung</groupId>
     <artifactId>isy-benutzerverwaltung-gui-primefaces</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.2.0-SNAPSHOT</version>
 </dependency>
 ----
 
