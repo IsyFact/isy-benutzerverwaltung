@@ -20,14 +20,15 @@ package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao;
  * #L%
  */
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Paginierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierung;
 import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.RolleSuchkriterien;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Rolle;
 import de.bund.bva.pliscommon.persistence.dao.Dao;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Beschreibt den Datenbankzugriff für Rollen.
@@ -50,7 +51,7 @@ public interface RollenDao extends Dao<Rolle, Long> {
      * @param rollenIds IDs der Rollen
      * @return eine Liste aller Rollen, die zu den IDs gefunden wurden.
      */
-    List<Rolle> sucheMitRollenIds(Collection<String> rollenIds);
+    Set<Rolle> sucheMitRollenIds(Collection<String> rollenIds);
 
     /**
      * Diese Methode filtert und sortiert eine Treffermenge an Rollen und gibt diese zurueck.

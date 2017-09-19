@@ -20,25 +20,32 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.rollenzuwe
  * #L%
  */
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Paginierung;
+import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierattribut;
+import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungValidationException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.FehlerSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.ValidierungSchluessel;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSortierattribut;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.BenutzerverwaltungAwkWrapper;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzersuchen.BenutzerSuchkriterienModel;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.common.controller.AbstractBenutzerverwaltungController;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.controller.SucheController;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.konstanten.HinweisSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.SuchergebnisModel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.TrefferlisteModel;
 import de.bund.bva.isyfact.common.web.global.MessageController;
 import de.bund.bva.pliscommon.util.spring.MessageSourceHolder;
 import org.springframework.context.MessageSource;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.webflow.execution.RequestContextHolder;
 
 /**
  * Dieser Controller stellt die Funktionalitaet zur Rollenzuweisung-Maske
@@ -46,11 +53,14 @@ import java.util.Optional;
  *
  * @author Capgemini, Jonas Zitz
  */
-public class RollenZuweisungController extends AbstractBenutzerverwaltungController<RollenZuweisungModel> {
+public class RollenZuweisungController extends SucheController<RollenZuweisungModel> {
+
+    private final BenutzerverwaltungAwkWrapper awkWrapper;
 
     public RollenZuweisungController(MessageController messageController, MessageSource messageSource,
         BenutzerverwaltungAwkWrapper awkWrapper) {
-        super(messageController, messageSource, awkWrapper);
+        super(messageController, messageSource);
+        this.awkWrapper = awkWrapper;
     }
 
     /**
@@ -75,88 +85,47 @@ public class RollenZuweisungController extends AbstractBenutzerverwaltungControl
      */
     public void initialisiereModel(RollenZuweisungModel model) {
         try {
-            SuchergebnisModel<BenutzerModel> alleBenutzer =
-                getAwkWrapper().sucheBenutzer(new BenutzerSuchkriterienModel(), null, null);
-
-            model.setAlleBenutzer(alleBenutzer.getTrefferliste());
-            model.setAlleRollen(getAwkWrapper().leseAlleRollen());
+            model.setAlleRollen(awkWrapper.leseAlleRollen());
         } catch (BenutzerverwaltungValidationException validatorException) {
             erzeugeNachrichten(validatorException);
         }
-        model.setSelektierteRollenId(null);
-        model.setBenutzerZuRolle(new ArrayList<String>());
-
-        // Entferne Passwort. Dieses wird nicht benoetigt. Der Awf setzt das
-        // alte Passwort bei einer
-        // Benutzer-Aktualisierung.
-        for (BenutzerModel b : model.getAlleBenutzer()) {
-            b.setPasswort(null);
-        }
+        model.setAusgewaehlteBenutzer(new ArrayList<>());
+        model.setTrefferliste(new BenutzerTrefferlisteModel());
+        filterZuruecksetzen(model);
     }
 
-    /**
-     * Ermittelt zu einer {@link RollenZuweisungModel#getSelektierteRollenId()
-     * selektierten Rolle} alle {@link BenutzerModel}, die dieser Rolle
-     * zugewiesen sind.
-     *
-     * @param model ist das {@link RollenZuweisungModel}
-     */
-    public void ermittleBenutzerZuRolle(RollenZuweisungModel model) {
-        model.getBenutzerZuRolle().clear();
-        for (BenutzerModel benutzer : model.getAlleBenutzer()) {
-            for (RolleModel benutzerRolle : benutzer.getRollen()) {
-                if (benutzerRolle.getRollenId().equals(model.getSelektierteRollenId())) {
-                    model.getBenutzerZuRolle().add(benutzer.getBenutzername());
-                    break;
-                }
-            }
-        }
+    public void filterZuruecksetzen(RollenZuweisungModel model) {
+        model.getTrefferliste().setSuchkriterien(new BenutzerSuchkriterienModel());
     }
 
-    /**
-     * Aktualisiert alle {@link BenutzerModel} durch Aktualisierung der
-     * gewaehlten Rollen.
-     *
-     * @param model ist das Model.
-     */
-    public void aktualisiereRollenAllerBenutzer(RollenZuweisungModel model) {
-        String selektierteRollenId = model.getSelektierteRollenId();
-        if (selektierteRollenId == null) {
-            getMessageController().writeInfoMessage(
-                MessageSourceHolder.getMessage(ValidierungSchluessel.MSG_KEINE_ROLLE_AUSGEWAEHLT));
-            return;
-        }
+    public void rolleZuweisen(RollenZuweisungModel model, boolean rolleEntziehen) {
+        Optional<RolleModel> ausgewaehlteRolle = model.getAlleRollen()
+                                                      .stream()
+                                                      .filter(r -> r.getRollenId().equals(model.getAusgewaehlteRollenId()))
+                                                      .findFirst();
 
-        Optional<RolleModel> selektierteRolle =
-            model.getAlleRollen().stream().filter(rolle -> rolle.getRollenId().equals(selektierteRollenId))
-                .findFirst();
-        if (selektierteRolle.isPresent()) {
-            List<String> benutzerRolleZuweisen = new ArrayList<>();
-            List<String> benutzerRolleEntziehen = new ArrayList<>();
-            for (BenutzerModel benutzer : model.getAlleBenutzer()) {
-                boolean benutzerZuRolleZuweisen =
-                    model.getBenutzerZuRolle().contains(benutzer.getBenutzername());
-                boolean benutzerHatRolle = pruefeBenutzerHatRolle(benutzer, selektierteRollenId);
-
-                // Benutzer hat die Rolle nicht, ist aber selektiert => Rolle zuweisen
-                if (!benutzerHatRolle && benutzerZuRolleZuweisen) {
-                    benutzerRolleZuweisen.add(benutzer.getBenutzername());
-                }
-                // Benutzer hat die Rolle, ist aber nicht selektiert => Rolle entziehen
-                if (benutzerHatRolle && !benutzerZuRolleZuweisen) {
-                    benutzerRolleEntziehen.add(benutzer.getBenutzername());
-                }
-
-                try {
-                    getAwkWrapper().weiseRolleZu(selektierteRolle.get(), benutzerRolleZuweisen);
-                    getAwkWrapper().entzieheRolle(selektierteRolle.get(), benutzerRolleEntziehen);
-                } catch (BenutzerverwaltungBusinessException validationException) {
-                    erzeugeNachrichten(validationException);
-                }
+        if (ausgewaehlteRolle.isPresent()) {
+            if (model.getAusgewaehlteBenutzer().isEmpty()) {
+                getMessageController().writeWarnMessage(MessageSourceHolder.getMessage(HinweisSchluessel.KEIN_BENUTZER_AUSGEWAEHLT),
+                    MessageSourceHolder.getMessage(HinweisSchluessel.KEIN_BENUTZER_AUSGEWAEHLT));
+                return;
             }
 
-            getMessageController().writeSuccessMessage(
-                MessageSourceHolder.getMessage(HinweisSchluessel.ROLLENZUWEISUNG_BENUTZER_AKTUALISIERT));
+            List<String> benutzernamen =
+                model.getAusgewaehlteBenutzer().stream().map(BenutzerModel::getBenutzername).collect(Collectors.toList());
+
+            try {
+                if (rolleEntziehen) {
+                    awkWrapper.entzieheRolle(ausgewaehlteRolle.get(), benutzernamen);
+                } else {
+                    awkWrapper.weiseRolleZu(ausgewaehlteRolle.get(), benutzernamen);
+                }
+
+                getMessageController().writeSuccessMessage(
+                    MessageSourceHolder.getMessage(HinweisSchluessel.ROLLENZUWEISUNG_BENUTZER_AKTUALISIERT));
+            } catch (BenutzerverwaltungBusinessException e) {
+                erzeugeNachrichten(e);
+            }
         } else {
             getMessageController().writeWarnMessage(
                 MessageSourceHolder.getMessage(ValidierungSchluessel.MSG_ROLLE_NICHT_VORHANDEN),
@@ -164,31 +133,52 @@ public class RollenZuweisungController extends AbstractBenutzerverwaltungControl
         }
     }
 
-    /**
-     * Prueft, ob ein {@link BenutzerModel Benutzer} eine definierte
-     * {@link RolleModel Rolle} Besitzt.
-     *
-     * @param benutzer ist der {@link BenutzerModel Benutzer}
-     * @param rollenId ist die {@link RolleModel Rolle}
-     * @return {@link Boolean#TRUE}, wenn der {@link BenutzerModel Benutzer} ueber die {@link RolleModel
-     * Rolle} verfuegt. {@link Boolean#FALSE} ansonsten.
-     */
-    private boolean pruefeBenutzerHatRolle(BenutzerModel benutzer, String rollenId) {
-        if (benutzer.getRollen() == null || benutzer.getRollen().isEmpty()) {
-            return false;
-        }
-
-        for (RolleModel benutzerRolle : benutzer.getRollen()) {
-            if (rollenId.equals(benutzerRolle.getRollenId())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     protected Class<RollenZuweisungModel> getMaskenModelKlasseZuController() {
         return RollenZuweisungModel.class;
     }
 
+    /**
+     * Model für die Trefferliste. Ist als innere Klasse des Controllers implementiert, da
+     * Models eigentlich keinen direkten Zugang zum AWK-Wrapper haben dürfen.
+     *
+     * @author msg systems ag, Stefan Dellmuth
+     */
+    private static class BenutzerTrefferlisteModel
+        extends TrefferlisteModel<BenutzerModel, BenutzerSuchkriterienModel> {
+
+        @Override
+        protected SuchergebnisModel<BenutzerModel> suche(BenutzerSuchkriterienModel suchkriterien,
+            Sortierung sortierung, Paginierung paginierung) throws BenutzerverwaltungValidationException {
+            BenutzerverwaltungAwkWrapper awkWrapper =
+                RequestContextHolder.getRequestContext().getActiveFlow().getApplicationContext()
+                    .getBean(BenutzerverwaltungAwkWrapper.class);
+            return awkWrapper.sucheBenutzer(suchkriterien, sortierung, paginierung);
+        }
+
+        @Override
+        protected Sortierattribut ermittleSortierattribut(String sortierAttribut) {
+            try {
+                return BenutzerSortierattribut.valueOf(sortierAttribut);
+            } catch (IllegalArgumentException | NullPointerException e) {
+                return BenutzerSortierattribut.getStandard();
+            }
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public BenutzerModel getRowData(String rowKey) {
+            for (BenutzerModel treffer : (List<BenutzerModel>) getWrappedData()) {
+                if (Objects.equals(rowKey, getRowKey(treffer))) {
+                    return treffer;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public Object getRowKey(BenutzerModel object) {
+            return object.getBenutzername();
+        }
+    }
 }

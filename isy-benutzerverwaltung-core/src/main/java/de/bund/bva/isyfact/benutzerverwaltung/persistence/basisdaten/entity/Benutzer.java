@@ -20,15 +20,23 @@ package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity;
  * #L%
  */
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Version;
 
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.NamedQuerySchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Die persistente Entität eines {@link Benutzer}s.
@@ -69,7 +77,7 @@ public class Benutzer implements Serializable {
 
     private String telefonnummer;
 
-    private List<Rolle> rollen = new ArrayList<>();
+    private Set<Rolle> rollen = new HashSet<>();
 
     private int version;
 
@@ -319,7 +327,7 @@ public class Benutzer implements Serializable {
     @JoinTable(name = "Benutzer_Rollen",
                joinColumns = @JoinColumn(name = "Benutzer_PK", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "Rolle_PK", referencedColumnName = "primarykey"))
-    public List<Rolle> getRollen() {
+    public Set<Rolle> getRollen() {
         return rollen;
     }
 
@@ -328,7 +336,7 @@ public class Benutzer implements Serializable {
      *
      * @param rollen neue Rollen
      */
-    public void setRollen(List<Rolle> rollen) {
+    public void setRollen(Set<Rolle> rollen) {
         this.rollen = rollen;
     }
 
