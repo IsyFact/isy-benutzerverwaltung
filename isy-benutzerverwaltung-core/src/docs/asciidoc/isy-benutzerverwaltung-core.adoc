@@ -108,6 +108,34 @@ In der Datei `persistence.xml` muss ein Eintrag für die Entities `Benutzer` und
 </persistence>
 ----
 
+Self-Service
+^^^^^^^^^^^^
+
+Die E-Mail-Konfiguration des Self-Service verwendet folgende Properties:
+
+[width="75%", options="header"]
+|=====
+| Property | Werte / Beispiel | Erklärung
+| selfservice.mail.smtp.host       | `mail.example.com` | Hostname des SMTP-Servers
+| selfservice.mail.smtp.port       | `465`              | Port des SMTP-Servers
+| selfservice.mail.smtp.ssl.enable | `true` / `false`   | SSL ein- oder ausgeschaltet
+| selfservice.mail.smtp.auth       | `true` / `false`   | Authentifizierung ein- oder ausgeschaltet.
+                                                          Wenn dieser Wert auf `false` steht, können die
+                                                          Properties `selfservice.mail.username` und
+                                                          `selfservice.mail.password` weggelassen werden.
+| selfservice.mail.username        | `self.service@example.com` | Benutzername zur Authentifizierung am SMTP-Server
+| selfservice.mail.password        | `self.service` | Passwort zur Authentifizierung am SMTP-Server
+| selfservice.mail.sender          | `self.service@example.com` | Absenderadresse
+| selfservice.mail.subject         | `Selfservice zum Zurücksetzen Ihres Passworts` | Text für Betreffzeile der E-Mail
+| selfservice.mail.body            | `Über folgenden Link setzen Sie Ihr Passwort zurueck:\n\n$link` | Text für den Body der E-Mail.
+                                                                                                     Muss Platzhalter `$link` enthalten.
+| selfservice.mail.link            | `http://example.com/selfServicePasswortZuruecksetzenFlow`       | Text für den `$link`-Platzhalter im Body der E-Mail.
+                                                                                                     Der Link muss zum `selfServicePasswortZuruecksetzenFlow` führen.
+                                                                                                     An diesen Text wird das Token angehängt und der Link muss entsprechend auf `?token=` oder `&token=` enden.
+|=====
+
+Eine Beispieldatei mit allen Properties liegt unter `src/main/resources/config/selfServiceMail.properties`.
+
 Integration in Anwendungen
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
