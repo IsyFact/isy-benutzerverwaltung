@@ -1,4 +1,4 @@
-package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa;
+package de.bund.bva.isyfact.benutzerverwaltung.persistence.selfservice.dao.jpa;
 
 /*-
  * #%L
@@ -20,16 +20,16 @@ package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa;
  * #L%
  */
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.BenutzerTokenDao;
-import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.BenutzerToken;
-import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.QBenutzerToken;
-import de.bund.bva.pliscommon.persistence.dao.AbstractDao;
-import org.springframework.beans.factory.InitializingBean;
-
+import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.util.Date;
+
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import de.bund.bva.isyfact.benutzerverwaltung.persistence.selfservice.dao.BenutzerTokenDao;
+import de.bund.bva.isyfact.benutzerverwaltung.persistence.selfservice.entity.BenutzerToken;
+import de.bund.bva.isyfact.benutzerverwaltung.persistence.selfservice.entity.QBenutzerToken;
+import de.bund.bva.pliscommon.persistence.dao.AbstractDao;
+import org.springframework.beans.factory.InitializingBean;
 
 /**
  * Datenzugriff für das BenutzerToken.

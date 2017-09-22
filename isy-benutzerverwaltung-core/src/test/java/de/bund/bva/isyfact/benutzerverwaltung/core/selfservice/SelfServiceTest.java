@@ -36,9 +36,9 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.Benutzerve
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.PasswortZuruecksetzen;
 import de.bund.bva.isyfact.benutzerverwaltung.core.selfservice.impl.SelfServiceImpl;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.BenutzerDao;
-import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.BenutzerTokenDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Benutzer;
-import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.BenutzerToken;
+import de.bund.bva.isyfact.benutzerverwaltung.persistence.selfservice.dao.BenutzerTokenDao;
+import de.bund.bva.isyfact.benutzerverwaltung.persistence.selfservice.entity.BenutzerToken;
 import de.bund.bva.pliscommon.konfiguration.common.Konfiguration;
 import de.bund.bva.pliscommon.util.spring.MessageSourceHolder;
 import org.junit.Before;

@@ -48,7 +48,7 @@
     </bean>
 
     <bean id="benutzerTokenDao"
-          class="de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa.JpaBenutzerTokenDao"
+          class="de.bund.bva.isyfact.benutzerverwaltung.persistence.selfservice.dao.jpa.JpaBenutzerTokenDao"
           parent="abstractDao"/>
 
 </beans>
