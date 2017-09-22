@@ -1,4 +1,4 @@
-package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao;
+package de.bund.bva.isyfact.benutzerverwaltung.persistence.selfservice.dao;
 
 /*-
  * #%L
@@ -20,11 +20,10 @@ package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao;
  * #L%
  */
 
-
-import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.BenutzerToken;
-import de.bund.bva.pliscommon.persistence.dao.Dao;
-
 import java.util.Date;
+
+import de.bund.bva.isyfact.benutzerverwaltung.persistence.selfservice.entity.BenutzerToken;
+import de.bund.bva.pliscommon.persistence.dao.Dao;
 
 /**
  * Datenzugriff für das BenutzerToken.

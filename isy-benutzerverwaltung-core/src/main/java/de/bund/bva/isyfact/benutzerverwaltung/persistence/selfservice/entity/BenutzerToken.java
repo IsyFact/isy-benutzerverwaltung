@@ -1,4 +1,4 @@
-package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity;
+package de.bund.bva.isyfact.benutzerverwaltung.persistence.selfservice.entity;
 
 /*-
  * #%L
@@ -20,13 +20,14 @@ package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity;
  * #L%
  */
 
-
+import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Version;
-import java.io.Serializable;
-import java.util.Date;
+
+import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Benutzer;
 
 /**
  * Die persistente Entität eines {@link BenutzerToken}s.
