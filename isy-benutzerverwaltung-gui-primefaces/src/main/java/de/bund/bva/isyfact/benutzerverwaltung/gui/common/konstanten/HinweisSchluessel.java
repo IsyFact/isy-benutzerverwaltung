@@ -63,6 +63,11 @@ public abstract class HinweisSchluessel {
     public static final String SELFSERVICE_TOKEN_UNGUELTIG = "BENVW80008";
 
     /**
+     * Es wurde kein Benutzer ausgewählt.
+     */
+    public static final String KEIN_BENUTZER_AUSGEWAEHLT = "BENVW80009";
+
+    /**
      * Die Rolle '{0}' wurde erfolgreich erstellt.
      */
     public static final String ROLLE_ERSTELLT = "BENVW80011";

@@ -20,12 +20,15 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.rollenzuwe
  * #L%
  */
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzersuchen.BenutzerSuchkriterienModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel;
-import de.bund.bva.isyfact.common.web.global.AbstractMaskenModel;
-
-import java.util.ArrayList;
-import java.util.List;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.SucheModel;
 
 /**
  * Dieses Model stellt die Daten zur Rollenzuweisung-Maske bereit.
@@ -33,7 +36,7 @@ import java.util.List;
  * @author Capgemini, Jonas Zitz
  * @author msg systems ag, Stefan Dellmuth
  */
-public class RollenZuweisungModel extends AbstractMaskenModel {
+public class RollenZuweisungModel extends SucheModel<BenutzerModel, BenutzerSuchkriterienModel> {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -42,19 +45,19 @@ public class RollenZuweisungModel extends AbstractMaskenModel {
     private List<RolleModel> alleRollen;
 
     /**
-     * Selektierte Rollen, zur Anzeige der ausgewählten Rollen in der Auswahlliste.
+     * Liste aller Status zur Anzeige in einer Auswahlliste.
      */
-    private String selektierteRollenId;
+    private final List<BenutzerStatus> alleBenutzerStatus = Arrays.asList(BenutzerStatus.values());
 
     /**
-     * Liste aller Benutzer zur Anzeige in einer Auswahlliste.
+     * Id der ausgewählten Rolle.
      */
-    private List<BenutzerModel> alleBenutzer = new ArrayList<>();
+    private String ausgewaehlteRollenId;
 
     /**
-     * Selektierte Benutzernamen für die selektierte Rolle.
+     * Liste der ausgewählten Benutzer.
      */
-    private List<String> benutzerZuRolle = new ArrayList<>();
+    private List<BenutzerModel> ausgewaehlteBenutzer;
 
     public List<RolleModel> getAlleRollen() {
         return alleRollen;
@@ -64,28 +67,27 @@ public class RollenZuweisungModel extends AbstractMaskenModel {
         this.alleRollen = alleRollen;
     }
 
-    public String getSelektierteRollenId() {
-        return selektierteRollenId;
+    public List<BenutzerStatus> getAlleBenutzerStatus() {
+        return alleBenutzerStatus;
     }
 
-    public void setSelektierteRollenId(String selektierteRollenId) {
-        this.selektierteRollenId = selektierteRollenId;
+    public String getAusgewaehlteRollenId() {
+        return ausgewaehlteRollenId;
     }
 
-    public List<BenutzerModel> getAlleBenutzer() {
-        return alleBenutzer;
+    public void setAusgewaehlteRollenId(String ausgewaehlteRollenId) {
+        this.ausgewaehlteRollenId = ausgewaehlteRollenId;
     }
 
-    public void setAlleBenutzer(List<BenutzerModel> alleBenutzer) {
-        this.alleBenutzer = alleBenutzer;
+    public List<BenutzerModel> getAusgewaehlteBenutzer() {
+        return ausgewaehlteBenutzer;
     }
 
-    public List<String> getBenutzerZuRolle() {
-        return benutzerZuRolle;
+    public void setAusgewaehlteBenutzer(List<BenutzerModel> ausgewaehlteBenutzer) {
+        this.ausgewaehlteBenutzer = ausgewaehlteBenutzer;
     }
 
-    public void setBenutzerZuRolle(List<String> benutzerZuRolle) {
-        this.benutzerZuRolle = benutzerZuRolle;
+    public String getRollen(BenutzerModel benutzerModel) {
+        return benutzerModel.getRollen().stream().map(RolleModel::getRollenId).collect(Collectors.joining(", "));
     }
-
 }
