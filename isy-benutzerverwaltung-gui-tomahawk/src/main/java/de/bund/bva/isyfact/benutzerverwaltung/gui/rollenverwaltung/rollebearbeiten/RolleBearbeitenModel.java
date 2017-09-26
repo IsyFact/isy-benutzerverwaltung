@@ -21,7 +21,7 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.rollebearbei
  */
 
 
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.RolleModel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel;
 import de.bund.bva.isyfact.common.web.global.AbstractMaskenModel;
 
 /**
