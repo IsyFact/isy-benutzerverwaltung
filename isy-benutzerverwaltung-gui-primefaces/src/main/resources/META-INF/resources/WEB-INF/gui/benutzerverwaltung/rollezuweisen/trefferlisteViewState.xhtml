@@ -1,6 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
   #%L
   IsyFact Benutzerverwaltung GUI mit Primefaces
@@ -23,10 +20,17 @@
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
                 template="/WEB-INF/gui/common/benutzerverwaltung-applikation.xhtml">
+
+    <f:loadBundle basename="resources.isy-benutzerverwaltung.nachrichten.maskentexte" var="msg_bnvw"/>
 
     <ui:define name="inhaltsbereich">
         <ui:include src="/WEB-INF/gui/benutzerverwaltung/rollezuweisen/benutzerSuchenForm.xhtml"/>
+        <br/>
+        <ui:include src="/WEB-INF/gui/benutzerverwaltung/rollezuweisen/benutzerSuchenTrefferliste.xhtml"/>
+        <br/>
+        <ui:include src="/WEB-INF/gui/benutzerverwaltung/rollezuweisen/rollenAuswahl.xhtml"/>
     </ui:define>
 
 </ui:composition>
