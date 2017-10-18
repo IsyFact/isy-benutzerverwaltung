@@ -40,6 +40,7 @@
           id="abstractBenutzerverwaltungController">
         <property name="benutzerverwaltungAwkWrapper" ref="benutzerverwaltungAwkWrapper"/>
         <property name="rollenverwaltungAwkWrapper" ref="rollenverwaltungAwkWrapper"/>
+        <property name="selfServiceAwkWrapper" ref="selfServiceAwkWrapper"/>
         <property name="messageController" ref="messageController"/>
         <property name="validationController" ref="validationController"/>
     </bean>
@@ -120,6 +121,16 @@
           class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.logout.LogoutController"
           parent="abstractBenutzerverwaltungController">
         <property name="aufrufKontextVerwalter" ref="aufrufKontextVerwalter"/>
+    </bean>
+
+    <bean id="selfServicePasswortAnfordernController"
+          class="de.bund.bva.isyfact.benutzerverwaltung.gui.selfservice.passwortanfordern.SelfServicePasswortAnfordernController"
+          parent="abstractBenutzerverwaltungController">
+    </bean>
+
+    <bean id="selfServicePasswortZuruecksetzenController"
+          class="de.bund.bva.isyfact.benutzerverwaltung.gui.selfservice.passwortzuruecksetzen.SelfServicePasswortZuruecksetzenController"
+          parent="abstractBenutzerverwaltungController">
     </bean>
 
 </beans>
