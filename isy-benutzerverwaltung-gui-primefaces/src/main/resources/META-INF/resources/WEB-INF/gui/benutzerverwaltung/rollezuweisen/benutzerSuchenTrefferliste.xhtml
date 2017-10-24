@@ -1,0 +1,59 @@
+<!--
+  #%L
+  IsyFact Benutzerverwaltung GUI mit Primefaces
+  %%
+  Copyright (C) 2016 - 2017 Bundesverwaltungsamt (BVA)
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <f:loadBundle basename="resources.isy-benutzerverwaltung.nachrichten.maskentexte" var="msg_bnvw"/>
+
+    <ui:fragment>
+        <p:panel header="#{msg_bnvw.MEL_RollenZuweisung_Ergebnis}">
+            <p:dataTable var="benutzer"
+                         selection="#{rollenZuweisenModel.ausgewaehlteBenutzer}"
+                         paginator="true" rows="10"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,25,50"
+                         currentPageReportTemplate="#{msg_bnvw.MEL_Trefferliste_TrefferGesamt}: #{rollenZuweisenModel.trefferliste.rowCount}"
+                         paginatorPosition="bottom"
+                         value="#{rollenZuweisenModel.trefferliste}" lazy="true"
+                         emptyMessage="#{msg_bnvw.MEL_Trefferliste_keineEintraege}">
+                <p:column selectionMode="multiple" style="width:36px;text-align:center"/>
+                <p:column sortBy="#{BenutzerSortierattribut.BENUTZERNAME}"
+                          headerText="#{msg_bnvw.MEL_BenutzerSuchen_benutzer_benutzername}">
+                    <h:outputText value="#{benutzer.benutzername}" title="#{benutzer.benutzername}"/>
+                </p:column>
+
+                <p:column sortBy="#{BenutzerSortierattribut.NACHNAME}"
+                          headerText="#{msg_bnvw.MEL_BenutzerSuchen_benutzer_nachname}">
+                    <h:outputText value="#{benutzer.nachname}" title="#{benutzer.nachname}"/>
+                </p:column>
+
+                <p:column sortBy="#{BenutzerSortierattribut.VORNAME}"
+                          headerText="#{msg_bnvw.MEL_BenutzerSuchen_benutzer_vorname}">
+                    <h:outputText value="#{benutzer.vorname}" title="#{benutzer.vorname}"/>
+                </p:column>
+
+                <p:column headerText="#{msg_bnvw.MEL_rolle}">
+                    <h:outputText value="#{rollenZuweisenModel.getRollen(benutzer)}" title="#{benutzer.benutzername}"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </ui:fragment>
+</ui:composition>

@@ -57,12 +57,12 @@
             <artifactId>isy-logging</artifactId>
         </dependency>
         <dependency>
-            <groupId>de.bund.bva.pliscommon</groupId>
-            <artifactId>plis-persistence</artifactId>
+            <groupId>de.bund.bva.isyfact</groupId>
+            <artifactId>isy-persistence</artifactId>
         </dependency>
         <dependency>
-            <groupId>de.bund.bva.pliscommon</groupId>
-            <artifactId>plis-ueberwachung</artifactId>
+            <groupId>de.bund.bva.isyfact</groupId>
+            <artifactId>isy-ueberwachung</artifactId>
         </dependency>
         <dependency>
             <groupId>de.bund.bva.isyfact</groupId>

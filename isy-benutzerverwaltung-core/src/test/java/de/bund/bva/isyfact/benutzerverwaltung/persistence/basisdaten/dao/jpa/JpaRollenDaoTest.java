@@ -20,6 +20,10 @@ package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa;
  * #L%
  */
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Paginierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierrichtung;
@@ -34,9 +38,6 @@ import de.bund.bva.isyfact.test.AbstractSpringDbUnitTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -61,7 +62,7 @@ public class JpaRollenDaoTest extends AbstractSpringDbUnitTest {
 
     @Test
     public void testSucheMitRollenIds() throws Exception {
-        List<Rolle> ergebnis = rollenDao.sucheMitRollenIds(Arrays.asList("idrolle1", "idrolle2"));
+        Set<Rolle> ergebnis = rollenDao.sucheMitRollenIds(Arrays.asList("idrolle1", "idrolle2"));
 
         assertEquals(2, ergebnis.size());
     }
