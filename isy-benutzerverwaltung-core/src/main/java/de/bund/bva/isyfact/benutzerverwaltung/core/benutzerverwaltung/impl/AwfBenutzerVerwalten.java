@@ -20,6 +20,11 @@ package de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.impl;
  * #L%
  */
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.validation.Validator;
 
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungTechnicalRuntimeException;
@@ -28,7 +33,11 @@ import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.FehlerSchluessel
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.ValidierungSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.RolleDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
-import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.*;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.BenutzerAendern;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.BenutzerAnlegen;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.BenutzerSelbstAendern;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.PasswortAendern;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.PasswortZuruecksetzen;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.BenutzerDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.RollenDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Benutzer;
@@ -36,11 +45,6 @@ import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Roll
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import javax.validation.Validator;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Diese Klasse bietet Funktionalität zum Erstellen, Bearbeiten und Loeschen
@@ -278,9 +282,9 @@ class AwfBenutzerVerwalten extends AbstractAnwendungsfall {
         }
     }
 
-    private List<Rolle> konvertiereRollen(List<RolleDaten> rolleDaten) {
+    private Set<Rolle> konvertiereRollen(List<RolleDaten> rolleDaten) {
         if (rolleDaten == null) {
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
 
         List<String> rollenIds =
