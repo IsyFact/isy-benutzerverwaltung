@@ -42,12 +42,15 @@ import de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.rollesuchen.R
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import org.dozer.Mapper;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Standard-Implementierung des AWK-Wrappers für die Komponente Rollenverwaltung.
  *
  * @author Björn Saxe, msg systems ag
  */
+@Transactional(rollbackFor = Throwable.class, propagation = Propagation.REQUIRED)
 public class RollenverwaltungAwkWrapperImpl implements RollenverwaltungAwkWrapper {
 
     private static final IsyLogger LOG = IsyLoggerFactory.getLogger(RollenverwaltungAwkWrapperImpl.class);
