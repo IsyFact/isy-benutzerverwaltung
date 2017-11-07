@@ -58,6 +58,11 @@ public abstract class HinweisSchluessel {
     public static final String BENUTZER_SELBST_PASSWORT_GEAENDERT = "BENVW80007";
 
     /**
+     * Das Token ist nicht vorhanden oder abgelaufen.
+     */
+    public static final String SELFSERVICE_TOKEN_UNGUELTIG = "BENVW80008";
+
+    /**
      * Die Rolle '{0}' wurde erfolgreich erstellt.
      */
     public static final String ROLLE_ERSTELLT = "BENVW80011";

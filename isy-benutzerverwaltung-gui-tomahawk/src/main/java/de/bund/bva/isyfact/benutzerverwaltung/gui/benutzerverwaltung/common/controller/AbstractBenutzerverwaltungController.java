@@ -28,6 +28,7 @@ import de.bund.bva.isyfact.benutzerverwaltung.common.exception.Benutzerverwaltun
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungValidationException;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.BenutzerverwaltungAwkWrapper;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.awkwrapper.RollenverwaltungAwkWrapper;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.selfservice.awkwrapper.SelfServiceAwkWrapper;
 import de.bund.bva.isyfact.common.web.global.AbstractGuiController;
 import de.bund.bva.isyfact.common.web.global.AbstractMaskenModel;
 import de.bund.bva.isyfact.common.web.global.MessageController;
@@ -50,6 +51,8 @@ public abstract class AbstractBenutzerverwaltungController<T extends AbstractMas
 
     private RollenverwaltungAwkWrapper rollenverwaltungAwkWrapper;
 
+    private SelfServiceAwkWrapper selfServiceAwkWrapper;
+
     private MessageController messageController;
 
     private ValidationController validationController;
@@ -70,6 +73,15 @@ public abstract class AbstractBenutzerverwaltungController<T extends AbstractMas
     @Required
     public void setRollenverwaltungAwkWrapper(RollenverwaltungAwkWrapper rollenverwaltungAwkWrapper) {
         this.rollenverwaltungAwkWrapper = rollenverwaltungAwkWrapper;
+    }
+
+    public SelfServiceAwkWrapper getSelfServiceAwkWrapper() {
+        return selfServiceAwkWrapper;
+    }
+
+    @Required
+    public void setSelfServiceAwkWrapper(SelfServiceAwkWrapper selfServiceAwkWrapper) {
+        this.selfServiceAwkWrapper = selfServiceAwkWrapper;
     }
 
     protected MessageController getMessageController() {
