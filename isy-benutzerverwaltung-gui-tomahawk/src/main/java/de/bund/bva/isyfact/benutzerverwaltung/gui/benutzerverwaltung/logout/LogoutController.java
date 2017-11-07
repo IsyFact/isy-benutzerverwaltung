@@ -58,7 +58,7 @@ public class LogoutController extends AbstractBenutzerverwaltungController<Logou
             aufrufKontextVerwalter.getAufrufKontext().getDurchfuehrenderSachbearbeiterName());
 
         try {
-            getAwkWrapper().speichereAbmeldung(
+            getBenutzerverwaltungAwkWrapper().speichereAbmeldung(
                 aufrufKontextVerwalter.getAufrufKontext().getDurchfuehrenderBenutzerKennung());
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         } catch (BenutzerverwaltungBusinessException validationException) {

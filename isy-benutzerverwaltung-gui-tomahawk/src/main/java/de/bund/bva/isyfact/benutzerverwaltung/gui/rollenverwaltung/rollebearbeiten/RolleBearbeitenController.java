@@ -21,15 +21,15 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.rollebearbei
  */
 
 
+import java.util.Objects;
+
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungValidationException;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.common.controller.AbstractBenutzerverwaltungController;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.RolleModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.konstanten.HinweisSchluessel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel;
 import de.bund.bva.pliscommon.sicherheit.Sicherheit;
 import de.bund.bva.pliscommon.util.spring.MessageSourceHolder;
 import org.springframework.beans.factory.annotation.Required;
-
-import java.util.Objects;
 
 /**
  * Controller zum Bearbeiten von Rollen.
@@ -62,8 +62,8 @@ public class RolleBearbeitenController extends AbstractBenutzerverwaltungControl
      */
     public void aendereRolle(RolleBearbeitenModel model) {
         try {
-            RolleModel ergebnis =
-                getAwkWrapper().aendereRolle(model.getRollenIdVorVerarbeitung(), model.getRolle());
+            RolleModel ergebnis = getRollenverwaltungAwkWrapper()
+                .aendereRolle(model.getRollenIdVorVerarbeitung(), model.getRolle());
             getMessageController().writeSuccessMessage(MessageSourceHolder
                 .getMessage(HinweisSchluessel.ROLLE_GEAENDERT, ergebnis.getRollenId()));
             if (!Objects.equals(ergebnis.getRollenId(), model.getRollenIdVorVerarbeitung())) {

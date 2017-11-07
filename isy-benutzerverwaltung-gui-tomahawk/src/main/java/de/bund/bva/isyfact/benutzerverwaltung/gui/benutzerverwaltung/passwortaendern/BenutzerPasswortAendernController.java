@@ -1,4 +1,4 @@
-package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerpasswortzuruecksetzen;
+package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.passwortaendern;
 
 /*-
  * #%L
@@ -25,33 +25,37 @@ import java.util.Arrays;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.ValidierungSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.common.controller.AbstractBenutzerverwaltungController;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.konstanten.HinweisSchluessel;
+import de.bund.bva.isyfact.benutzerverwaltung.sicherheit.BenutzerverwaltungAufrufKontextImpl;
 import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
+import de.bund.bva.pliscommon.aufrufkontext.AufrufKontextVerwalter;
 import de.bund.bva.pliscommon.util.spring.MessageSourceHolder;
+import org.springframework.beans.factory.annotation.Required;
 
 /**
- * Controller zum Zurücksetzen des Passworts.
+ * Controller zum Ändern des eigenen Passworts.
  *
  * @author msg systems ag, Björn Saxe
  */
-public class BenutzerPasswortZuruecksetzenController
-    extends AbstractBenutzerverwaltungController<BenutzerPasswortZuruecksetzenModel> {
+public class BenutzerPasswortAendernController
+    extends AbstractBenutzerverwaltungController<BenutzerPasswortAendernModel> {
 
-    public void setzeBenutzer(BenutzerPasswortZuruecksetzenModel model, BenutzerModel benutzer) {
-        model.setBenutzername(benutzer.getBenutzername());
-    }
+    AufrufKontextVerwalter<BenutzerverwaltungAufrufKontextImpl> aufrufKontextVerwalter;
 
-    public void setzePasswortZurueck(BenutzerPasswortZuruecksetzenModel model) {
+    public void setzePasswort(BenutzerPasswortAendernModel model) {
 
-        if (model.getPasswort().equals(model.getPasswortWiederholung())) {
+        if (model.getNeuesPasswort().equals(model.getNeuesPasswortWiederholung())) {
+            String benutzername =
+                getAufrufKontextVerwalter().getAufrufKontext().getDurchfuehrenderBenutzerKennung();
+
             try {
                 getBenutzerverwaltungAwkWrapper()
-                    .setzePasswortZurueck(model.getBenutzername(), model.getPasswort(),
-                        model.getPasswortWiederholung());
+                    .setzePasswort(benutzername, model.getAltesPasswort(), model.getNeuesPasswort(),
+                        model.getNeuesPasswortWiederholung());
 
                 getMessageController().writeSuccessMessage(
-                    MessageSourceHolder.getMessage(HinweisSchluessel.BENUTZER_PASSWORT_ZURUECKGESETZT));
+                    MessageSourceHolder.getMessage(HinweisSchluessel.BENUTZER_AKTUALISIERT, benutzername));
+
             } catch (BenutzerverwaltungBusinessException exception) {
                 zeigeNachricht(exception);
             }
@@ -61,18 +65,27 @@ public class BenutzerPasswortZuruecksetzenController
                     MessageSourceHolder
                         .getMessage(ValidierungSchluessel.MSG_PASSWORT_AENDERN_UNTERSCHIEDLICH))));
         }
-
     }
 
     @Override
-    protected Class<BenutzerPasswortZuruecksetzenModel> getMaskenModelKlasseZuController() {
-        return BenutzerPasswortZuruecksetzenModel.class;
+    protected Class<BenutzerPasswortAendernModel> getMaskenModelKlasseZuController() {
+        return BenutzerPasswortAendernModel.class;
     }
 
     /**
      * @see de.bund.bva.isyfact.common.web.global.RfGuiController#initialisiereModel(de.bund.bva.isyfact.common.web.global.AbstractMaskenModel)
      */
     @Override
-    public void initialisiereModel(BenutzerPasswortZuruecksetzenModel model) {
+    public void initialisiereModel(BenutzerPasswortAendernModel model) {
+    }
+
+    public AufrufKontextVerwalter<BenutzerverwaltungAufrufKontextImpl> getAufrufKontextVerwalter() {
+        return aufrufKontextVerwalter;
+    }
+
+    @Required
+    public void setAufrufKontextVerwalter(
+        AufrufKontextVerwalter<BenutzerverwaltungAufrufKontextImpl> aufrufKontextVerwalter) {
+        this.aufrufKontextVerwalter = aufrufKontextVerwalter;
     }
 }

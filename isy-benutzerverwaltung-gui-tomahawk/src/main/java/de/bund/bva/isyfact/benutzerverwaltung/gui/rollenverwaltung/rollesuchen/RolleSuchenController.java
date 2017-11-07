@@ -26,9 +26,9 @@ import de.bund.bva.isyfact.benutzerverwaltung.common.exception.Benutzerverwaltun
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungValidationException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.FehlerSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.RolleSortierattribut;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.RolleModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.controller.AbstractSuchDataTableController;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.konstanten.HinweisSchluessel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.SuchergebnisModel;
 import de.bund.bva.isyfact.common.web.jsf.components.datatable.DataTablePaginationModel.PaginationType;
 import de.bund.bva.pliscommon.sicherheit.Sicherheit;
@@ -70,7 +70,7 @@ public class RolleSuchenController extends AbstractSuchDataTableController<Rolle
     @Override
     protected SuchergebnisModel<RolleModel> sucheEntitaet(RolleSuchkriterienModel kriterien, Sortierung sortierung,
 	    Paginierung paginierung) throws BenutzerverwaltungValidationException {
-	return getAwkWrapper().sucheRollen(kriterien, sortierung, paginierung);
+        return getRollenverwaltungAwkWrapper().sucheRollen(kriterien, sortierung, paginierung);
     }
     
     /**
@@ -81,7 +81,7 @@ public class RolleSuchenController extends AbstractSuchDataTableController<Rolle
      */
     public boolean rolleLoeschen(RolleSuchenModel model) {
         try {
-            getAwkWrapper().loescheRolle(model.getAusgewaehlterTreffer());
+            getRollenverwaltungAwkWrapper().loescheRolle(model.getAusgewaehlterTreffer().getRollenId());
             // Das Leeren des Caches zwingt alle Benutzer intern zur erneuten Anmeldung.
             // Der gelöschte Benutzer stößt auf einen Fehler und ist so nicht mehr angemeldet.
             //sicherheit.leereCache();

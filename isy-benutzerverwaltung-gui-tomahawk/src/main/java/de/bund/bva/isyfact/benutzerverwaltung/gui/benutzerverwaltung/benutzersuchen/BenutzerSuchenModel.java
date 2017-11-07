@@ -20,11 +20,11 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzersu
  * #L%
  */
 
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.AbstractSuchDataTableModel;
-
-import javax.faces.model.SelectItem;
 import java.util.List;
+import javax.faces.model.SelectItem;
+
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.AbstractSuchDataTableModel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel;
 
 /**
  * @author msg systems ag, Björn Saxe

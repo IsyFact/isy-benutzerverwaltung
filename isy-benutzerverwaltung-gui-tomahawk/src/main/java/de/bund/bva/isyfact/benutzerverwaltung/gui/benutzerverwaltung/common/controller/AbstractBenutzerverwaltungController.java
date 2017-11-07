@@ -20,18 +20,20 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.common.con
  * #L%
  */
 
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.validation.ConstraintViolation;
+
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungValidationException;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.BenutzerverwaltungAwkWrapper;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.awkwrapper.RollenverwaltungAwkWrapper;
 import de.bund.bva.isyfact.common.web.global.AbstractGuiController;
 import de.bund.bva.isyfact.common.web.global.AbstractMaskenModel;
 import de.bund.bva.isyfact.common.web.global.MessageController;
 import de.bund.bva.isyfact.common.web.validation.ValidationController;
 import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
-
-import javax.validation.ConstraintViolation;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Required;
 
 /**
  * Diese Klasse bietet einen zentralen Zugriff für alle Controller auf den
@@ -39,39 +41,51 @@ import java.util.stream.Collectors;
  *
  * @author Capgemini, Jonas Zitz
  * @version $Id: AbstractBenutzerverwaltungController.java 41870 2013-07-25
- *          13:54:34Z jozitz $
+ * 13:54:34Z jozitz $
  */
 public abstract class AbstractBenutzerverwaltungController<T extends AbstractMaskenModel>
-	extends AbstractGuiController<T> {
+    extends AbstractGuiController<T> {
 
-    private BenutzerverwaltungAwkWrapper awkWrapper;
+    private BenutzerverwaltungAwkWrapper benutzerverwaltungAwkWrapper;
+
+    private RollenverwaltungAwkWrapper rollenverwaltungAwkWrapper;
 
     private MessageController messageController;
 
     private ValidationController validationController;
 
-    protected BenutzerverwaltungAwkWrapper getAwkWrapper() {
-	return awkWrapper;
+    protected BenutzerverwaltungAwkWrapper getBenutzerverwaltungAwkWrapper() {
+        return benutzerverwaltungAwkWrapper;
     }
 
-    public void setAwkWrapper(BenutzerverwaltungAwkWrapper awkWrapper) {
-	this.awkWrapper = awkWrapper;
+    @Required
+    public void setBenutzerverwaltungAwkWrapper(BenutzerverwaltungAwkWrapper benutzerverwaltungAwkWrapper) {
+        this.benutzerverwaltungAwkWrapper = benutzerverwaltungAwkWrapper;
+    }
+
+    public RollenverwaltungAwkWrapper getRollenverwaltungAwkWrapper() {
+        return rollenverwaltungAwkWrapper;
+    }
+
+    @Required
+    public void setRollenverwaltungAwkWrapper(RollenverwaltungAwkWrapper rollenverwaltungAwkWrapper) {
+        this.rollenverwaltungAwkWrapper = rollenverwaltungAwkWrapper;
     }
 
     protected MessageController getMessageController() {
-	return messageController;
+        return messageController;
     }
 
     public void setMessageController(MessageController messageController) {
-	this.messageController = messageController;
+        this.messageController = messageController;
     }
 
     public ValidationController getValidationController() {
-	return validationController;
+        return validationController;
     }
 
     public void setValidationController(ValidationController validationController) {
-	this.validationController = validationController;
+        this.validationController = validationController;
     }
 
     /**
@@ -79,39 +93,39 @@ public abstract class AbstractBenutzerverwaltungController<T extends AbstractMas
      * Anwendungskerns.
      *
      * @param exception
-     *            Ausnahme des Anwendungskerns
+     *     Ausnahme des Anwendungskerns
      */
     protected void zeigeNachricht(BenutzerverwaltungBusinessException exception) {
-	if (exception instanceof BenutzerverwaltungValidationException) {
-	    BenutzerverwaltungValidationException validationException = (BenutzerverwaltungValidationException) exception;
+        if (exception instanceof BenutzerverwaltungValidationException) {
+            BenutzerverwaltungValidationException validationException =
+                (BenutzerverwaltungValidationException) exception;
 
-	    List<ValidationMessage> validationMessages = validationException.getFehler().stream()
-		    									.map(this::toValidationMessage)
-		    									.collect(Collectors.toList());
-	    
-	    getValidationController().processValidationMessages(validationMessages);
-	} else {
-	    getMessageController().writeErrorMessage(exception.getFehlertext(), exception.getFehlertext());
-	}
+            List<ValidationMessage> validationMessages =
+                validationException.getFehler().stream().map(this::toValidationMessage)
+                    .collect(Collectors.toList());
+
+            getValidationController().processValidationMessages(validationMessages);
+        } else {
+            getMessageController().writeErrorMessage(exception.getFehlertext(), exception.getFehlertext());
+        }
     }
 
     private ValidationMessage toValidationMessage(ConstraintViolation<?> violation) {
-	String reference = violation.getPropertyPath().toString();
+        String reference = violation.getPropertyPath().toString();
 
-	// Sonderfälle für Validation-Annotationen, die an einer Klasse stehen,
-	// da dort kein PropertyPath gesetzt wird
-	if (reference.isEmpty()) {
-	    String rootBeanClassName = violation.getRootBeanClass().getName().toLowerCase();
-	    // Passwort
-	    if (rootBeanClassName.contains("passwort"))
-	    {
-		reference = "passwort";
-	    }
-	}
+        // Sonderfälle für Validation-Annotationen, die an einer Klasse stehen,
+        // da dort kein PropertyPath gesetzt wird
+        if (reference.isEmpty()) {
+            String rootBeanClassName = violation.getRootBeanClass().getName().toLowerCase();
+            // Passwort
+            if (rootBeanClassName.contains("passwort")) {
+                reference = "passwort";
+            }
+        }
 
-	String messageText = violation.getMessage();
+        String messageText = violation.getMessage();
 
-	return new ValidationMessage("VA", reference, reference, messageText);
+        return new ValidationMessage("VA", reference, reference, messageText);
     }
 
 }
