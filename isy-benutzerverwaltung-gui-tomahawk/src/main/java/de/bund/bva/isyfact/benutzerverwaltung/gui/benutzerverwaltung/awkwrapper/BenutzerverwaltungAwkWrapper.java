@@ -20,6 +20,8 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper
  * #L%
  */
 
+import java.util.List;
+
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Paginierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
@@ -30,12 +32,9 @@ import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.daten.BenutzerBearbeitenSelbst;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerbearbeiten.BenutzerBearbeitenModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzersuchen.BenutzerSuchkriterienModel;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.RolleModel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.SuchergebnisModel;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.rollesuchen.RolleSuchkriterienModel;
-
-import java.util.List;
 
 /**
  * Anwendungskern-Wrapper fuer die Benutzerverwaltung-Komponente. Diese Komponente bietet die Moeglichkeit zur
@@ -141,56 +140,6 @@ public interface BenutzerverwaltungAwkWrapper {
     void loescheBenutzer(BenutzerModel benutzer) throws BenutzerverwaltungBusinessException;
 
     /**
-     * Legt eine neue Rolle an.
-     *
-     * @param rolleModel Daten der neuen Rolle
-     * @return die neue Rolle.
-     * @throws BenutzerverwaltungValidationException falls die Eingabedaten ungültig sind.
-     */
-    RolleModel legeRolleAn(RolleModel rolleModel) throws BenutzerverwaltungValidationException;
-
-    /**
-     * Liest eine Rolle anhand ihrer Rollen-ID aus.
-     *
-     * @param rolleId ID der Rolle
-     * @return die Daten der Rolle, falls vorhanden, oder {@code null}.
-     * @throws BenutzerverwaltungBusinessException falls die Rolle nicht existiert.
-     */
-    RolleModel leseRolle(String rolleId) throws BenutzerverwaltungBusinessException;
-
-    /**
-     * Sucht Rollen anhand von Suchkriterien und sortiert die Treffer
-     * anschließend nach eines Sortierattributs.
-     *
-     * @param filter      enthält die Suchkriterien
-     * @param sortierung  enthält das Sortierattribut und die Reihenfolge der Sortierung (aufsteigend,
-     *                    absteigend)
-     * @param paginierung enthält den ersten Treffer und die maximale Größe der Trefferliste
-     * @return eine sortierte Liste von Rollen.
-     * @throws BenutzerverwaltungValidationException falls die Eingabedaten ungültig sind.
-     */
-    SuchergebnisModel<RolleModel> sucheRollen(RolleSuchkriterienModel filter, Sortierung sortierung,
-        Paginierung paginierung) throws BenutzerverwaltungValidationException;
-
-    /**
-     * Liefert eine Liste mit allen im System vorhandenen Rollen.
-     *
-     * @return Liste mit Rollen
-     */
-    List<RolleModel> getRollen();
-
-    /**
-     * Ändert die Daten einer Rolle.
-     *
-     * @param rolleId ID der Rolle
-     * @param rolleModel neue Daten der Rolle
-     * @return die aktualisierte Rolle.
-     * @throws BenutzerverwaltungValidationException falls die Eingabedaten ungültig sind.
-     */
-    RolleModel aendereRolle(String rolleId, RolleModel rolleModel)
-        throws BenutzerverwaltungValidationException;
-
-    /**
      * Weist einer Menge von Benutzern eine Rolle zu.
      *
      * @param rolle         Rolle
@@ -209,12 +158,4 @@ public interface BenutzerverwaltungAwkWrapper {
      */
     void entzieheRolle(RolleModel rolle, List<String> benutzernamen)
         throws BenutzerverwaltungBusinessException;
-
-    /**
-     * Löscht eine Rolle.
-     *
-     * @param rolle Daten der zu löschenden Rolle
-     * @throws BenutzerverwaltungValidationException falls die Eingabedaten ungültig sind.
-     */
-    void loescheRolle(RolleModel rolle) throws BenutzerverwaltungBusinessException;
 }

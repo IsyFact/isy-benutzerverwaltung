@@ -31,7 +31,7 @@
          class="de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.rollebearbeiten.RolleBearbeitenModel"/>
 
     <input name="ausgewaehlteRolle"
-           type="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.RolleModel"/>
+           type="de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel"/>
 
     <on-start>
         <evaluate

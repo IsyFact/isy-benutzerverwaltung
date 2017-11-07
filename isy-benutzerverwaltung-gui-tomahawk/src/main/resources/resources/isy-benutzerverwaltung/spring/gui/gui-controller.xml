@@ -38,7 +38,8 @@
     <bean abstract="true"
           class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.common.controller.AbstractBenutzerverwaltungController"
           id="abstractBenutzerverwaltungController">
-        <property name="awkWrapper" ref="isy-benutzerverwaltung_benutzerverwaltungAwkWrapper"/>
+        <property name="benutzerverwaltungAwkWrapper" ref="benutzerverwaltungAwkWrapper"/>
+        <property name="rollenverwaltungAwkWrapper" ref="rollenverwaltungAwkWrapper"/>
         <property name="messageController" ref="messageController"/>
         <property name="validationController" ref="validationController"/>
     </bean>
@@ -46,7 +47,8 @@
     <bean abstract="true"
           class="de.bund.bva.isyfact.benutzerverwaltung.gui.common.controller.AbstractSuchDataTableController"
           id="abstractSuchDataTableController">
-        <property name="awkWrapper" ref="isy-benutzerverwaltung_benutzerverwaltungAwkWrapper"/>
+        <property name="benutzerverwaltungAwkWrapper" ref="benutzerverwaltungAwkWrapper"/>
+        <property name="rollenverwaltungAwkWrapper" ref="rollenverwaltungAwkWrapper"/>
         <property name="messageController" ref="messageController"/>
         <property name="validationController" ref="validationController"/>
     </bean>
@@ -76,18 +78,18 @@
     </bean>
     
     <bean id="benutzerPasswortZuruecksetzenController"
-          class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerpasswortzuruecksetzen.BenutzerPasswortZuruecksetzenController"
+          class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.passwortzuruecksetzen.BenutzerPasswortZuruecksetzenController"
           parent="abstractBenutzerverwaltungController">
     </bean>
     
     <bean id="benutzerPasswortAendernController"
-          class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerpasswortaendern.BenutzerPasswortAendernController"
+          class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.passwortaendern.BenutzerPasswortAendernController"
           parent="abstractBenutzerverwaltungController">
     	<property name="aufrufKontextVerwalter" ref="aufrufKontextVerwalter"/>
     </bean>
 
     <bean id="rolleZuweisenController"
-          class="de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.rollezuweisen.RolleZuweisenController"
+          class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.rollenzuweisung.RollenZuweisungController"
           parent="abstractSuchDataTableController">
     </bean>
     

@@ -28,7 +28,7 @@
     <secured attributes="Benutzerverwaltung.Benutzer.Aendern"/>
     
     <var name="rolleZuweisenModel"
-         class="de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.rollezuweisen.RolleZuweisenModel"/>
+         class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.rollenzuweisung.RollenZuweisungModel"/>
 
     <on-start>
          <evaluate expression="rolleZuweisenController.initialisiereModel(rolleZuweisenModel)"/>

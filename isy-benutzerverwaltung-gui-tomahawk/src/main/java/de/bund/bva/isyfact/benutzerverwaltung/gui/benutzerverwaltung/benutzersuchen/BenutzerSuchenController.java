@@ -20,15 +20,14 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzersu
  * #L%
  */
 
-
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Paginierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungValidationException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.FehlerSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSortierattribut;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.controller.AbstractSuchDataTableController;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.SuchergebnisModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.util.AuswahlHelper;
 import de.bund.bva.isyfact.common.web.jsf.components.datatable.DataTableModel.DatatableOperationMode;
@@ -41,12 +40,12 @@ import org.springframework.dao.DataIntegrityViolationException;
  * @author msg systems ag, Björn Saxe
  */
 public class BenutzerSuchenController extends
-	AbstractSuchDataTableController<BenutzerModel, BenutzerSuchkriterienModel, BenutzerSuchenModel, BenutzerSortierattribut> {
+    AbstractSuchDataTableController<BenutzerModel, BenutzerSuchkriterienModel, BenutzerSuchenModel, BenutzerSortierattribut> {
 
     private Sicherheit<?> sicherheit;
 
     public void filterZuruecksetzen(BenutzerSuchenModel model) {
-	model.setSuchkriterien(new BenutzerSuchkriterienModel());
+        model.setSuchkriterien(new BenutzerSuchkriterienModel());
     }
 
     /**
@@ -54,54 +53,57 @@ public class BenutzerSuchenController extends
      * Filter zurueckgesetzt und DropDown-Menues mit Werten belegt.
      *
      * @param model
-     *            das Model.
+     *     das Model.
      */
     public void initialisiereModel(BenutzerSuchenModel model) {
-	if (model.getSuchkriterien() == null) {
-	    model.setMode(DatatableOperationMode.SERVER);
+        if (model.getSuchkriterien() == null) {
+            model.setMode(DatatableOperationMode.SERVER);
 
-	    model.setVerfuegbareRollen(AuswahlHelper.erstelleRollenDropDown(getAwkWrapper().getRollen()));
-	    model.setVerfuegbareBenutzerStatus(AuswahlHelper.erstelleBenutzerStatusDropDown());
+            model.setVerfuegbareRollen(
+                AuswahlHelper.erstelleRollenDropDown(getRollenverwaltungAwkWrapper().leseAlleRollen()));
+            model.setVerfuegbareBenutzerStatus(AuswahlHelper.erstelleBenutzerStatusDropDown());
 
-	    model.setSuchkriterien(new BenutzerSuchkriterienModel());
-	    model.getSortModel().setProperty(BenutzerSortierattribut.NACHNAME.name());
-	    model.getPaginationModel().setType(PaginationType.NORMAL);
-	    model.getPaginationModel().setPageSize(10);
-	}
+            model.setSuchkriterien(new BenutzerSuchkriterienModel());
+            model.getSortModel().setProperty(BenutzerSortierattribut.NACHNAME.name());
+            model.getPaginationModel().setType(PaginationType.NORMAL);
+            model.getPaginationModel().setPageSize(10);
+        }
     }
 
     /**
      * Löscht einen Benutzer.
      *
-     * @param model Benutzer, der gelöscht werden soll
+     * @param model
+     *     Benutzer, der gelöscht werden soll
      */
     public boolean benutzerLoeschen(BenutzerSuchenModel model) {
-	try {
-	    getAwkWrapper().loescheBenutzer(model.getAusgewaehlterTreffer());
-	    // Das Leeren des Caches zwingt alle Benutzer intern zur erneuten
-	    // Anmeldung.
-	    // Der gelöschte Benutzer stößt auf einen Fehler und ist so nicht
-	    // mehr angemeldet.
-	    sicherheit.leereCache();
-	    return true;
-	} catch (DataIntegrityViolationException e) {
-	    zeigeNachricht(new BenutzerverwaltungBusinessException(FehlerSchluessel.BENUTZER_LOESCHEN_NICHT_MOEGLICH,
-		    model.getAusgewaehlterTreffer().getBenutzername()));
-	    return false;
-	} catch (BenutzerverwaltungBusinessException exception) {
-	    zeigeNachricht(exception);
-	    return false;
-	}
+        try {
+            getBenutzerverwaltungAwkWrapper().loescheBenutzer(model.getAusgewaehlterTreffer());
+            // Das Leeren des Caches zwingt alle Benutzer intern zur erneuten
+            // Anmeldung.
+            // Der gelöschte Benutzer stößt auf einen Fehler und ist so nicht
+            // mehr angemeldet.
+            sicherheit.leereCache();
+            return true;
+        } catch (DataIntegrityViolationException e) {
+            zeigeNachricht(
+                new BenutzerverwaltungBusinessException(FehlerSchluessel.BENUTZER_LOESCHEN_NICHT_MOEGLICH,
+                    model.getAusgewaehlterTreffer().getBenutzername()));
+            return false;
+        } catch (BenutzerverwaltungBusinessException exception) {
+            zeigeNachricht(exception);
+            return false;
+        }
     }
 
     @Override
     protected SuchergebnisModel<BenutzerModel> sucheEntitaet(BenutzerSuchkriterienModel kriterien,
-	    Sortierung sortierung, Paginierung paginierung) throws BenutzerverwaltungValidationException {
-	return getAwkWrapper().sucheBenutzer(kriterien, sortierung, paginierung);
+        Sortierung sortierung, Paginierung paginierung) throws BenutzerverwaltungValidationException {
+        return getBenutzerverwaltungAwkWrapper().sucheBenutzer(kriterien, sortierung, paginierung);
     }
 
     @Required
     public void setSicherheit(Sicherheit<?> sicherheit) {
-	this.sicherheit = sicherheit;
+        this.sicherheit = sicherheit;
     }
 }
