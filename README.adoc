@@ -25,8 +25,6 @@ link:/isy-benutzerverwaltung-core/src/docs/asciidoc/isy-benutzerverwaltung-core.
 
 link:/isy-benutzerverwaltung-sicherheit/src/docs/asciidoc/isy-benutzerverwaltung-sicherheit.adoc[Dokumentation `isy-benutzeverrwaltung-sicherheit`]
 
-link:/isy-benutzerverwaltung-gui-primefaces/src/docs/asciidoc/isy-benutzerverwaltung-gui-primefaces.adoc[Dokumentation `isy-benutzvererwaltung-gui-primefaces`]
-
 link:/isy-benutzerverwaltung-gui-tomahawk/src/docs/asciidoc/isy-benutzerverwaltung-gui-tomahawk.adoc[Dokumentation `isy-benutzerverwaltung-gui-tomahawk`]
 
 ////
@@ -35,16 +33,5 @@ link:/isy-benutzerverwaltung-gui-tomahawk/src/docs/asciidoc/isy-benutzerverwaltu
 === GUI allgemein
 * Inhalt der `gui-linksnavigation.properties` in die entsprechende Datei der Anwendung kopieren und die Liste der IDs zusammenführen.
 * Inhalt der `navigation.xml` mit der entsprechenden Datei der Anwendung zusammenführen.
-
-=== GUI mit Primefaces
-* `basis.xhtml` der Bibliothek `plis-web` überschreiben und Import von `jQuery` herausnehmen.
-
-.Konfiguration der FontAwesome-Icons
-[source,xml]
-----
-<context-param>
-    <param-name>primefaces.FONT_AWESOME</param-name>
-    <param-value>true</param-value>
-</context-param>
 ----
 ////
