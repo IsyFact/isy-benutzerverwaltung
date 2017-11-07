@@ -18,7 +18,6 @@
         <module>isy-benutzerverwaltung-core</module>
         <module>isy-benutzerverwaltung-sicherheit</module>
         <module>isy-benutzerverwaltung-gui-tomahawk</module>
-        <module>isy-benutzerverwaltung-gui-primefaces</module>
     </modules>
 
     <dependencyManagement>
