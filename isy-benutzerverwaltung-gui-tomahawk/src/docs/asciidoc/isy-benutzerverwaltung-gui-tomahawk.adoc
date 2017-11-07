@@ -12,7 +12,7 @@ Einbinden von _isy-benutzerverwaltung-gui-tomahawk_
 Für die Benutzerverwaltung existieren zwei Module, die eine Verwaltungsoberfläche für die Benutzerverwaltung umsetzen.
 Damit können Benutzer gegen eine lokale Datenbank authentifiziert und Benutzer und Rollen angelegt, bearbeitet, gesucht und gelöscht werden.
 Zusätzlich können Benutzern Rollen zugewiesen und Passwörter geändert werden.
-Das Modul `isy-benutzerverwaltung-gui-tomahawk` nutzt die GUI-Komponenten aus der `plis-web`-Bibliothek auf der Grundlage von _Apache MyFaces Tomahawk_.
+Das Modul `isy-benutzerverwaltung-gui-tomahawk` nutzt die GUI-Komponenten aus der `isy-web`-Bibliothek auf der Grundlage von _Apache MyFaces Tomahawk_.
 
 Im Folgenden wird beschrieben, wie das Modul `isy-benutzerverwaltung-gui-tomahawk` in die eigene Anwendung integriert wird.
 
@@ -50,7 +50,7 @@ Die Spring-Konfiguration von `isy-benutzerverwaltung-gui-tomahawk` wird folgende
 Maskentexte
 ~~~~~~~~~~~
 
-Um den Titel der Anwendung auf den Seiten der Benutzerverwaltungs zu setzen gibt es mehrere Möglichkeiten.
+Um den Titel der Anwendung auf den Seiten der Benutzerverwaltung zu setzen gibt es mehrere Möglichkeiten.
 Eine davon ist die Datei `/WEB-INF/gui/common/seitenelemente/messageRessources.xhtml` in der eigenen Anwendung zu überschreiben und darin eine eigene _Properties_-Datei für den Anwendungstitel zu laden.
 
 ./WEB-INF/gui/common/seitenelemente/messageRessources.xhtml

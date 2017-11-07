@@ -130,9 +130,9 @@ Die E-Mail-Konfiguration des Self-Service verwendet folgende Properties:
 | selfservice.mail.subject         | `Selfservice zum Zurücksetzen Ihres Passworts` | Text für Betreffzeile der E-Mail
 | selfservice.mail.body            | `Über folgenden Link setzen Sie Ihr Passwort zurueck:\n\n$link` | Text für den Body der E-Mail.
                                                                                                      Muss Platzhalter `$link` enthalten.
-| selfservice.mail.link            | `http://example.com/selfServicePasswortZuruecksetzenFlow`       | Text für den `$link`-Platzhalter im Body der E-Mail.
-                                                                                                     Der Link muss zum `selfServicePasswortZuruecksetzenFlow` führen.
-                                                                                                     An diesen Text wird das Token angehängt und der Link muss entsprechend auf `?token=` oder `&token=` enden.
+| selfservice.mail.link            | `http://example.com/selfServicePasswortZuruecksetzenFlow?token=` | Text für den `$link`-Platzhalter im Body der E-Mail.
+                                                                                                        Der Link muss zum `selfServicePasswortZuruecksetzenFlow` führen.
+                                                                                                        An diesen Text wird das Token angehängt und der Link muss entsprechend auf `?token=` oder `&token=` enden.
 |=====
 
 Eine Beispieldatei mit allen Properties liegt unter `src/main/resources/config/selfServiceMail.properties`.
