@@ -1,8 +1,8 @@
-package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerpasswortzuruecksetzen;
+package de.bund.bva.isyfact.benutzerverwaltung.gui.selfservice.passwortzuruecksetzen;
 
 /*-
  * #%L
- * IsyFact Benutzerverwaltung GUI mit Tomahawk
+ * IsyFact Benutzerverwaltung GUI mit Primefaces
  * %%
  * Copyright (C) 2016 - 2017 Bundesverwaltungsamt (BVA)
  * %%
@@ -20,40 +20,58 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerpa
  * #L%
  */
 
+
 import java.util.Arrays;
 
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.ValidierungSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.common.controller.AbstractBenutzerverwaltungController;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.konstanten.HinweisSchluessel;
 import de.bund.bva.isyfact.common.web.validation.ValidationMessage;
 import de.bund.bva.pliscommon.util.spring.MessageSourceHolder;
 
 /**
- * Controller zum Zurücksetzen des Passworts.
+ * Controller zum Bearbeiten von Benutzern.
  *
- * @author msg systems ag, Björn Saxe
+ * @author msg systems ag, Bjoern Saxe
+ * @author msg systems ag, Alexander Salvanos
  */
-public class BenutzerPasswortZuruecksetzenController
-    extends AbstractBenutzerverwaltungController<BenutzerPasswortZuruecksetzenModel> {
+public class SelfServicePasswortZuruecksetzenController
+    extends AbstractBenutzerverwaltungController<SelfServicePasswortZuruecksetzenModel> {
 
-    public void setzeBenutzer(BenutzerPasswortZuruecksetzenModel model, BenutzerModel benutzer) {
-        model.setBenutzername(benutzer.getBenutzername());
+    @Override
+    public void initialisiereModel(SelfServicePasswortZuruecksetzenModel model) {
+        model.setPasswortZurueckgesetzt(false);
+        model.setTokenGueltig(false);
     }
 
-    public void setzePasswortZurueck(BenutzerPasswortZuruecksetzenModel model) {
+    @Override
+    protected Class<SelfServicePasswortZuruecksetzenModel> getMaskenModelKlasseZuController() {
+        return SelfServicePasswortZuruecksetzenModel.class;
+    }
 
+    public void ueberpruefeToken(SelfServicePasswortZuruecksetzenModel model, String token) {
+        try {
+            String benutzername = getSelfServiceAwkWrapper().holeBenutzernameZuToken(token);
+            model.setTokenGueltig(true);
+            model.setBenutzername(benutzername);
+        } catch (BenutzerverwaltungBusinessException e) {
+            getMessageController().writeErrorMessage(
+                MessageSourceHolder.getMessage(HinweisSchluessel.SELFSERVICE_TOKEN_UNGUELTIG),
+                MessageSourceHolder.getMessage(HinweisSchluessel.SELFSERVICE_TOKEN_UNGUELTIG));
+        }
+    }
+
+    public void passwortZuruecksetzen(SelfServicePasswortZuruecksetzenModel model) {
         if (model.getPasswort().equals(model.getPasswortWiederholung())) {
             try {
-                getBenutzerverwaltungAwkWrapper()
-                    .setzePasswortZurueck(model.getBenutzername(), model.getPasswort(),
-                        model.getPasswortWiederholung());
-
+                getSelfServiceAwkWrapper().passwortZuruecksetzen(model.getBenutzername(), model.getPasswort(),
+                    model.getPasswortWiederholung());
                 getMessageController().writeSuccessMessage(
                     MessageSourceHolder.getMessage(HinweisSchluessel.BENUTZER_PASSWORT_ZURUECKGESETZT));
-            } catch (BenutzerverwaltungBusinessException exception) {
-                zeigeNachricht(exception);
+                model.setPasswortZurueckgesetzt(true);
+            } catch (BenutzerverwaltungBusinessException e) {
+                zeigeNachricht(e);
             }
         } else {
             getValidationController().processValidationMessages(Arrays.asList(
@@ -61,18 +79,6 @@ public class BenutzerPasswortZuruecksetzenController
                     MessageSourceHolder
                         .getMessage(ValidierungSchluessel.MSG_PASSWORT_AENDERN_UNTERSCHIEDLICH))));
         }
-
     }
 
-    @Override
-    protected Class<BenutzerPasswortZuruecksetzenModel> getMaskenModelKlasseZuController() {
-        return BenutzerPasswortZuruecksetzenModel.class;
-    }
-
-    /**
-     * @see de.bund.bva.isyfact.common.web.global.RfGuiController#initialisiereModel(de.bund.bva.isyfact.common.web.global.AbstractMaskenModel)
-     */
-    @Override
-    public void initialisiereModel(BenutzerPasswortZuruecksetzenModel model) {
-    }
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+  #%L
+  IsyFact Benutzerverwaltung GUI mit Primefaces
+  %%
+  Copyright (C) 2016 - 2017 Bundesverwaltungsamt (BVA)
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+                template="/WEB-INF/gui/benutzerverwaltung/common/benutzerverwaltung-applikation.xhtml">
+
+    <ui:define name="inhaltsbereich">
+        <isy:panelGroup>
+            <isy:panel>
+                <f:facet name="panelHeader">
+                    #{msg_isyBenutzerverwaltung.MEL_PasswortAendern}
+                </f:facet>
+                <f:facet name="panelBody">
+                    <div class="form-horizontal">
+                        <div class="row-fluid">
+                            <div class="col-lg-6">
+                                <isy:formInput reference="email"
+                                               value="#{selfServicePasswortAnfordernModel.email}"
+                                               label="#{msg_isyBenutzerverwaltung.MEL_benutzer_emailAdresse}"
+                                               labelStyleClass="col-lg-4"
+                                               inputStyleClass="col-lg-8"
+                                               required="true"
+                                               id="email"/>
+                                <div class="pull-right">
+                                    <isy:button id="performSelfServicePasswortAnfordern"
+                                                value="#{msg_isyBenutzerverwaltung.MEL_Selfservice_PasswortZuruecksetzen}"
+                                                action="selfServicePasswortAnfordern"
+                                                ajax="false"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </f:facet>
+            </isy:panel>
+        </isy:panelGroup>
+    </ui:define>
+
+</ui:composition>

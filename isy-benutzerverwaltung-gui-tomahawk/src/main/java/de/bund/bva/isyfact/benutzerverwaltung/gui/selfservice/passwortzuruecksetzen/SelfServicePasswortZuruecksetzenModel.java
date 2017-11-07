@@ -1,8 +1,8 @@
-package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerpasswortzuruecksetzen;
+package de.bund.bva.isyfact.benutzerverwaltung.gui.selfservice.passwortzuruecksetzen;
 
 /*-
  * #%L
- * IsyFact Benutzerverwaltung GUI mit Tomahawk
+ * IsyFact Benutzerverwaltung GUI mit Primefaces
  * %%
  * Copyright (C) 2016 - 2017 Bundesverwaltungsamt (BVA)
  * %%
@@ -24,25 +24,22 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerpa
 import de.bund.bva.isyfact.common.web.global.AbstractMaskenModel;
 
 /**
- * Model zum Zurücksetzen des Passworts.
+ * Model zum Zurücksetzen von Passwörtern.
  *
- * @author msg systems ag, Björn Saxe
+ * @author msg systems ag, Bjoern Saxe
+ * @author msg systems ag, Alexander Salvanos
  */
-public class BenutzerPasswortZuruecksetzenModel extends AbstractMaskenModel {
+public class SelfServicePasswortZuruecksetzenModel extends AbstractMaskenModel {
 
-    private static final long serialVersionUID = 1L;
-    
-    private String benutzername;
     private String passwort;
+
     private String passwortWiederholung;
 
-    public String getBenutzername() {
-        return benutzername;
-    }
+    private boolean tokenGueltig;
 
-    public void setBenutzername(String benutzerName) {
-        this.benutzername = benutzerName;
-    }
+    private String benutzername;
+
+    private boolean passwortZurueckgesetzt;
 
     public String getPasswort() {
         return passwort;
@@ -60,5 +57,27 @@ public class BenutzerPasswortZuruecksetzenModel extends AbstractMaskenModel {
         this.passwortWiederholung = passwortWiederholung;
     }
 
-    
+    public boolean isTokenGueltig() {
+        return tokenGueltig;
+    }
+
+    public void setTokenGueltig(boolean tokenGueltig) {
+        this.tokenGueltig = tokenGueltig;
+    }
+
+    public String getBenutzername() {
+        return benutzername;
+    }
+
+    public void setBenutzername(String benutzername) {
+        this.benutzername = benutzername;
+    }
+
+    public boolean isPasswortZurueckgesetzt() {
+        return passwortZurueckgesetzt;
+    }
+
+    public void setPasswortZurueckgesetzt(boolean passwortZurueckgesetzt) {
+        this.passwortZurueckgesetzt = passwortZurueckgesetzt;
+    }
 }
