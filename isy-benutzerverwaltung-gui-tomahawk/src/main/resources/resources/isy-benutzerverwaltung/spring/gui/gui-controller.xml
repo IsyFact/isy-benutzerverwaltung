@@ -71,6 +71,12 @@
         <property name="sicherheit" ref="sicherheit"/>
         <property name="aufrufKontextVerwalter" ref="aufrufKontextVerwalter"/>        
     </bean>
+
+    <bean id="benutzerSelbstBearbeitenController"
+          class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerselbstbearbeiten.BenutzerSelbstBearbeitenController"
+          parent="abstractBenutzerverwaltungController">
+        <property name="aufrufKontextVerwalter" ref="aufrufKontextVerwalter"/>
+    </bean>
     
     <bean id="benutzerSuchenController"
           class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzersuchen.BenutzerSuchenController"

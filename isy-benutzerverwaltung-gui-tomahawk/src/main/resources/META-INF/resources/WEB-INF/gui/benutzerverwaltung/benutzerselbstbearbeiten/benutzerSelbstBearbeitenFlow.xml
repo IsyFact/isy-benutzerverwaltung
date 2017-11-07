@@ -27,19 +27,18 @@
 
     <secured attributes="Benutzerverwaltung.Benutzer.Aendern.Selbst"/>
 
-    <var name="benutzerBearbeitenModel"
-         class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerbearbeiten.BenutzerBearbeitenModel"/>
+    <var name="benutzerSelbstBearbeitenModel"
+         class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerselbstbearbeiten.BenutzerSelbstBearbeitenModel"/>
 
     <on-start>
-    	<evaluate expression="benutzerBearbeitenModel.setBenutzerBearbeitetSichSelbst(true)"/>
-        <evaluate expression="benutzerBearbeitenController.initialisiereModel(benutzerBearbeitenModel)"/>
+        <evaluate expression="benutzerSelbstBearbeitenController.initialisiereModel(benutzerSelbstBearbeitenModel)"/>
     </on-start>
 
-    <view-state id="benutzerSelbstBearbeitenViewState" model="benutzerBearbeitenModel">
+    <view-state id="benutzerSelbstBearbeitenViewState" model="benutzerSelbstBearbeitenModel">
     	<attribute name="headlineKey" value="MAS_Benutzerverwaltung_Headline"/>
         
         <transition on="speichern" to="benutzerSelbstBearbeitenViewState">
-            <evaluate expression="benutzerBearbeitenController.benutzerBearbeitenSelbst(benutzerBearbeitenModel)"/>
+            <evaluate expression="benutzerSelbstBearbeitenController.benutzerSelbstBearbeiten(benutzerSelbstBearbeitenModel)"/>
         </transition>
     </view-state>
 
