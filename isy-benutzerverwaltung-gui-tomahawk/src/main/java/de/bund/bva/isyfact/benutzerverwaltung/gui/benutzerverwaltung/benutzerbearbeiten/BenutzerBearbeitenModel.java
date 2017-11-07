@@ -39,8 +39,6 @@ import de.bund.bva.isyfact.common.web.global.AbstractMaskenModel;
 public class BenutzerBearbeitenModel extends AbstractMaskenModel {
 
     private static final long serialVersionUID = -6110443602902438569L;
-    
-    private boolean benutzerBearbeitetSichSelbst = false;
 
     /**
      * Liste aller {@link BenutzerStatus} zur Anzeige in einer Auswahlliste.
@@ -102,14 +100,6 @@ public class BenutzerBearbeitenModel extends AbstractMaskenModel {
 
     public List<BenutzerStatus> getAlleBenutzerStatus() {
         return alleBenutzerStatus;
-    }
-
-    public boolean isBenutzerBearbeitetSichSelbst() {
-	return benutzerBearbeitetSichSelbst;
-    }
-
-    public void setBenutzerBearbeitetSichSelbst(boolean benutzerBearbeitetSichSelbst) {
-	this.benutzerBearbeitetSichSelbst = benutzerBearbeitetSichSelbst;
     }
 
     public String getAlterBenutzername() {

@@ -23,7 +23,6 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerbe
 import java.io.IOException;
 
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.daten.BenutzerBearbeitenSelbst;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.common.controller.AbstractBenutzerverwaltungController;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.konstanten.HinweisSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel;
@@ -49,16 +48,6 @@ public class BenutzerBearbeitenController
 
     @Override
     public void initialisiereModel(BenutzerBearbeitenModel model) {
-        if (model.isBenutzerBearbeitetSichSelbst()) {
-            String benutzername =
-                aufrufKontextVerwalter.getAufrufKontext().getDurchfuehrenderBenutzerKennung();
-
-            try {
-                model.setBenutzer(getBenutzerverwaltungAwkWrapper().leseBenutzer(benutzername));
-            } catch (BenutzerverwaltungBusinessException validationException) {
-                getMessageController().writeException(validationException);
-            }
-        }
         model.setAlleRollen(getRollenverwaltungAwkWrapper().leseAlleRollen());
     }
 
@@ -103,31 +92,6 @@ public class BenutzerBearbeitenController
             }
             getMessageController().writeSuccessMessage(MessageSourceHolder
                 .getMessage(HinweisSchluessel.BENUTZER_AKTUALISIERT, ergebnis.getBenutzername()));
-        } catch (BenutzerverwaltungBusinessException validationException) {
-            zeigeNachricht(validationException);
-        }
-    }
-
-    /**
-     * Funktion zur Selbstbearbeitung durch den Benutzer.
-     *
-     * @param model
-     *     das {@link BenutzerBearbeitenModel}
-     */
-    public void benutzerBearbeitenSelbst(BenutzerBearbeitenModel model) {
-        try {
-            BenutzerBearbeitenSelbst bearbeitenSelbst = new BenutzerBearbeitenSelbst();
-            bearbeitenSelbst.setBehoerde(model.getBenutzer().getBehoerde());
-            bearbeitenSelbst.setBenutzername(model.getBenutzer().getBenutzername());
-            bearbeitenSelbst.setEmailAdresse(model.getBenutzer().getEmailAdresse());
-            bearbeitenSelbst.setNachname(model.getBenutzer().getNachname());
-            bearbeitenSelbst.setTelefonnummer(model.getBenutzer().getTelefonnummer());
-            bearbeitenSelbst.setVorname(model.getBenutzer().getVorname());
-
-            getBenutzerverwaltungAwkWrapper().aendereBenutzerSelbst(bearbeitenSelbst);
-
-            getMessageController().writeSuccessMessage(MessageSourceHolder
-                .getMessage(HinweisSchluessel.BENUTZER_AKTUALISIERT, model.getBenutzer().getBenutzername()));
         } catch (BenutzerverwaltungBusinessException validationException) {
             zeigeNachricht(validationException);
         }
