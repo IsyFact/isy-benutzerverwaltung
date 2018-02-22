@@ -36,38 +36,33 @@
 								label="#{msg_isyBenutzerverwaltung.MEL_benutzer_benutzername}"
 								labelStyleClass="col-lg-4" inputStyleClass="col-lg-8"
 								required="true"
-								readonly="#{benutzerBearbeitenModel.benutzerBearbeitetSichSelbst}"
 								id="benutzernameInput" />
 						</div>
 					</div>
-					<ui:fragment rendered="#{!benutzerBearbeitenModel.benutzerBearbeitetSichSelbst}">
-						<div class="row-fluid">
-							<div class="col-lg-6">
-								<isy:formSelectOneDropdown reference="status"
-									value="#{benutzerBearbeitenModel.benutzer.status}"
-									label="#{msg_isyBenutzerverwaltung.MEL_benutzer_status}"
-									labelStyleClass="col-lg-4" inputStyleClass="col-lg-8"
-									id="statusSelect"
-									disabled="#{benutzerBearbeitenModel.benutzerBearbeitetSichSelbst}"
-									placeholder="">
-									<f:selectItems
-										value="#{benutzerBearbeitenModel.alleBenutzerStatus}"
-										var="status" itemLabel="#{status.bezeichnung}"
-										itemValue="#{status}" />
-								</isy:formSelectOneDropdown>
-								<isy:formSelectManyList reference="rollen"
-									value="#{benutzerBearbeitenModel.selektierteRollenIds}"
-									label="#{msg_isyBenutzerverwaltung.MEL_benutzer_rollen}"
-									labelStyleClass="col-lg-4" inputStyleClass="col-lg-8"
-									id="rolleSelect" checkboxed="true" size="3"
-									disabled="#{benutzerBearbeitenModel.benutzerBearbeitetSichSelbst}">
-									<f:selectItems value="#{benutzerBearbeitenModel.alleRollen}"
-										var="rolle" itemLabel="#{rolle.rollenId}"
-										itemValue="#{rolle.rollenId}" />
-								</isy:formSelectManyList>
-							</div>
+					<div class="row-fluid">
+						<div class="col-lg-6">
+							<isy:formSelectOneDropdown reference="status"
+								value="#{benutzerBearbeitenModel.benutzer.status}"
+								label="#{msg_isyBenutzerverwaltung.MEL_benutzer_status}"
+								labelStyleClass="col-lg-4" inputStyleClass="col-lg-8"
+								id="statusSelect"
+								placeholder="">
+								<f:selectItems
+									value="#{benutzerBearbeitenModel.alleBenutzerStatus}"
+									var="status" itemLabel="#{status.bezeichnung}"
+									itemValue="#{status}" />
+							</isy:formSelectOneDropdown>
+							<isy:formSelectManyList reference="rollen"
+								value="#{benutzerBearbeitenModel.selektierteRollenIds}"
+								label="#{msg_isyBenutzerverwaltung.MEL_benutzer_rollen}"
+								labelStyleClass="col-lg-4" inputStyleClass="col-lg-8"
+								id="rolleSelect" checkboxed="true" size="3">
+								<f:selectItems value="#{benutzerBearbeitenModel.alleRollen}"
+									var="rolle" itemLabel="#{rolle.rollenId}"
+									itemValue="#{rolle.rollenId}" />
+							</isy:formSelectManyList>
 						</div>
-					</ui:fragment>
+					</div>
 				</div>
 			</f:facet>
 		</isy:panel>
@@ -108,13 +103,11 @@
 								label="#{msg_isyBenutzerverwaltung.MEL_benutzer_telefonnummer}"
 								labelStyleClass="col-lg-4" inputStyleClass="col-lg-8"
 								id="telefonnummerInput" />
-							<ui:fragment rendered="#{!benutzerBearbeitenModel.benutzerBearbeitetSichSelbst}">
-								<isy:formTextarea reference="bemerkung"
-									value="#{benutzerBearbeitenModel.benutzer.bemerkung}"
-									label="#{msg_isyBenutzerverwaltung.MEL_benutzer_bemerkung}"
-									labelStyleClass="col-lg-4" inputStyleClass="col-lg-8"
-									id="bemerkungInput" rows="4" cols="80" />
-							</ui:fragment>
+							<isy:formTextarea reference="bemerkung"
+								value="#{benutzerBearbeitenModel.benutzer.bemerkung}"
+								label="#{msg_isyBenutzerverwaltung.MEL_benutzer_bemerkung}"
+								labelStyleClass="col-lg-4" inputStyleClass="col-lg-8"
+								id="bemerkungInput" rows="4" cols="80" />
 							<div class="pull-right">
 								<isy:button id="speichereBenutzer"
 									value="#{msg_isyBenutzerverwaltung.MEL_Speichern}" action="speichern"

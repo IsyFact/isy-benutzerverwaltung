@@ -63,7 +63,7 @@
     
     <view-state id="rolleLoeschenDialogViewState">    	
     	<var name="rolle"
-        	 class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.RolleModel"/>
+             class="de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel"/>
     		 
 		<on-entry>
 			<evaluate expression="basisController.showModalDialog()"/>
@@ -88,7 +88,7 @@
 
     <subflow-state id="bearbeiteRolle" subflow="rolleBearbeitenFlow">
         <input name="ausgewaehlteRolle" value="rolleSuchenModel.ausgewaehlterTreffer"
-               type="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.RolleModel"/>
+               type="de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel"/>
 
         <transition on="end" to="rolleSuchenTrefferlisteViewState"/>
     </subflow-state>

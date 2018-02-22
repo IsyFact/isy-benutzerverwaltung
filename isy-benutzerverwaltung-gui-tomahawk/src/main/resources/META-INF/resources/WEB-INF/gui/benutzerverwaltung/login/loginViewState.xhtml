@@ -22,7 +22,7 @@
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:isy="http://java.sun.com/jsf/composite/isyfact"
+                xmlns:isy="http://java.sun.com/jsf/composite/isyfact" xmlns:h="http://java.sun.com/jsf/html"
                 template="/WEB-INF/gui/benutzerverwaltung/common/benutzerverwaltung-applikation.xhtml">
                 <!-- template="/WEB-INF/gui/common/layout/applikation.xhtml"-->
 
@@ -41,6 +41,16 @@
                 <div class="col-lg-4">
                     <div style="text-align: center">
                         <isy:button action="performLoginAction" value="Anmelden"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-df">
+                <div class="col-lg-12">
+                    <div>
+                        <h:outputLink value="selfServicePasswortAnfordernFlow"
+                                      id="performSelfServicePasswortAnfordern">
+                            #{msg_isyBenutzerverwaltung.MEL_Selfservice_PasswortZuruecksetzen}
+                        </h:outputLink>
                     </div>
                 </div>
             </div>

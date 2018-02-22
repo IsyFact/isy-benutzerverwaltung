@@ -1,0 +1,58 @@
+<!--
+  #%L
+  IsyFact Benutzerverwaltung GUI mit Tomahawk
+  %%
+  Copyright (C) 2016 - 2017 Bundesverwaltungsamt (BVA)
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:isy="http://java.sun.com/jsf/composite/isyfact">
+
+	<isy:panel>
+		<f:facet name="panelHeader">
+     		#{msg_isyBenutzerverwaltung.MEL_BenutzerSuchen_Trefferliste_Titel} - #{msg_isyBenutzerverwaltung.MEL_Trefferliste_TrefferGesamt}: #{rolleZuweisenModel.dataModel.getFilteredItemCount()}
+     	</f:facet>
+		<f:facet name="panelBody">
+			<isy:dataTable dataTableModel="#{rolleZuweisenModel}"
+				dataTableController="#{rolleZuweisenController}" selectable="false">
+				<f:facet name="tableHeader">
+					<isy:dataTableHeader>
+						<isy:dataTableRowAllSelection />
+					</isy:dataTableHeader>
+					<isy:dataTableHeader
+						name="#{msg_isyBenutzerverwaltung.MEL_benutzer_vorname}"
+						sortable="true" sortProperty="VORNAME" />
+					<isy:dataTableHeader
+						name="#{msg_isyBenutzerverwaltung.MEL_benutzer_nachname}"
+						sortable="true" sortProperty="NACHNAME" />
+					<isy:dataTableHeader
+						name="#{msg_isyBenutzerverwaltung.MEL_benutzer_benutzername}"
+						sortable="true" sortProperty="BENUTZERNAME" />
+					<ui:repeat var="rollenId"
+						value="#{rolleZuweisenModel.verfuegbareRollenIds}">
+						<isy:dataTableHeader name="#{rollenId}" sortable="false" />
+					</ui:repeat>
+				</f:facet>
+				<isy:dataTableRows
+                        rowDefinition="/WEB-INF/gui/benutzerverwaltung/rollezuweisen/rowDefinition.xhtml"/>
+				<f:facet name="tablePagination">
+					<isy:dataTablePaginator />
+				</f:facet>
+			</isy:dataTable>
+		</f:facet>
+	</isy:panel>
+</ui:composition>

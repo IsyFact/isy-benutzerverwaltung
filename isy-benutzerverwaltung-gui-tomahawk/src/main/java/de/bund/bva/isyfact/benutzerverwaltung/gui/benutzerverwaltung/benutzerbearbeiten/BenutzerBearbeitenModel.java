@@ -20,15 +20,15 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerbe
  * #L%
  */
 
-import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.RolleModel;
-import de.bund.bva.isyfact.common.web.global.AbstractMaskenModel;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel;
+import de.bund.bva.isyfact.common.web.global.AbstractMaskenModel;
 
 /**
  * Model zum Bearbeiten von Benutzern.
@@ -39,8 +39,6 @@ import java.util.stream.Collectors;
 public class BenutzerBearbeitenModel extends AbstractMaskenModel {
 
     private static final long serialVersionUID = -6110443602902438569L;
-    
-    private boolean benutzerBearbeitetSichSelbst = false;
 
     /**
      * Liste aller {@link BenutzerStatus} zur Anzeige in einer Auswahlliste.
@@ -102,14 +100,6 @@ public class BenutzerBearbeitenModel extends AbstractMaskenModel {
 
     public List<BenutzerStatus> getAlleBenutzerStatus() {
         return alleBenutzerStatus;
-    }
-
-    public boolean isBenutzerBearbeitetSichSelbst() {
-	return benutzerBearbeitetSichSelbst;
-    }
-
-    public void setBenutzerBearbeitetSichSelbst(boolean benutzerBearbeitetSichSelbst) {
-	this.benutzerBearbeitetSichSelbst = benutzerBearbeitetSichSelbst;
     }
 
     public String getAlterBenutzername() {

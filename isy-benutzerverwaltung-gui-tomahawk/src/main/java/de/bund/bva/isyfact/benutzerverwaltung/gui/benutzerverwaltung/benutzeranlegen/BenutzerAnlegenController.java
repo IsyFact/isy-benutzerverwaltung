@@ -24,8 +24,8 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzeran
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.daten.BenutzerAnlegenDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.common.controller.AbstractBenutzerverwaltungController;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.konstanten.HinweisSchluessel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel;
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.bund.bva.pliscommon.util.spring.MessageSourceHolder;
@@ -41,7 +41,7 @@ public class BenutzerAnlegenController extends AbstractBenutzerverwaltungControl
 
     @Override
     public void initialisiereModel(BenutzerAnlegenModel model) {
-        model.setAlleRollen(getAwkWrapper().getRollen());
+        model.setAlleRollen(getRollenverwaltungAwkWrapper().leseAlleRollen());
     }
 
     /**
@@ -49,7 +49,8 @@ public class BenutzerAnlegenController extends AbstractBenutzerverwaltungControl
      */
     public void legeBenutzerAn(BenutzerAnlegenModel model) {
         try {
-            BenutzerModel benutzerDaten = getAwkWrapper().legeBenutzerAn(model.getBenutzer());
+            BenutzerModel benutzerDaten =
+                getBenutzerverwaltungAwkWrapper().legeBenutzerAn(model.getBenutzer());
             model.setBenutzer(new BenutzerAnlegenDaten());
 
             String nachricht = MessageSourceHolder

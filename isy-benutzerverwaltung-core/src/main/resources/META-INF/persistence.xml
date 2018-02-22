@@ -23,6 +23,6 @@
 	<persistence-unit name="isy-benutzerverwaltung-persistence-unit">
 		<class>de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Benutzer</class>
 		<class>de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Rolle</class>
-		<class>de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.BenutzerToken</class>
+		<class>de.bund.bva.isyfact.benutzerverwaltung.persistence.selfservice.entity.BenutzerToken</class>
 	</persistence-unit>
 </persistence>
