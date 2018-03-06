@@ -20,9 +20,9 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.login;
  * #L%
  */
 
-import de.bund.bva.isyfact.common.web.global.AbstractMaskenModel;
-
 import java.io.Serializable;
+
+import de.bund.bva.isyfact.common.web.global.AbstractMaskenModel;
 
 /**
  * Model der Login Flows
@@ -53,6 +53,10 @@ public class LoginModel extends AbstractMaskenModel implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrl;
     }
 
     public void setRedirectUrl(String redirectUrl) {

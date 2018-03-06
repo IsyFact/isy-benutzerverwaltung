@@ -20,20 +20,20 @@ package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa;
  * #L%
  */
 
-import com.github.springtestdbunit.annotation.DatabaseSetup;
-import com.github.springtestdbunit.annotation.ExpectedDatabase;
-import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
-import de.bund.bva.isyfact.benutzerverwaltung.core.TestfallKonfiguration;
-import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.BenutzerTokenDao;
-import de.bund.bva.isyfact.test.AbstractSpringDbUnitTest;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneOffset;
 import java.util.Date;
+
+import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.springtestdbunit.annotation.ExpectedDatabase;
+import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
+import de.bund.bva.isyfact.benutzerverwaltung.core.TestfallKonfiguration;
+import de.bund.bva.isyfact.benutzerverwaltung.persistence.selfservice.dao.BenutzerTokenDao;
+import de.bund.bva.isyfact.test.AbstractSpringDbUnitTest;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
 @ContextConfiguration(classes = TestfallKonfiguration.class)
 @DatabaseSetup("BenutzerverwaltungPersistenceTestSetup.xml")

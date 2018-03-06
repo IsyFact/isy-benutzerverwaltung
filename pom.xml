@@ -4,7 +4,7 @@
     <groupId>de.bund.bva.isyfact.benutzerverwaltung</groupId>
     <artifactId>isy-benutzerverwaltung-parent</artifactId>
     <name>IsyFact Benutzerverwaltung Parent</name>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
 
     <parent>
         <groupId>de.bund.bva.isyfact</groupId>
@@ -18,7 +18,6 @@
         <module>isy-benutzerverwaltung-core</module>
         <module>isy-benutzerverwaltung-sicherheit</module>
         <module>isy-benutzerverwaltung-gui-tomahawk</module>
-        <module>isy-benutzerverwaltung-gui-primefaces</module>
     </modules>
 
     <dependencyManagement>

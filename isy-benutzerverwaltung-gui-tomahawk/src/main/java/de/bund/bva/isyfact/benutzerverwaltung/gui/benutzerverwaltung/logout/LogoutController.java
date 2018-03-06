@@ -20,6 +20,8 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.logout;
  * #L%
  */
 
+import javax.faces.context.FacesContext;
+
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.common.controller.AbstractBenutzerverwaltungController;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.konstanten.EreignissSchluessel;
@@ -56,8 +58,9 @@ public class LogoutController extends AbstractBenutzerverwaltungController<Logou
             aufrufKontextVerwalter.getAufrufKontext().getDurchfuehrenderSachbearbeiterName());
 
         try {
-            getAwkWrapper().speichereAbmeldung(
+            getBenutzerverwaltungAwkWrapper().speichereAbmeldung(
                 aufrufKontextVerwalter.getAufrufKontext().getDurchfuehrenderBenutzerKennung());
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         } catch (BenutzerverwaltungBusinessException validationException) {
             zeigeNachricht(validationException);
         }

@@ -20,6 +20,14 @@ package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.jpa;
  * #L%
  */
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.TypedQuery;
+
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.ComparableExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -36,12 +44,6 @@ import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Roll
 import de.bund.bva.pliscommon.konfiguration.common.Konfiguration;
 import de.bund.bva.pliscommon.persistence.dao.AbstractDao;
 import org.springframework.beans.factory.InitializingBean;
-
-import javax.persistence.TypedQuery;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Implementiert den Datenbankzugriff für Rollen mittels JPA.
@@ -74,11 +76,11 @@ public class JpaRollenDao extends AbstractDao<Rolle, Long> implements RollenDao,
     }
 
     @Override
-    public List<Rolle> sucheMitRollenIds(Collection<String> rollenIds) {
+    public Set<Rolle> sucheMitRollenIds(Collection<String> rollenIds) {
         TypedQuery<Rolle> query =
             getEntityManager().createNamedQuery(NamedQuerySchluessel.SUCHE_ROLLE_IDS, Rolle.class);
         query.setParameter("ids", rollenIds);
-        return query.getResultList();
+        return new HashSet<>(query.getResultList());
     }
 
     @Override

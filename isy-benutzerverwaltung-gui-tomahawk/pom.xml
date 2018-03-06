@@ -8,7 +8,7 @@
     <parent>
         <groupId>de.bund.bva.isyfact.benutzerverwaltung</groupId>
         <artifactId>isy-benutzerverwaltung-parent</artifactId>
-        <version>1.2.0-SNAPSHOT</version>
+        <version>1.3.0-SNAPSHOT</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -33,8 +33,8 @@
 
         <!-- Bibliothek mit den MBeans für die Überwachung -->
         <dependency>
-            <groupId>de.bund.bva.pliscommon</groupId>
-            <artifactId>plis-ueberwachung</artifactId>
+            <groupId>de.bund.bva.isyfact</groupId>
+            <artifactId>isy-ueberwachung</artifactId>
         </dependency>
 
         <!-- Bibliothek fuer Autorisierung -->
@@ -141,8 +141,8 @@
 
         <!-- PLIS-Erweiterungen fuer Spring Web Flow und JSF -->
         <dependency>
-            <groupId>de.bund.bva.pliscommon</groupId>
-            <artifactId>plis-web</artifactId>
+            <groupId>de.bund.bva.isyfact</groupId>
+            <artifactId>isy-web</artifactId>
         </dependency>
 
         <!-- Isy-Logging -->

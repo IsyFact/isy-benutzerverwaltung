@@ -64,7 +64,7 @@
     
     <view-state id="benutzerLoeschenDialogViewState" model="benutzerSuchenModel">
     	<var name="benutzer"
-    		 class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel"/>
+             class="de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel"/>
     		 
 		<on-entry>
 			<evaluate expression="basisController.showModalDialog()"/>
@@ -91,7 +91,7 @@
 
         <input name="ausgewaehlterBenutzer"
                value="benutzerSuchenModel.ausgewaehlterTreffer"
-               type="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel"/>
+               type="de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel"/>
 
         <transition on="end" to="benutzerSuchenViewState"/>
         
@@ -101,7 +101,7 @@
 
         <input name="ausgewaehlterBenutzer"
                value="benutzerSuchenModel.ausgewaehlterTreffer"
-               type="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel"/>
+               type="de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel"/>
 
         <transition on="end" to="benutzerSuchenTrefferlisteViewState"/>
         

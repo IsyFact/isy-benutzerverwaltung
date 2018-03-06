@@ -31,7 +31,7 @@
          class="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerbearbeiten.BenutzerBearbeitenModel"/>
 
     <input name="ausgewaehlterBenutzer"
-           type="de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel"/>
+           type="de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel"/>
 
     <on-start>
         <evaluate

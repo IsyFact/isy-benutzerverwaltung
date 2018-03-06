@@ -20,13 +20,13 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.common.util;
  * #L%
  */
 
-import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.RolleModel;
-
-import javax.faces.model.SelectItem;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.model.SelectItem;
+
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel;
 
 /**
  * Diese Hilfsklasse bietet Hilfsfunktionen zur Benutzerverwaltung

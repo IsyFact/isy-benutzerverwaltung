@@ -20,8 +20,8 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.rollesuchen;
  * #L%
  */
 
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.RolleModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.AbstractSuchDataTableModel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel;
 
 /**
  * @author msg systems ag, Björn Saxe

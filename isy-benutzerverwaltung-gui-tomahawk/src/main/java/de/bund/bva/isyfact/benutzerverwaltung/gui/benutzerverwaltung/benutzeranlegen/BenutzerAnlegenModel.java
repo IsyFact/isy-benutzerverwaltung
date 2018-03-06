@@ -20,13 +20,13 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzeran
  * #L%
  */
 
-import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.daten.BenutzerAnlegenDaten;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.RolleModel;
-import de.bund.bva.isyfact.common.web.global.AbstractMaskenModel;
-
 import java.util.Arrays;
 import java.util.List;
+
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.daten.BenutzerAnlegenDaten;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel;
+import de.bund.bva.isyfact.common.web.global.AbstractMaskenModel;
 
 /**
  * Model zum Anlegen von Benutzern.

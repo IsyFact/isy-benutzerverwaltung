@@ -20,6 +20,9 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper
  * #L%
  */
 
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Paginierung;
 import de.bund.bva.isyfact.benutzerverwaltung.common.datentyp.Sortierrichtung;
@@ -32,32 +35,25 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.RolleDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSortierattribut;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerSuchkriterien;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.Benutzerverwaltung;
-import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.*;
-import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.RolleSortierattribut;
-import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.RolleSuchkriterien;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.BenutzerAendern;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.BenutzerAnlegen;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.BenutzerSelbstAendern;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.PasswortAendern;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.PasswortZuruecksetzen;
 import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.Rollenverwaltung;
-import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.daten.RolleAendern;
-import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.daten.RolleAnlegen;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.BenutzerverwaltungAwkWrapper;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.daten.BenutzerAnlegenDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.daten.BenutzerBearbeitenSelbst;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzerbearbeiten.BenutzerBearbeitenModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.benutzersuchen.BenutzerSuchkriterienModel;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.BenutzerModel;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.model.RolleModel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel;
+import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.RolleModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.SuchergebnisModel;
-import de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.rollesuchen.RolleSuchkriterienModel;
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import org.dozer.Mapper;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Standard-Implementierung des Benutzerverwaltung-AWK-Wrapper Interfaces.
@@ -72,26 +68,20 @@ public class BenutzerverwaltungAwkWrapperImpl implements BenutzerverwaltungAwkWr
     /**
      * Zugriff auf die Core-Schicht.
      */
-    private Benutzerverwaltung benutzerverwaltung;
+    private final Benutzerverwaltung benutzerverwaltung;
 
-    private Rollenverwaltung rollenverwaltung;
+    private final Rollenverwaltung rollenverwaltung;
 
     /**
      * Zugriff auf Dozer.
      */
-    private Mapper mapper;
+    private final Mapper mapper;
 
-    /**
-     * Sets the field 'benutzerverwaltung'.
-     *
-     * @param benutzerverwaltung New value for benutzerverwaltung
-     */
-    public void setBenutzerverwaltung(Benutzerverwaltung benutzerverwaltung) {
+    public BenutzerverwaltungAwkWrapperImpl(Benutzerverwaltung benutzerverwaltung,
+        Rollenverwaltung rollenverwaltung, Mapper mapper) {
         this.benutzerverwaltung = benutzerverwaltung;
-    }
-
-    public void setRollenverwaltung(Rollenverwaltung rollenverwaltung) {
         this.rollenverwaltung = rollenverwaltung;
+        this.mapper = mapper;
     }
 
     @Override
@@ -137,70 +127,11 @@ public class BenutzerverwaltungAwkWrapperImpl implements BenutzerverwaltungAwkWr
         return mapper.map(benutzerverwaltung.speichereAbmeldung(benutzername), BenutzerModel.class);
     }
 
-    @Override
-    public RolleModel legeRolleAn(RolleModel rolleModel) throws BenutzerverwaltungValidationException {
-        RolleAnlegen rolleAnlegen = new RolleAnlegen(rolleModel.getRollenId(), rolleModel.getRollenName());
-        return mapper.map(rollenverwaltung.legeRolleAn(rolleAnlegen), RolleModel.class);
-    }
 
-    @Override
-    public RolleModel leseRolle(String rolleId) throws BenutzerverwaltungBusinessException {
-        return mapper.map(rollenverwaltung.leseRolle(rolleId), RolleModel.class);
-    }
-
-    @Override
-    public SuchergebnisModel<RolleModel> sucheRollen(RolleSuchkriterienModel filter, Sortierung sortierung,
-        Paginierung paginierung) throws BenutzerverwaltungValidationException {
-        RolleSuchkriterien coreSuchkriterien = mapper.map(filter, RolleSuchkriterien.class);
-
-        // Sortierung mappen
-        Sortierung coreSortierung =
-            new Sortierung(RolleSortierattribut.getStandard(), Sortierrichtung.getStandard());
-        if (sortierung != null) {
-            coreSortierung.setAttribut(sortierung.getAttribut());
-            coreSortierung.setRichtung(sortierung.getRichtung());
-        }
-
-        Suchergebnis<RolleDaten> suchergebnis =
-            rollenverwaltung.sucheRollen(coreSuchkriterien, coreSortierung, paginierung);
-
-        SuchergebnisModel<RolleModel> suchergebnisModel = new SuchergebnisModel<>();
-        suchergebnis.getTrefferliste().forEach(
-            treffer -> suchergebnisModel.getTrefferliste().add(mapper.map(treffer, RolleModel.class)));
-        suchergebnisModel.setAnzahlTreffer(suchergebnis.getAnzahlTreffer());
-
-        return suchergebnisModel;
-    }
-
-    @Override
-    public RolleModel aendereRolle(String rolleId, RolleModel rolleModel)
-        throws BenutzerverwaltungValidationException {
-        // Neue ID nur mitliefern, wenn sie sich wirklich geändert hat.
-        String neueRollenId = rolleId.equals(rolleModel.getRollenId()) ? null : rolleModel.getRollenId();
-        RolleAendern rolleAendern = new RolleAendern(rolleId, neueRollenId, rolleModel.getRollenName());
-        return mapper.map(rollenverwaltung.aendereRolle(rolleAendern), RolleModel.class);
-    }
-
-    @Override
-    public List<RolleModel> getRollen() {
-        try {
-            return sucheRollen(new RolleSuchkriterienModel(),
-                new Sortierung(RolleSortierattribut.getStandard(), Sortierrichtung.getStandard()), null)
-                .getTrefferliste();
-        } catch (BenutzerverwaltungValidationException e) {
-            LOG.error(e.getMessage(), e);
-            return Collections.emptyList();
-        }
-    }
 
     @Override
     public void loescheBenutzer(BenutzerModel benutzer) throws BenutzerverwaltungBusinessException {
         benutzerverwaltung.loescheBenutzer(benutzer.getBenutzername());
-    }
-
-    @Required
-    public void setMapper(Mapper mapper) {
-        this.mapper = mapper;
     }
 
     @Override
@@ -214,11 +145,6 @@ public class BenutzerverwaltungAwkWrapperImpl implements BenutzerverwaltungAwkWr
         throws BenutzerverwaltungBusinessException {
         benutzerverwaltung.entzieheRolle(mapper.map(rolle, RolleDaten.class), benutzernamen);
 
-    }
-
-    @Override
-    public void loescheRolle(RolleModel rolle) throws BenutzerverwaltungBusinessException {
-        rollenverwaltung.loescheRolle(rolle.getRollenId());
     }
 
     @Override

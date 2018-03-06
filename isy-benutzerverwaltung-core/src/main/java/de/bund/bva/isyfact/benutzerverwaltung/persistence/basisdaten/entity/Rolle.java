@@ -20,10 +20,16 @@ package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity;
  * #L%
  */
 
-import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.NamedQuerySchluessel;
-
-import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Version;
+
+import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.NamedQuerySchluessel;
 
 /**
  * Die persistente Entität einer {@link Rolle}.
@@ -123,4 +129,20 @@ public class Rolle implements Serializable {
         this.version = version;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Rolle rolle = (Rolle) o;
+        return Objects.equals(id, rolle.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
