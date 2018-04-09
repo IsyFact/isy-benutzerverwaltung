@@ -35,9 +35,6 @@
     </on-start>
 
     <view-state id="rolleZuweisenSuchenViewState" model="rolleZuweisenModel">
-
-        <attribute name="breadcrumbTitelSchluessel" value="MEL_Breadcrumb_Rollenzuweisung_rollenzuweisen"/>
-
         <transition on="filterZuruecksetzen">
 	        <evaluate
 	        	expression="rolleZuweisenController.filterZuruecksetzen(rolleZuweisenModel)"/>

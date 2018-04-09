@@ -35,8 +35,6 @@
     </on-start>
     
     <view-state id="benutzerSuchenViewState" model="benutzerSuchenModel">
-        <attribute name="breadcrumbTitelSchluessel" value="MEL_Breadcrumb_Benutzer_suchen"/>
-                
         <transition on="filterZuruecksetzen">
 	        <evaluate
 	        	expression="benutzerSuchenController.filterZuruecksetzen(benutzerSuchenModel)"/>
