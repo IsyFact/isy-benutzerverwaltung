@@ -27,11 +27,21 @@ package de.bund.bva.isyfact.benutzerverwaltung.common.konstanten;
  */
 public abstract class KonfigurationsSchluessel {
 
-    public static final String CONF_ZUGRIFFSVERWALTUNG_MAX_FEHLANMELDEVERSUCHE =
+    public static final String ZUGRIFFSVERWALTUNG_MAX_FEHLANMELDEVERSUCHE =
             "benutzerverwaltung.maxfehlanmeldeversuche";
 
-    public static final String CONF_SELFSERVICE_TOKEN_ABGELAUFEN_IN_STUNDEN =
+    public static final String ZUGRIFFSVERWALTUNG_BENUTZER_ABLAUFFRIST_IN_TAGEN = "benutzerverwaltung.benutzer.ablauffrist.tage";
+
+    public static final String SELFSERVICE_TOKEN_ABGELAUFEN_IN_STUNDEN =
             "selfservice.token.timeout.hours";
 
     public static final String SUCHE_CASE_SENSITIVE = "benutzerverwaltung.suche.casesensitive";
+
+    public static final String ANZAHL_SPEICHERE_LETZTE_PASSWOERTER = "benutzerverwaltung.benutzer.anzahl.letztepasswoerter";
+
+    public static final String PASSWORT_POLICY_MINDESTLAENGE = "benutzerverwaltung.passwortpolicy.mindestlaenge";
+
+    public static final String PASSWORT_POLICY_SONDERZEICHEN = "benutzerverwaltung.passwortpolicy.sonderzeichen";
+
+    public static final String PASSWORT_POLICY_ANZAHL_LETZTE_PASSWOERTER = "benutzerverwaltung.passwortpolicy.anzahlletztepasswoerter";
 }

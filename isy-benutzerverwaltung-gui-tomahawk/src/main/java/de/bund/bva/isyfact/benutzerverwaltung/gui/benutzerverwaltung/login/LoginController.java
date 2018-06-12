@@ -95,10 +95,10 @@ public class LoginController extends AbstractGuiController<LoginModel> {
             return false;
         } catch (AuthentifizierungFehlgeschlagenException e) {
             LOG.info(LogKategorie.JOURNAL, EreignissSchluessel.MSG_LOGIN_FAILED,
-                    "Authentifizierung fehlgeschlagen (Benutzername / Passwort falsch oder Benutzer nicht aktiviert)", e);
-
+                    e.getFehlertext());
             context.addMessage(
-                    new MessageBuilder().error().defaultText("Benutzername / Passwort falsch oder der Benutzer ist nicht aktiviert.").build());
+                    new MessageBuilder().error().defaultText(e.getFehlertext()).build());
+
             return false;
         }
         return true;

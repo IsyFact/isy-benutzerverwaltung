@@ -9,9 +9,9 @@ package de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.impl;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -45,6 +45,7 @@ import de.bund.bva.isyfact.benutzerverwaltung.integration.BenutzerReferenz;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.BenutzerDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.RollenDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Benutzer;
+import de.bund.bva.pliscommon.konfiguration.common.Konfiguration;
 import org.dozer.Mapper;
 import org.dozer.MappingException;
 import org.springframework.dao.DataAccessException;
@@ -67,10 +68,11 @@ public class BenutzerverwaltungImpl implements Benutzerverwaltung {
     private final Mapper mapper;
 
     public BenutzerverwaltungImpl(BenutzerDao benutzerDao, RollenDao rollenDao,
-        PasswordEncoder passwordEncoder, Mapper mapper, Validator validator) {
+        PasswordEncoder passwordEncoder, Mapper mapper, Validator validator, Konfiguration konfiguration) {
         awfBenutzerAnAbmelden = new AwfBenutzerAnAbmelden(benutzerDao, validator);
         awfBenutzerSuchen = new AwfBenutzerSuchen(benutzerDao, validator);
-        awfBenutzerVerwalten = new AwfBenutzerVerwalten(benutzerDao, rollenDao, passwordEncoder, validator);
+        awfBenutzerVerwalten =
+            new AwfBenutzerVerwalten(benutzerDao, rollenDao, passwordEncoder, validator, konfiguration);
         this.mapper = mapper;
     }
 
@@ -218,7 +220,8 @@ public class BenutzerverwaltungImpl implements Benutzerverwaltung {
     @Override
     public void loeseBenutzerReferenzAuf(BenutzerReferenz benutzerReferenz) {
         if (benutzerReferenz != null && benutzerReferenz.getId() != null) {
-            BenutzerDaten daten = mapper.map(awfBenutzerSuchen.leseBenutzer(benutzerReferenz.getId()), BenutzerDaten.class);
+            BenutzerDaten daten =
+                mapper.map(awfBenutzerSuchen.leseBenutzer(benutzerReferenz.getId()), BenutzerDaten.class);
             benutzerReferenz.setDaten(daten);
         }
     }

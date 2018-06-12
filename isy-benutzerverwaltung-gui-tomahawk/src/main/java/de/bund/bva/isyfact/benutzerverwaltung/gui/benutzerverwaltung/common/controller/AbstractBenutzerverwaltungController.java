@@ -26,6 +26,7 @@ import javax.validation.ConstraintViolation;
 
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungValidationException;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.validation.PasswortKorrekt;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.awkwrapper.BenutzerverwaltungAwkWrapper;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.rollenverwaltung.awkwrapper.RollenverwaltungAwkWrapper;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.selfservice.awkwrapper.SelfServiceAwkWrapper;
@@ -128,16 +129,15 @@ public abstract class AbstractBenutzerverwaltungController<T extends AbstractMas
         // Sonderfälle für Validation-Annotationen, die an einer Klasse stehen,
         // da dort kein PropertyPath gesetzt wird
         if (reference.isEmpty()) {
-            String rootBeanClassName = violation.getRootBeanClass().getName().toLowerCase();
-            // Passwort
-            if (rootBeanClassName.contains("passwort")) {
+            // Feld für altes Passwort bei Änderung durch Benutzer selbst
+            if (violation.getConstraintDescriptor().getAnnotation().annotationType().equals(PasswortKorrekt.class)) {
+                reference = "altesPasswort";
+            } else if (violation.getRootBeanClass().getName().toLowerCase().contains("passwort")) { // Passwort-Felder
                 reference = "passwort";
             }
         }
 
-        String messageText = violation.getMessage();
-
-        return new ValidationMessage("VA", reference, reference, messageText);
+        return new ValidationMessage("VA", reference, reference, violation.getMessage());
     }
 
 }

@@ -18,11 +18,11 @@
 -- #L%
 ---
 -- user: user
--- passwort: password
+-- passwort: qwertZ1!
 
 INSERT INTO BENUTZER (ID,BEHOERDE,BEMERKUNG,BENUTZERNAME,PASSWORT,STATUS,VERSION,FEHLANMELDEVERSUCHE,VORNAME,NACHNAME )
 VALUES
-  (1, 'Behörde1', 'Bemerkung1', 'user', '$2a$10$lj4tBJe5luAEI6g7iOZ75uiVvyHgQgn6oQjZNJRIQdQt7fPzvyQRy', 2, 0,
+  (1, 'Behörde1', 'Bemerkung1', 'user', '$2a$10$FrhgE995.OkufUJ7YKlRHekMyTKRjzUAo54HkQ46ANlZibPY0n4ym', 2, 0,
    0, 'Max', 'Mustermann');
 Commit;
 

@@ -22,9 +22,9 @@ package de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten;
 
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.validation.BekannterBenutzername;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.validation.PasswoerterStimmenUeberein;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.validation.passwordpolicy.PasswortPolicyUeberpruefen;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 /**
@@ -33,6 +33,7 @@ import java.util.Objects;
  * @author msg systems ag, Stefan Dellmuth
  */
 @PasswoerterStimmenUeberein
+@PasswortPolicyUeberpruefen
 public class PasswortZuruecksetzen {
 
     private String benutzername;
@@ -65,7 +66,6 @@ public class PasswortZuruecksetzen {
         this.benutzername = benutzername;
     }
 
-    @Size(min = 8, message = "{validation.benutzer.passwort.kurz}")
     @NotNull
     public String getNeuesPasswort() {
         return neuesPasswort;

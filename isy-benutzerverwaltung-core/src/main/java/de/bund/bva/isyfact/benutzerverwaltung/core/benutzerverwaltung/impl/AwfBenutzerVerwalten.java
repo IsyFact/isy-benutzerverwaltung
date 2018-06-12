@@ -9,9 +9,9 @@ package de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.impl;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,6 +30,7 @@ import de.bund.bva.isyfact.benutzerverwaltung.common.exception.Benutzerverwaltun
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungTechnicalRuntimeException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungValidationException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.FehlerSchluessel;
+import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.KonfigurationsSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.ValidierungSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.RolleDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
@@ -44,6 +45,7 @@ import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Benu
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Rolle;
 import de.bund.bva.isyfact.logging.IsyLogger;
 import de.bund.bva.isyfact.logging.IsyLoggerFactory;
+import de.bund.bva.pliscommon.konfiguration.common.Konfiguration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -54,17 +56,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @version $Id: AwfBenutzerVerwalten.java 41877 2013-07-26 09:08:49Z jozitz $
  */
 class AwfBenutzerVerwalten extends AbstractAnwendungsfall {
-    private final static IsyLogger LOG = IsyLoggerFactory.getLogger(AwfBenutzerVerwalten.class);
+    private static final IsyLogger LOG = IsyLoggerFactory.getLogger(AwfBenutzerVerwalten.class);
 
     private final RollenDao rollenDao;
 
     private final PasswordEncoder passwordEncoder;
 
+    private final Konfiguration konfiguration;
+
     AwfBenutzerVerwalten(BenutzerDao benutzerDao, RollenDao rollenDao, PasswordEncoder passwordEncoder,
-        Validator validator) {
+        Validator validator, Konfiguration konfiguration) {
         super(benutzerDao, validator);
         this.rollenDao = rollenDao;
         this.passwordEncoder = passwordEncoder;
+        this.konfiguration = konfiguration;
     }
 
     /**
@@ -114,6 +119,7 @@ class AwfBenutzerVerwalten extends AbstractAnwendungsfall {
 
         // Gleichheit des alten Passworts über Bean Validation geprüft
         validiere(passwortAendern);
+
         return setzePasswort(passwortAendern.getBenutzername(), passwortAendern.getNeuesPasswort());
     }
 
@@ -132,6 +138,7 @@ class AwfBenutzerVerwalten extends AbstractAnwendungsfall {
         }
 
         validiere(passwortZuruecksetzen);
+
         return setzePasswort(passwortZuruecksetzen.getBenutzername(),
             passwortZuruecksetzen.getNeuesPasswort());
     }
@@ -140,8 +147,22 @@ class AwfBenutzerVerwalten extends AbstractAnwendungsfall {
         throws BenutzerverwaltungBusinessException {
         Benutzer benutzer = leseBenutzer(benutzername);
         benutzer.setPasswort(passwordEncoder.encode(neuesPasswort));
-        benutzerDao.speichere(benutzer);
+
+        aktualisiereLetztePasswoerter(benutzer);
+
         return benutzer;
+    }
+
+    private void aktualisiereLetztePasswoerter(Benutzer benutzer) {
+        benutzer.getLetztePasswoerter().add(benutzer.getPasswort());
+
+        int anzahlLetztePasswoerter =
+            konfiguration.getAsInteger(KonfigurationsSchluessel.ANZAHL_SPEICHERE_LETZTE_PASSWOERTER, 10);
+
+        if (anzahlLetztePasswoerter < benutzer.getLetztePasswoerter().size() && !benutzer
+            .getLetztePasswoerter().isEmpty()) {
+            benutzer.getLetztePasswoerter().remove(0);
+        }
     }
 
     /**
@@ -166,7 +187,7 @@ class AwfBenutzerVerwalten extends AbstractAnwendungsfall {
             benutzer.setFehlanmeldeVersuche(0);
         }
         benutzer.setStatus(neuerStatus);
-        benutzerDao.speichere(benutzer);
+
         return benutzer;
     }
 
@@ -196,8 +217,6 @@ class AwfBenutzerVerwalten extends AbstractAnwendungsfall {
         benutzer.setTelefonnummer(benutzerAendern.getTelefonnummer());
         benutzer.setBemerkung(benutzerAendern.getBemerkung());
 
-        benutzerDao.speichere(benutzer);
-
         return benutzer;
     }
 
@@ -220,8 +239,6 @@ class AwfBenutzerVerwalten extends AbstractAnwendungsfall {
         benutzer.setBehoerde(benutzerSelbstAendern.getBehoerde());
         benutzer.setEmailAdresse(benutzerSelbstAendern.getEmailAdresse());
         benutzer.setTelefonnummer(benutzerSelbstAendern.getTelefonnummer());
-
-        benutzerDao.speichere(benutzer);
 
         return benutzer;
     }
@@ -249,7 +266,6 @@ class AwfBenutzerVerwalten extends AbstractAnwendungsfall {
                     ValidierungSchluessel.MSG_BENUTZERNAME_NICHT_VORHANDEN, benutzername);
             } else {
                 benutzer.getRollen().add(rolle);
-                benutzerDao.speichere(benutzer);
             }
         }
     }
@@ -277,7 +293,6 @@ class AwfBenutzerVerwalten extends AbstractAnwendungsfall {
                     ValidierungSchluessel.MSG_BENUTZERNAME_NICHT_VORHANDEN, benutzername);
             } else {
                 benutzer.getRollen().remove(rolle);
-                benutzerDao.speichere(benutzer);
             }
         }
     }

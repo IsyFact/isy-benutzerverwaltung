@@ -68,5 +68,18 @@ public class ValidierungSchluessel {
     public static final String MSG_ROLLE_BEREITS_VORHANDEN = "validation.rolle.vorhanden";
 
     public static final String ROLLE_ID_UNGUELTIG = "validation.rolle.id.ungueltig";
+    
+    public static final String MSG_PASSWORT_POLICY_DEFAULT_LAENGE = "validation.passwort.policy.default.laenge";
 
+    public static final String MSG_PASSWORT_POLICY_DEFAULT_GROSSBUCHSTABEN = "validation.passwort.policy.default.grossbuchstaben";
+
+    public static final String MSG_PASSWORT_POLICY_DEFAULT_KLEINBUCHSTABEN = "validation.passwort.policy.default.kleinbuchstaben";
+
+    public static final String MSG_PASSWORT_POLICY_DEFAULT_ZAHL = "validation.passwort.policy.default.zahl";
+
+    public static final String MSG_PASSWORT_POLICY_DEFAULT_SONDERZEICHEN = "validation.passwort.policy.default.sonderzeichen";
+
+    public static final String MSG_PASSWORT_POLICY_DEFAULT_LETZTE_PASSWOERTER = "validation.passwort.policy.default.letztepasswoerter";
+
+    public static final String MSG_PASSWORT_POLICY_DEFAULT_UNGUELTIGE_ZEICHEN = "validation.passwort.policy.default.ungueltigezeichen";
 }

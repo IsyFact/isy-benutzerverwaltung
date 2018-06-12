@@ -40,9 +40,19 @@ public class FehlerSchluessel {
     public static final String MSG_AUTHENTIFIZIERUNG_FEHLGESCHLAGEN = "BENVZ00001";
 
     /**
-     * Benutzer Account gesperrt. Bitte melden Sie sich bei einem Administrator.
+     * Benutzer Account gesperrt.
      */
     public static final String MSG_BENUTZER_GESPERRT = "BENVZ00002";
+
+    /**
+     * Benutzername oder Passwort nicht korrekt.
+     */
+    public static final String MSG_BENUTZER_PASSWORT_FALSCH = "BENVZ00003";
+
+    /**
+     * Benutzer Account abgelaufen.
+     */
+    public static final String MSG_BENUTZER_ABGELAUFEN = "BENVZ00004";
 
     /**
      * Der Benutzer kann nicht gelöscht werden, da in der Anwendung noch auf ihn verwiesen wird.

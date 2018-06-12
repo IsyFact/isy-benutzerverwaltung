@@ -9,9 +9,9 @@ package de.bund.bva.isyfact.benutzerverwaltung.sicherheit;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,6 +20,11 @@ package de.bund.bva.isyfact.benutzerverwaltung.sicherheit;
  * #L%
  */
 
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.FehlerSchluessel;
@@ -35,13 +40,9 @@ import de.bund.bva.isyfact.logging.IsyLoggerFactory;
 import de.bund.bva.pliscommon.konfiguration.common.Konfiguration;
 import de.bund.bva.pliscommon.sicherheit.accessmgr.AccessManager;
 import de.bund.bva.pliscommon.sicherheit.common.exception.AuthentifizierungFehlgeschlagenException;
-import de.bund.bva.pliscommon.sicherheit.common.exception.AuthentifizierungTechnicalException;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Implementiert den Access Managers mit Hilfe der IsyFact Benutzerverwaltung.
@@ -57,6 +58,8 @@ public class BenutzerverwaltungAccessManager implements
     private static final IsyLogger LOG = IsyLoggerFactory.getLogger(BenutzerverwaltungAccessManager.class);
 
     private static final int MAX_FEHLERVERSUCHE_DEFAULT = 5;
+
+    private static final int BENUTZER_ABLAUFFRIST = 365;
 
     private final Benutzerverwaltung benutzerverwaltung;
 
@@ -74,8 +77,7 @@ public class BenutzerverwaltungAccessManager implements
     @Override
     @Transactional(noRollbackFor = AuthentifizierungFehlgeschlagenException.class)
     public BenutzerverwaltungAuthentifizierungErgebnis authentifiziere(
-        BenutzerverwaltungAufrufKontextImpl aufrufkontext)
-        throws AuthentifizierungTechnicalException, AuthentifizierungFehlgeschlagenException {
+        BenutzerverwaltungAufrufKontextImpl aufrufkontext) {
 
         String kennung = aufrufkontext.getDurchfuehrenderBenutzerKennung();
         String passwort = aufrufkontext.getDurchfuehrenderBenutzerPasswort();
@@ -91,9 +93,8 @@ public class BenutzerverwaltungAccessManager implements
     }
 
     /**
-     * @param authentifiziereBenutzer - den aus der Benutzerverwaltungs-Schnittstelle zurückgegebenen
-     *                                Benutzer
-     * @return
+     * @param authentifiziereBenutzer den aus der Benutzerverwaltungsschnittstelle zurückgegebenen Benutzer
+     * @return das Ergebnis der Authentifizierung
      */
     private BenutzerverwaltungAuthentifizierungErgebnis fuelleAuthentifizierungsergebnis(
         BenutzerDaten authentifiziereBenutzer) {
@@ -178,7 +179,7 @@ public class BenutzerverwaltungAccessManager implements
 
     /**
      * Diese Methode authentifiziert einen {@link Benutzer} gegenueber dem Benutzerverzeichnis. Bei
-     * erfolgreicher Authentifizierung das {@link Benutzer Benutzer-Objekt} zurueckgeliefert. Dieses beitet
+     * erfolgreicher Authentifizierung das {@link Benutzer Benutzer-Objekt} zurueckgeliefert. Dieses bietet
      * {@link Benutzer#getRollen() Rollen}, die zur Nutzung weiterer Funktionalitaet autorisieren.
      *
      * @param benutzername    ist der {@link Benutzer#getBenutzername() Benutzername} des zu
@@ -193,43 +194,96 @@ public class BenutzerverwaltungAccessManager implements
      */
     private BenutzerDaten authentifiziereBenutzer(String benutzername, String passwort,
         boolean passwortIstHash) throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
+
+        pruefeBenutzerUndPasswort(benutzername, passwort);
+
+        BenutzerDaten benutzer = leseBenutzer(benutzername);
+
+        pruefeBenutzerStatus(benutzer);
+
+        if (benutzerAbgelaufen(benutzer)) {
+            sperreBenutzer(benutzer);
+            setzeAnmeldedatumZurueck(benutzer);
+            throw new BenutzerverwaltungAuthentifizierungFehlgeschlagenException(
+                FehlerSchluessel.MSG_BENUTZER_ABGELAUFEN);
+        }
+
+        if (passwortKorrekt(passwort, benutzer, passwortIstHash)) {
+            LOG.debug("Benutzer \"{}\" erfolgreich authentifiziert.", benutzername);
+            return authentifizierungErfolgreichBehandlung(benutzer, passwortIstHash);
+        } else {
+            authentifizierungFehlgeschlagenBehandlung(benutzer);
+            throw new BenutzerverwaltungAuthentifizierungFehlgeschlagenException(
+                FehlerSchluessel.MSG_BENUTZER_PASSWORT_FALSCH);
+        }
+    }
+
+    private void setzeAnmeldedatumZurueck(BenutzerDaten benutzer) {
+        try {
+            benutzerverwaltung.speichereErfolgreicheAnmeldung(benutzer.getBenutzername());
+        } catch (BenutzerverwaltungBusinessException exception) {
+            LOG.error("Konnte Anmeldedatum nicht zurücksetzen", exception);
+        }
+    }
+
+    private void pruefeBenutzerUndPasswort(String benutzername, String passwort)
+        throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
         if (benutzername == null || benutzername.isEmpty() || passwort == null || passwort.isEmpty()) {
             LOG.debug(
                 "Authentifizierung fehlgeschlagen, da Benutzername, Passwort oder PasswortHash null bzw. leer.");
             throw new BenutzerverwaltungAuthentifizierungFehlgeschlagenException(
                 FehlerSchluessel.MSG_AUTHENTIFIZIERUNG_FEHLGESCHLAGEN);
         }
+    }
 
-        BenutzerDaten benutzer;
+    private BenutzerDaten leseBenutzer(String benutzername)
+        throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
         try {
-            benutzer = benutzerverwaltung.leseBenutzer(benutzername);
+            return benutzerverwaltung.leseBenutzer(benutzername);
         } catch (BenutzerverwaltungBusinessException validationException) {
             LOG.debugFachdaten("Authentifizierung fehlgeschlagen, da der Benutzer \"{}\" nicht existiert.",
                 benutzername);
             throw new BenutzerverwaltungAuthentifizierungFehlgeschlagenException(
                 FehlerSchluessel.MSG_AUTHENTIFIZIERUNG_FEHLGESCHLAGEN);
         }
+    }
 
-        // Prüfung den Benutzer-Status
+    private void pruefeBenutzerStatus(BenutzerDaten benutzer)
+        throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
         if (BenutzerStatus.AKTIVIERT != benutzer.getStatus()) {
-            LOG.debugFachdaten("Authentifizierung fehlgeschlagen, da der Benutzer {} {} ist.",
+            LOG.debugFachdaten("Authentifizierung fehlgeschlagen, da der Benutzer \"{}\" {} ist.",
                 benutzer.getBenutzername(), benutzer.getStatus());
             authentifizierungFehlgeschlagenBehandlung(benutzer);
+            throw new BenutzerverwaltungAuthentifizierungFehlgeschlagenException(
+                FehlerSchluessel.MSG_BENUTZER_GESPERRT);
+        }
+    }
+
+    private boolean benutzerAbgelaufen(BenutzerDaten benutzer) {
+        Date letzteAnmeldung = benutzer.getLetzteAnmeldung();
+
+        if (letzteAnmeldung == null) {
+            return false;
         }
 
-        boolean authentifizierungErfolgreich;
+        int ablaufFrist = konfiguration
+            .getAsInteger(KonfigurationsSchluessel.ZUGRIFFSVERWALTUNG_BENUTZER_ABLAUFFRIST_IN_TAGEN,
+                BENUTZER_ABLAUFFRIST);
+
+        Date jetzt = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(letzteAnmeldung);
+        calendar.add(Calendar.DATE, ablaufFrist);
+        Date ablaufDatum = calendar.getTime();
+
+        return (jetzt.after(ablaufDatum));
+    }
+
+    private boolean passwortKorrekt(String passwort, BenutzerDaten benutzer, boolean passwortIstHash) {
         if (passwortIstHash) {
-            authentifizierungErfolgreich = passwort.equals(benutzer.getPasswort());
+            return passwort.equals(benutzer.getPasswort());
         } else {
-            authentifizierungErfolgreich = passwordEncoder.matches(passwort, benutzer.getPasswort());
-        }
-
-        if (authentifizierungErfolgreich) {
-            LOG.debug("Benutzer \"" + benutzername + "\" erfolgreich authentifiziert.");
-            return authentifizierungErfolgreichBehandlung(benutzer, passwortIstHash);
-        } else {
-            authentifizierungFehlgeschlagenBehandlung(benutzer);
-            return null; // Never called
+            return passwordEncoder.matches(passwort, benutzer.getPasswort());
         }
     }
 
@@ -252,8 +306,9 @@ public class BenutzerverwaltungAccessManager implements
         if (istFolgeanmeldung) {
             LOG.debug("Es handelt sich um eine Folgeanmeldung.");
         } else {
-            LOG.debugFachdaten("Setze die letzte Anmeldezeit des Benutzers \"" + benutzer.getBenutzername()
-                + "\" und setze die Fehlanmeldeversuche auf 0 zurueck.");
+            LOG.debugFachdaten(
+                "Setze die letzte Anmeldezeit des Benutzers \"{}\" und setze die Fehlanmeldeversuche auf 0 zurueck.",
+                benutzer.getBenutzername());
             try {
                 return benutzerverwaltung.speichereErfolgreicheAnmeldung(benutzer.getBenutzername());
             } catch (BenutzerverwaltungBusinessException validationException) {
@@ -270,16 +325,12 @@ public class BenutzerverwaltungAccessManager implements
      * <p>
      * Die Methode erhoeht die Anzahl von {@link Benutzer#getFehlanmeldeVersuche() Anmelde-Fehlversuchen}
      * eines {@link Benutzer Benutzers} und sperrt diesen, sobald der {@link
-     * KonfigurationsSchluessel#CONF_ZUGRIFFSVERWALTUNG_MAX_FEHLANMELDEVERSUCHE konfigurierte Maximalwert} zu
+     * KonfigurationsSchluessel#ZUGRIFFSVERWALTUNG_MAX_FEHLANMELDEVERSUCHE konfigurierte Maximalwert} zu
      * fehlgeschlagenen Login-Versuchen ueberschritten wird.
      *
      * @param benutzer die Benutzerdaten aus der Datenbank
-     * @throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException im Fall einer fehlgeschlagenen
-     *                                                                    Authentifizierung
      */
-    private void authentifizierungFehlgeschlagenBehandlung(BenutzerDaten benutzer)
-        throws BenutzerverwaltungAuthentifizierungFehlgeschlagenException {
-
+    private void authentifizierungFehlgeschlagenBehandlung(BenutzerDaten benutzer) {
         try {
             benutzer = benutzerverwaltung.speichereFehlgeschlageneAnmeldung(benutzer.getBenutzername());
         } catch (BenutzerverwaltungBusinessException validationException) {
@@ -288,25 +339,21 @@ public class BenutzerverwaltungAccessManager implements
         }
 
         // Nach zu vielen fehlerhaften Anmeldungen wird der Benutzer gesperrt.
-        if (benutzer.getFehlanmeldeVersuche() > konfiguration
-            .getAsInteger(KonfigurationsSchluessel.CONF_ZUGRIFFSVERWALTUNG_MAX_FEHLANMELDEVERSUCHE,
+        if (benutzer.getFehlanmeldeVersuche() >= konfiguration
+            .getAsInteger(KonfigurationsSchluessel.ZUGRIFFSVERWALTUNG_MAX_FEHLANMELDEVERSUCHE,
                 MAX_FEHLERVERSUCHE_DEFAULT)) {
-            try {
-                benutzerverwaltung.setzeStatus(benutzer.getBenutzername(), BenutzerStatus.GESPERRT);
-            } catch (BenutzerverwaltungBusinessException validationException) {
-                LOG.error("Konnte Benutzer nicht sperren.", validationException);
-                return;
-            }
-
-            throw new BenutzerverwaltungAuthentifizierungFehlgeschlagenException(
-                FehlerSchluessel.MSG_BENUTZER_GESPERRT);
+            sperreBenutzer(benutzer);
         }
 
-        LOG.debugFachdaten("Die Anmeldung des Benutzers {} ist zum {}. Mal fehlgeschlagen.",
+        LOG.debugFachdaten("Die Anmeldung des Benutzers \"{}\" ist zum {}. Mal fehlgeschlagen.",
             benutzer.getBenutzername(), benutzer.getFehlanmeldeVersuche());
-
-        throw new BenutzerverwaltungAuthentifizierungFehlgeschlagenException(
-            FehlerSchluessel.MSG_AUTHENTIFIZIERUNG_FEHLGESCHLAGEN);
     }
 
+    private void sperreBenutzer(BenutzerDaten benutzer) {
+        try {
+            benutzerverwaltung.setzeStatus(benutzer.getBenutzername(), BenutzerStatus.GESPERRT);
+        } catch (BenutzerverwaltungBusinessException exception) {
+            LOG.error("Konnte Benutzer nicht sperren.", exception);
+        }
+    }
 }

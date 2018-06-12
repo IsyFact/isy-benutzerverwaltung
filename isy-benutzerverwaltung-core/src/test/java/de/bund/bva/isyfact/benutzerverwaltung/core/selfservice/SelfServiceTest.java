@@ -128,7 +128,7 @@ public class SelfServiceTest {
 
         when(benutzerDao.sucheMitId(123L)).thenReturn(benutzer);
 
-        when(konfiguration.getAsInteger(KonfigurationsSchluessel.CONF_SELFSERVICE_TOKEN_ABGELAUFEN_IN_STUNDEN, 48)).thenReturn(48);
+        when(konfiguration.getAsInteger(KonfigurationsSchluessel.SELFSERVICE_TOKEN_ABGELAUFEN_IN_STUNDEN, 48)).thenReturn(48);
 
         when(emailService.erzeugeEmailMitToken(anyString(), anyString())).thenReturn(new MimeMessage((Session)null));
 

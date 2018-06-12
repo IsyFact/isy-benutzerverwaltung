@@ -95,7 +95,7 @@ public class BenutzerAnlegenTest extends AbstractBenutzerverwaltungTest {
     private BenutzerAnlegen neuerBenutzer() {
         BenutzerAnlegen benutzer = new BenutzerAnlegen();
         benutzer.setBenutzername("moderator");
-        benutzer.setPasswort("passwort");
+        benutzer.setPasswort("qwertzU1!");
         benutzer.setStatus(BenutzerStatus.AKTIVIERT);
         benutzer.setBehoerde("IHK");
         benutzer.setNachname("Mod");

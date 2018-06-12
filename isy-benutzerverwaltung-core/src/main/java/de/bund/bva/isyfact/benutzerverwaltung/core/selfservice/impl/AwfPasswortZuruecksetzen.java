@@ -94,7 +94,7 @@ class AwfPasswortZuruecksetzen {
         benutzerToken.setBenutzer(benutzer);
         int abgelaufenInStunden =
             konfiguration.getAsInteger(
-                KonfigurationsSchluessel.CONF_SELFSERVICE_TOKEN_ABGELAUFEN_IN_STUNDEN,
+                KonfigurationsSchluessel.SELFSERVICE_TOKEN_ABGELAUFEN_IN_STUNDEN,
                 SELFSERVICE_TOKEN_DEFAULT_DAUER_STUNDEN);
         Date date = Date.from(Instant.now().plus(abgelaufenInStunden, ChronoUnit.HOURS));
         benutzerToken.setAblaufDatum(date);
