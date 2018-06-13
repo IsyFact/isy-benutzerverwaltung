@@ -15,26 +15,26 @@ import de.bund.bva.pliscommon.util.spring.MessageSourceHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- *  Default Password Policy
- *  
- *  - Das Passwort muss aus mindestens 8 Zeichen bestehen (konfigurierbar)
- *  - Es sind sowohl Groß als auch Kleinbuchstaben zu verwenden
- *  - Das Passwort muss mindestens eine Zahl und ein zugelassenes Sonderzeichen (!#&*+,-_.;:?) enthalten (konfigurierbar)
- *  - Die letzten 10 Passwörter dürfen nicht verwendet werden. (konfigurierbar)
+ * Default Password Policy
+ *
+ * - Das Passwort muss aus mindestens 8 Zeichen bestehen (konfigurierbar)
+ * - Es sind sowohl Groß als auch Kleinbuchstaben zu verwenden
+ * - Das Passwort muss mindestens eine Zahl und ein zugelassenes Sonderzeichen (!#&*+,-_.;:?) enthalten (konfigurierbar)
+ * - Die letzten 10 Passwörter dürfen nicht verwendet werden. (konfigurierbar)
  */
 public class DefaultPasswortPolicy implements PasswortPolicy {
-
-    private final Benutzerverwaltung benutzerverwaltung;
-
-    private final Konfiguration konfiguration;
-
-    private final PasswordEncoder passwordEncoder;
 
     public static final String DEFAULT_SONDERZEICHEN = "!#&*+,-_.;:?";
 
     public static final int DEFAULT_MINDESTLAENGE = 8;
 
     public static final int DEFAULT_ANZAHL_LETZTE_PASSWOERTER = 10;
+
+    private final Benutzerverwaltung benutzerverwaltung;
+
+    private final Konfiguration konfiguration;
+
+    private final PasswordEncoder passwordEncoder;
 
     public DefaultPasswortPolicy(Benutzerverwaltung benutzerverwaltung, Konfiguration konfiguration,
         PasswordEncoder passwordEncoder) {
@@ -44,46 +44,60 @@ public class DefaultPasswortPolicy implements PasswortPolicy {
     }
 
     @Override
-    public ValidationResult validate(String passwort, String benutzername) {        
+    public ValidationResult validate(String passwort, String benutzername) {
         if (!hatMindestlaenge(passwort)) {
-            int mindestlaenge = konfiguration.getAsInteger(KonfigurationsSchluessel.PASSWORT_POLICY_MINDESTLAENGE, DEFAULT_MINDESTLAENGE);
-            String message = MessageSourceHolder.getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_LAENGE, Integer.toString(mindestlaenge));
-            
+            int mindestlaenge = konfiguration
+                .getAsInteger(KonfigurationsSchluessel.PASSWORT_POLICY_MINDESTLAENGE, DEFAULT_MINDESTLAENGE);
+            String message = MessageSourceHolder
+                .getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_LAENGE,
+                    Integer.toString(mindestlaenge));
+
             return new ValidationResult(false, message);
         } else if (!hatGueltigeZeichen(passwort)) {
-            String message = MessageSourceHolder.getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_UNGUELTIGE_ZEICHEN);
+            String message = MessageSourceHolder
+                .getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_UNGUELTIGE_ZEICHEN);
 
             return new ValidationResult(false, message);
         } else if (!enthaeltKleinbuchstabe(passwort)) {
-            String message = MessageSourceHolder.getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_KLEINBUCHSTABEN);
+            String message = MessageSourceHolder
+                .getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_KLEINBUCHSTABEN);
 
             return new ValidationResult(false, message);
         } else if (!enthaeltGrossbuchstabe(passwort)) {
-            String message = MessageSourceHolder.getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_GROSSBUCHSTABEN);
+            String message = MessageSourceHolder
+                .getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_GROSSBUCHSTABEN);
 
             return new ValidationResult(false, message);
         } else if (!enthaeltSonderzeichen(passwort)) {
-            String erlaubteSonderzeichen = konfiguration.getAsString(KonfigurationsSchluessel.PASSWORT_POLICY_SONDERZEICHEN, DEFAULT_SONDERZEICHEN);
-            String message = MessageSourceHolder.getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_SONDERZEICHEN, erlaubteSonderzeichen);
+            String erlaubteSonderzeichen = konfiguration
+                .getAsString(KonfigurationsSchluessel.PASSWORT_POLICY_SONDERZEICHEN, DEFAULT_SONDERZEICHEN);
+            String message = MessageSourceHolder
+                .getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_SONDERZEICHEN,
+                    erlaubteSonderzeichen);
 
             return new ValidationResult(false, message);
         } else if (!enthaeltZahl(passwort)) {
-            String message = MessageSourceHolder.getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_ZAHL);
+            String message =
+                MessageSourceHolder.getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_ZAHL);
 
             return new ValidationResult(false, message);
         } else if (benutzername != null && !enthaeltNichtDieLetztenPasswoerter(passwort, benutzername)) {
-            int anzahlLetztePasswoerter = konfiguration.getAsInteger(KonfigurationsSchluessel.PASSWORT_POLICY_ANZAHL_LETZTE_PASSWOERTER, DEFAULT_ANZAHL_LETZTE_PASSWOERTER);
-            String message = MessageSourceHolder.getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_LETZTE_PASSWOERTER, Integer.toString(anzahlLetztePasswoerter));
+            int anzahlLetztePasswoerter = konfiguration
+                .getAsInteger(KonfigurationsSchluessel.PASSWORT_POLICY_ANZAHL_LETZTE_PASSWOERTER,
+                    DEFAULT_ANZAHL_LETZTE_PASSWOERTER);
+            String message = MessageSourceHolder
+                .getMessage(ValidierungSchluessel.MSG_PASSWORT_POLICY_DEFAULT_LETZTE_PASSWOERTER,
+                    Integer.toString(anzahlLetztePasswoerter));
 
             return new ValidationResult(false, message);
         } else {
             return new ValidationResult(true, "");
         }
     }
-    
+
     private boolean hatGueltigeZeichen(String password) {
-        String sonderzeichen =
-            konfiguration.getAsString(KonfigurationsSchluessel.PASSWORT_POLICY_SONDERZEICHEN, DEFAULT_SONDERZEICHEN);
+        String sonderzeichen = konfiguration
+            .getAsString(KonfigurationsSchluessel.PASSWORT_POLICY_SONDERZEICHEN, DEFAULT_SONDERZEICHEN);
 
         Predicate<Character> gueltigeZeichen =
             c -> Character.isLowerCase(c) || Character.isUpperCase(c) || Character.isDigit(c) || sonderzeichen
@@ -110,8 +124,8 @@ public class DefaultPasswortPolicy implements PasswortPolicy {
     }
 
     private boolean enthaeltSonderzeichen(String password) {
-        String sonderzeichen =
-            konfiguration.getAsString(KonfigurationsSchluessel.PASSWORT_POLICY_SONDERZEICHEN, DEFAULT_SONDERZEICHEN);
+        String sonderzeichen = konfiguration
+            .getAsString(KonfigurationsSchluessel.PASSWORT_POLICY_SONDERZEICHEN, DEFAULT_SONDERZEICHEN);
 
         return password.chars().mapToObj(i -> (char) i).anyMatch(c -> sonderzeichen.contains(c.toString()));
     }
@@ -122,9 +136,18 @@ public class DefaultPasswortPolicy implements PasswortPolicy {
         try {
             benutzerDaten = benutzerverwaltung.leseBenutzer(benutzername);
         } catch (BenutzerverwaltungBusinessException e) {
-            throw new BenutzerverwaltungTechnicalRuntimeException(ValidierungSchluessel.MSG_BENUTZERNAME_NICHT_VORHANDEN, benutzername);
+            throw new BenutzerverwaltungTechnicalRuntimeException(
+                ValidierungSchluessel.MSG_BENUTZERNAME_NICHT_VORHANDEN, benutzername);
         }
 
-        return benutzerDaten.getLetztePasswoerter().stream().noneMatch(altesPasswort -> passwordEncoder.matches(passwort, altesPasswort));
+        int anzahlLetztePasswoerter = konfiguration
+            .getAsInteger(KonfigurationsSchluessel.PASSWORT_POLICY_ANZAHL_LETZTE_PASSWOERTER,
+                DEFAULT_ANZAHL_LETZTE_PASSWOERTER);
+
+        int endIndex = benutzerDaten.getLetztePasswoerter().size();
+        int startIndex = Math.max(endIndex - anzahlLetztePasswoerter, 0);
+
+        return benutzerDaten.getLetztePasswoerter().subList(startIndex, endIndex).stream()
+            .noneMatch(altesPasswort -> passwordEncoder.matches(passwort, altesPasswort));
     }
 }
