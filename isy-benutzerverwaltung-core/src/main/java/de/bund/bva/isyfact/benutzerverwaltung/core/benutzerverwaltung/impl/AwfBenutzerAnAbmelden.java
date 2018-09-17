@@ -50,7 +50,6 @@ class AwfBenutzerAnAbmelden extends AbstractAnwendungsfall {
         Benutzer benutzer = leseBenutzer(benutzername);
         benutzer.setFehlanmeldeVersuche(0);
         benutzer.setLetzteAnmeldung(new Date());
-        benutzerDao.speichere(benutzer);
         return benutzer;
     }
 
@@ -62,7 +61,6 @@ class AwfBenutzerAnAbmelden extends AbstractAnwendungsfall {
 
         Benutzer benutzer = leseBenutzer(benutzername);
         benutzer.setFehlanmeldeVersuche(benutzer.getFehlanmeldeVersuche() + 1);
-        benutzerDao.speichere(benutzer);
         return benutzer;
     }
 
@@ -73,7 +71,6 @@ class AwfBenutzerAnAbmelden extends AbstractAnwendungsfall {
 
         Benutzer benutzer = leseBenutzer(benutzername);
         benutzer.setLetzteAbmeldung(new Date());
-        benutzerDao.speichere(benutzer);
         return benutzer;
     }
 

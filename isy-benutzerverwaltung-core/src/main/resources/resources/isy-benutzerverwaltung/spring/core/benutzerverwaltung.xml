@@ -25,6 +25,12 @@
 
     <bean name="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
+    <bean name="passwordPolicy" class="de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.passwortpolicy.impl.DefaultPasswortPolicy">
+        <constructor-arg ref="benutzerverwaltung"/>
+        <constructor-arg ref="konfiguration"/>
+        <constructor-arg ref="passwordEncoder"/>
+    </bean>
+
     <bean name="benutzerverwaltung"
           class="de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.impl.BenutzerverwaltungImpl">
         <constructor-arg ref="benutzerDao"/>
@@ -32,6 +38,7 @@
         <constructor-arg ref="passwordEncoder"/>
         <constructor-arg ref="dozer"/>
         <constructor-arg ref="beanValidator"/>
+        <constructor-arg ref="konfiguration"/>
     </bean>
 
 </beans>

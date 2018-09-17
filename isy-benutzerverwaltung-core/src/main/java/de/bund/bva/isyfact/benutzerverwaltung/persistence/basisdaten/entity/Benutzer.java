@@ -21,9 +21,12 @@ package de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity;
  */
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -56,6 +59,8 @@ public class Benutzer implements Serializable {
     private String benutzername;
 
     private String passwort;
+
+    private List<String> letztePasswoerter = new ArrayList<>();
 
     private String behoerde;
 
@@ -346,5 +351,14 @@ public class Benutzer implements Serializable {
 
     public void setPasswort(String passwort) {
         this.passwort = passwort;
+    }
+
+    @ElementCollection
+    public List<String> getLetztePasswoerter() {
+        return letztePasswoerter;
+    }
+
+    public void setLetztePasswoerter(List<String> letztePasswoerter) {
+        this.letztePasswoerter = letztePasswoerter;
     }
 }

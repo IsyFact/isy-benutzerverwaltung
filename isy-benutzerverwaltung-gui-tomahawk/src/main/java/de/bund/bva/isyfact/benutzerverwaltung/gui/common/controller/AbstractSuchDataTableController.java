@@ -193,9 +193,8 @@ public abstract class AbstractSuchDataTableController<R extends DataTableItem, K
 
     private ValidationMessage toValidationMessage(ConstraintViolation<?> violation) {
         String reference = violation.getPropertyPath().toString();
-        String messageText = violation.getMessage();
 
-        return new ValidationMessage("VA", reference, reference, messageText);
+        return new ValidationMessage("VA", reference, reference, violation.getMessage());
     }
 
     /**

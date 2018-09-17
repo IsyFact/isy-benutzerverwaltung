@@ -37,7 +37,7 @@
                 	<div class="form-horizontal">
 	                    <div class="row-fluid">
 	                        <div class="col-lg-6">
-	                           	<isy:formInput reference="passwort"
+	                           	<isy:formInput reference="altesPasswort"
 											   type="password"
 	                                           value="#{benutzerPasswortAendernModel.altesPasswort}"
 	                                           label="#{msg_isyBenutzerverwaltung.MEL_PasswortAendern_altesPasswort}"
@@ -45,7 +45,7 @@
 	                                           inputStyleClass="col-lg-8"
 	                                           required="true"
 	                                           id="altesPasswortInput"/>
-	                           	<isy:formInput reference="neuesPasswort"
+	                           	<isy:formInput reference="passwort"
 											   type="password"
 	                                           value="#{benutzerPasswortAendernModel.neuesPasswort}"
 	                                           label="#{msg_isyBenutzerverwaltung.MEL_PasswortZuruecksetzen_neuesPasswort}"
@@ -53,7 +53,7 @@
 	                                           inputStyleClass="col-lg-8"
 	                                           required="true"
 	                                           id="neuesPasswortInput"/>
-	                            <isy:formInput reference="neuesPasswortWiederholung"
+	                            <isy:formInput reference="passwortWiederholung"
 											   type="password"
 	                                           value="#{benutzerPasswortAendernModel.neuesPasswortWiederholung}"
 	                                           label="#{msg_isyBenutzerverwaltung.MEL_PasswortZuruecksetzen_neuesPasswortWiederholen}"

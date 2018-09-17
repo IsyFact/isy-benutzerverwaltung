@@ -48,6 +48,8 @@ public class BenutzerDaten implements Serializable {
 
     private String passwort;
 
+    private List<String> letztePasswoerter;
+
     private String behoerde;
 
     private String nachname;
@@ -334,13 +336,20 @@ public class BenutzerDaten implements Serializable {
         this.version = version;
     }
 
-    @Size(min = 8, max = 4000)
     public String getPasswort() {
         return passwort;
     }
 
     public void setPasswort(String passwort) {
         this.passwort = passwort;
+    }
+
+    public List<String> getLetztePasswoerter() {
+        return letztePasswoerter;
+    }
+
+    public void setLetztePasswoerter(List<String> letztePasswoerter) {
+        this.letztePasswoerter = letztePasswoerter;
     }
 
     /**
@@ -356,6 +365,7 @@ public class BenutzerDaten implements Serializable {
                 Objects.equals(id, that.id) &&
                 Objects.equals(benutzername, that.benutzername) &&
                 Objects.equals(passwort, that.passwort) &&
+                Objects.equals(letztePasswoerter, that.letztePasswoerter) &&
                 Objects.equals(behoerde, that.behoerde) &&
                 Objects.equals(nachname, that.nachname) &&
                 Objects.equals(vorname, that.vorname) &&

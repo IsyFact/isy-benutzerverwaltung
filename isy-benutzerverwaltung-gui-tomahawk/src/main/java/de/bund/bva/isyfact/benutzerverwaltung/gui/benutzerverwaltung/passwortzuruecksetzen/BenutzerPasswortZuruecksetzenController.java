@@ -21,6 +21,7 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.passwortzu
  */
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.ValidierungSchluessel;
@@ -56,8 +57,8 @@ public class BenutzerPasswortZuruecksetzenController
                 zeigeNachricht(exception);
             }
         } else {
-            getValidationController().processValidationMessages(Arrays.asList(
-                new ValidationMessage("VA", "neuesPasswortWiederholung", "neuesPasswortWiederholung",
+            getValidationController().processValidationMessages(Collections.singletonList(
+                new ValidationMessage("VA", "passwortWiederholung", "passwortWiederholung",
                     MessageSourceHolder
                         .getMessage(ValidierungSchluessel.MSG_PASSWORT_AENDERN_UNTERSCHIEDLICH))));
         }

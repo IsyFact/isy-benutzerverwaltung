@@ -24,13 +24,13 @@
 
     <!-- Passwort: "passwort" -->
     <Benutzer id="201" benutzername="benutzer"
-              passwort="$2a$10$lj4tBJe5luAEI6g7iOZ75uiVvyHgQgn6oQjZNJRIQdQt7fPzvyQRy"
+              passwort="$2a$10$FrhgE995.OkufUJ7YKlRHekMyTKRjzUAo54HkQ46ANlZibPY0n4ym"
               behoerde="BFJA" nachname="Tester" vorname="Klaus" status="2" fehlanmeldeVersuche="5"
               letzteAnmeldung="2016-01-01" letzteAbmeldung="2016-01-02" bemerkung="Testexperte"
               emailAdresse="klaus.tester@behoerde.de" telefonnummer="0123/456789" version="0"/>
 
     <Benutzer id="202" benutzername="admin"
-              passwort="$2a$10$lj4tBJe5luAEI6g7iOZ75uiVvyHgQgn6oQjZNJRIQdQt7fPzvyQRy"
+              passwort="$2a$10$FrhgE995.OkufUJ7YKlRHekMyTKRjzUAo54HkQ46ANlZibPY0n4ym"
               behoerde="BFJA" nachname="Tester" vorname="Jürgen" status="2" fehlanmeldeVersuche="0"
               letzteAnmeldung="2016-04-01" letzteAbmeldung="2016-04-01" bemerkung="Superuser"
               emailAdresse="juergen.tester@behoerde.de" telefonnummer="0121/456799" version="0"/>

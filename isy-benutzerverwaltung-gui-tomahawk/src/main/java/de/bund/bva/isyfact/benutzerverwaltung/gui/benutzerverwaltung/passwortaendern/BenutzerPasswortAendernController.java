@@ -23,6 +23,7 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.passwortae
 import java.util.Arrays;
 
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
+import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungValidationException;
 import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.ValidierungSchluessel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.benutzerverwaltung.common.controller.AbstractBenutzerverwaltungController;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.konstanten.HinweisSchluessel;
@@ -61,7 +62,7 @@ public class BenutzerPasswortAendernController
             }
         } else {
             getValidationController().processValidationMessages(Arrays.asList(
-                new ValidationMessage("VA", "neuesPasswortWiederholung", "neuesPasswortWiederholung",
+                new ValidationMessage("VA", "passwortWiederholung", "passwortWiederholung",
                     MessageSourceHolder
                         .getMessage(ValidierungSchluessel.MSG_PASSWORT_AENDERN_UNTERSCHIEDLICH))));
         }

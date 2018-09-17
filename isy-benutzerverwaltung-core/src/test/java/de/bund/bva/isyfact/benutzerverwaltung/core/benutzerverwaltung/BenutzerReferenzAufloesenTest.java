@@ -50,7 +50,7 @@ public class BenutzerReferenzAufloesenTest extends AbstractBenutzerverwaltungTes
         assertEquals(201L, (long)benutzerReferenz.getDaten().getId());
 
         assertEquals("benutzer", benutzerReferenz.getDaten().getBenutzername());
-        assertEquals("$2a$10$lj4tBJe5luAEI6g7iOZ75uiVvyHgQgn6oQjZNJRIQdQt7fPzvyQRy", benutzerReferenz.getDaten().getPasswort());
+        assertEquals("$2a$10$FrhgE995.OkufUJ7YKlRHekMyTKRjzUAo54HkQ46ANlZibPY0n4ym", benutzerReferenz.getDaten().getPasswort());
         assertEquals("BFJA", benutzerReferenz.getDaten().getBehoerde());
         assertEquals("Tester", benutzerReferenz.getDaten().getNachname());
         assertEquals("Klaus", benutzerReferenz.getDaten().getVorname());

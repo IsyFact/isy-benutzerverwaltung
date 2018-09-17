@@ -25,6 +25,7 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.RolleDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.BenutzerStatus;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.validation.UnbekannterBenutzername;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.validation.ValideRollen;
+import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.validation.passwordpolicy.PasswortPolicyUeberpruefen;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -72,8 +73,8 @@ public class BenutzerAnlegen implements Serializable {
         this.benutzername = benutzername;
     }
 
-    @Size(min = 8, message = "{validation.benutzer.passwort.kurz}")
     @NotNull
+    @PasswortPolicyUeberpruefen
     public String getPasswort() {
         return passwort;
     }

@@ -24,6 +24,8 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
+import de.bund.bva.isyfact.benutzerverwaltung.common.konstanten.KonfigurationsSchluessel;
+import de.bund.bva.isyfact.benutzerverwaltung.core.TestfallKonfiguration;
 import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.BenutzerDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.basisdaten.daten.RolleDaten;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.PasswortAendern;
@@ -36,7 +38,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 /**
  * Testet das Ändern von Benutzern.
@@ -47,9 +51,9 @@ public class BenutzerAendernTest extends AbstractBenutzerverwaltungTest {
 
     private static final String BENUTZERNAME = "benutzer";
 
-    private static final String PASSWORT = "passwort";
+    private static final String PASSWORT = "qwertZ1!";
 
-    private static final String PASSWORT_NEU = "passwort_neu";
+    private static final String PASSWORT_NEU = "qwertZ1!1";
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -57,7 +61,6 @@ public class BenutzerAendernTest extends AbstractBenutzerverwaltungTest {
     @Test
     @DatabaseSetup("testBenutzerverwaltungSetup.xml")
     public void testSetzePasswort() throws BenutzerverwaltungBusinessException {
-
         PasswortAendern passwortAendern =
             new PasswortAendern(BENUTZERNAME, PASSWORT, PASSWORT_NEU, PASSWORT_NEU);
         BenutzerDaten benutzerDaten = benutzerverwaltung.setzePasswort(passwortAendern);
@@ -96,5 +99,21 @@ public class BenutzerAendernTest extends AbstractBenutzerverwaltungTest {
             new RolleDaten(RollenTestdaten.ROLLE_MITGLIED_ID, RollenTestdaten.ROLLE_MITGLIED_NAME);
 
         benutzerverwaltung.entzieheRolle(rolle, benutzernamen);
+    }
+
+    @Test
+    @DatabaseSetup("testBenutzerverwaltungSetup.xml")
+    public void testSpeichereLetztePasswoerter() throws BenutzerverwaltungBusinessException {
+        when(TestfallKonfiguration.konfiguration.getAsInteger(KonfigurationsSchluessel.ANZAHL_SPEICHERE_LETZTE_PASSWOERTER, 10)).thenReturn(3);
+
+        for (int i = 1; i <= 4; i++) {
+            PasswortZuruecksetzen passwortZuruecksetzen = new PasswortZuruecksetzen(BENUTZERNAME, PASSWORT_NEU + i, PASSWORT_NEU + i);
+
+            benutzerverwaltung.setzePasswortZurueck(passwortZuruecksetzen);
+        }
+
+        BenutzerDaten benutzer = benutzerverwaltung.leseBenutzer(BENUTZERNAME);
+
+        assertEquals(3, benutzer.getLetztePasswoerter().size());
     }
 }
