@@ -21,7 +21,7 @@ Zur Integration der Sicherheitskomponente muss die Anwendung die folgende Abhän
 <dependency>
     <groupId>de.bund.bva.isyfact.benutzerverwaltung</groupId>
     <artifactId>isy-benutzerverwaltung-sicherheit</artifactId>
-    <version>1.4.0.RC2</version>
+    <version>1.4.0</version>
 </dependency>
 ----
 
