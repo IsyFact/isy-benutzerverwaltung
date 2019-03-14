@@ -26,7 +26,7 @@ Zur Integration der Kernkomponente muss die Anwendung die folgende Abhängigkeit
 <dependency>
     <groupId>de.bund.bva.isyfact.benutzerverwaltung</groupId>
     <artifactId>isy-benutzerverwaltung-core</artifactId>
-    <version>1.4.0</version>
+    <version>1.5.0-SNAPSHOT</version>
 </dependency>
 ----
 
