@@ -223,14 +223,12 @@
             </repositories>
             <dependencies>
                 <dependency>
-                    <groupId>com.oracle</groupId>
-                    <artifactId>ojdbc7</artifactId>
-                    <version>12.1.0.2.0</version>
+                    <groupId>com.oracle.jdbc</groupId>
+                    <artifactId>ojdbc8</artifactId>
                 </dependency>
                 <dependency>
-                    <groupId>com.oracle</groupId>
+                    <groupId>com.oracle.jdbc</groupId>
                     <artifactId>ucp</artifactId>
-                    <version>12.1.0.2.0</version>
                 </dependency>
             </dependencies>
         </profile>
