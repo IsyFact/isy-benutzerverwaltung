@@ -35,8 +35,9 @@ import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.daten.RolleA
 import de.bund.bva.isyfact.benutzerverwaltung.core.rollenverwaltung.daten.RolleAnlegen;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.RollenDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Rolle;
-import org.dozer.Mapper;
-import org.dozer.MappingException;
+
+import com.github.dozermapper.core.Mapper;
+import com.github.dozermapper.core.MappingException;
 import org.springframework.dao.DataAccessException;
 
 import javax.validation.Validator;
