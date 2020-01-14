@@ -39,8 +39,8 @@
 	<logger name="org.hibernate" level="WARN" additivity="false">
 		<appender-ref ref="KONSOLE" />
 	</logger>
-	<logger name="org.dozer" level="WARN" additivity="false">
-		<appender-ref ref="KONSOLE" />
+	<logger name="com.github.dozermapper.core" level="WARN" additivity="false">
+		<appender-ref ref="KONSOLE"/>
 	</logger>
 	<logger name="org.apache.commons" level="WARN" additivity="false">
 		<appender-ref ref="KONSOLE" />

@@ -21,12 +21,14 @@ package de.bund.bva.isyfact.benutzerverwaltung.gui.selfservice.awkwrapper.impl;
  */
 
 
+import com.github.dozermapper.core.Mapper;
+
 import de.bund.bva.isyfact.benutzerverwaltung.common.exception.BenutzerverwaltungBusinessException;
 import de.bund.bva.isyfact.benutzerverwaltung.core.benutzerverwaltung.daten.PasswortZuruecksetzen;
 import de.bund.bva.isyfact.benutzerverwaltung.core.selfservice.SelfService;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.common.model.BenutzerModel;
 import de.bund.bva.isyfact.benutzerverwaltung.gui.selfservice.awkwrapper.SelfServiceAwkWrapper;
-import org.dozer.Mapper;
+
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
