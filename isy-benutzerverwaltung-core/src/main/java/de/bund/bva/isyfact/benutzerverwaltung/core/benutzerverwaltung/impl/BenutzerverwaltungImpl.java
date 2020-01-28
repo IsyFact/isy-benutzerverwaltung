@@ -46,8 +46,8 @@ import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.Benutze
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.dao.RollenDao;
 import de.bund.bva.isyfact.benutzerverwaltung.persistence.basisdaten.entity.Benutzer;
 import de.bund.bva.pliscommon.konfiguration.common.Konfiguration;
-import org.dozer.Mapper;
-import org.dozer.MappingException;
+import com.github.dozermapper.core.Mapper;
+import com.github.dozermapper.core.MappingException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
