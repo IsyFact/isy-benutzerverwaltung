@@ -32,7 +32,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>org.glassfish</groupId>
@@ -41,5 +40,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>
