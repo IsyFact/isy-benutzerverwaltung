@@ -124,13 +124,6 @@
             <artifactId>dozer-core</artifactId>
         </dependency>
 
-        <!-- Aktuelle Version von Commons-Collections, z.B. fuer Dozer -->
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2.1</version>
-        </dependency>
-
         <!-- PLIS-Erweiterungen fuer Spring Web Flow und JSF -->
         <dependency>
             <groupId>de.bund.bva.isyfact</groupId>
