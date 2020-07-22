@@ -5,7 +5,7 @@
     <parent>
         <groupId>de.bund.bva.isyfact.benutzerverwaltung</groupId>
         <artifactId>isy-benutzerverwaltung-parent</artifactId>
-        <version>1.6.0</version>
+        <version>1.6.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>isy-benutzerverwaltung-gui-tomahawk</artifactId>
@@ -122,13 +122,6 @@
         <dependency>
             <groupId>com.github.dozermapper</groupId>
             <artifactId>dozer-core</artifactId>
-        </dependency>
-
-        <!-- Aktuelle Version von Commons-Collections, z.B. fuer Dozer -->
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2.1</version>
         </dependency>
 
         <!-- PLIS-Erweiterungen fuer Spring Web Flow und JSF -->
